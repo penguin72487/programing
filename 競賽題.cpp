@@ -1,40 +1,37 @@
 #include<iostream>
 #include<algorithm>
 #include<vector>
+#include<set>  
 using namespace std;
 int main()
 {
 	int i,j,n;
 	while (cin>>n)
 	{
-	int x[n],y[n],h[n],d[n];
+	int x[n],y[n],h[n]={0},d[n],d2[n];
 	for (i=0;i<n;i++)
 	{
 	cin>>x[i]>>y[i]>>h[i];
 	d[i]=x[i]*x[i]+y[i]*y[i] ;
+	d2[i]=d[i];
+	
 }
 	 sort(d, d+n);
 	for(i=0;i<n;i++)
-	{
-	
-		
-		for(j=0;j<n;j++)
+	printf("%d\n",d[i]);
+	for(i=0;i<n;i++)
+	{	
+		for(j=i+1;j<n-1;j++)
 		{	
-				if(x[j]==0&&y[j]==0)
-		{
-			x[0]^=x[j]^=x[0]^=x[j]; 
-			y[0]^=y[j]^=y[0]^=y[j];	
-		}
-			if(d[i]==x[j]*x[j]+y[j]*y[j])
-			{
-				x[i]^=x[j]^=x[i]^=x[j]; 
-				y[i]^=y[j]^=y[i]^=y[j];	
-			}
+			if(d[i]==d2[j])	
+				h[i]^=h[j]^=h[i]^=h[j];
+			
 		}
 	}
 	for(i=0;i<n;i++)
-	printf("%d %d\n",x[i],y[i]);
-	
+	printf("%d\n",d[i]);
+	printf("%d\n",max_element(h,h+n));
+  
 
 }
 	

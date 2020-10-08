@@ -5,7 +5,7 @@
 using namespace std;
 int main()
 {
-	int i,j,n;
+	int i,j,n,happy=0;
 	while (cin>>n)
 	{
 	int x[n],y[n],h[n]={0},d[n],d2[n];
@@ -28,9 +28,21 @@ int main()
 			
 		}
 	}
-	for(i=0;i<n;i++)
-	printf("%d\n",d[i]);
-	printf("%d\n",max_element(h,h+n));
+	while(h[i]>=0)
+	{
+		int int_max=0,int_min=1000000000;
+		for(i=0;i<n;i++)
+		{
+		int_max=max(h[i],int_max);
+		for(j=i;j<n;j++)	
+		int_min=min(h[j],int_min);
+	}
+		
+		happy+=int_max-int_min;
+		for(int k=i;k<j;k++)
+		h[k]=-1;
+		cout<<happy<<endl;
+	}
   
 
 }

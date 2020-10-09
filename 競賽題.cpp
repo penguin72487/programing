@@ -1,13 +1,14 @@
 #include<iostream>
-#include<algorithm>
+#include<algorithm> 
 #include<vector>
 #include<set>  
 using namespace std;
 int main()
 {
-	int i,j,n,happy=0;
+	int n;
 	while (cin>>n)
 	{
+	int i,j,happy=0;
 	int x[n],y[n],h[n]={0},d[n],d2[n];
 	for (i=0;i<n;i++)
 	{
@@ -28,15 +29,16 @@ int main()
 			
 		}
 	}
-	while(h[i]>=0)
+	int int_max=0,int_min=1000000000;
+	while(int_min>0)
 	{
-		int int_max=0,int_min=1000000000;
+		
 		for(i=0;i<n;i++)
 		{
 		int_max=max(h[i],int_max);
-		for(j=i;j<n;j++)	
+		for(j=i;j<n-1 ;j++)
 		int_min=min(h[j],int_min);
-	}
+}
 		
 		happy+=int_max-int_min;
 		for(int k=i;k<j;k++)

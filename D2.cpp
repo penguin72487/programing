@@ -9,11 +9,11 @@ int main()
 		cin>>a>>b>>w;
 		if (max(a,b)-min(a,b)>=4&&max(a,b)==22)
 		cout<<"YES\n";
-		else if (max(a,b)-min(a,b)>=4&&max(a,b)>=22)
+		else if (max(a,b)-min(a,b)>4&&max(a,b)>22)
 		cout<<"NO\n";
 		else if(max(a,b)-min(a,b)>=4&&max(a,b)-min(a,b)<22)
 		cout<<"YES\n";
-		else if(max(a,b)-min(a,b)>=2&&max(a,b)>=33)
+		else if(max(a,b)-min(a,b)>=2&&max(a,b)==33)
 		cout<<"YES\n";
 		else 
 		cout<<"NO\n";		

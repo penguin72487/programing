@@ -9,7 +9,7 @@ int main()
 	int int_max=-10000000,int_min=10000000;
 	for(int i=0;i<=n;i++)
 	{
-		int_max=max(a*i*i+b*i+c+d*(n-i)*(n-1)+e*(n-1)+f,int_max);
+		int_max=max(a*i*i+b*i+c+d*(n-i)*(n-i)+e*(n-i)+f,int_max);
 	 } 
 	cout<<int_max<<endl;
 	

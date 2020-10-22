@@ -26,9 +26,7 @@ int main()
 	scanf("%d",&n);
 		int loc[n]={0};
 			for(i=0;i<2*n;i++)
-	{
-	
-		
+	{	
 		scanf("%d",&a);
 			if(i=0)
 		loc[0]=a;

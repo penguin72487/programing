@@ -4,6 +4,12 @@
 using namespace std;
 int main()
 {
-	vector<int> a;
-	cout <<vec[1]<<endl;
+	int a;
+	vector<int> n;
+	n.reserve(100); 
+	cin>>a;
+	n[87]=a;
+	cout <<n[87]<<endl;
+	cout<<n.front()<<endl;
+	cout<<n.back()<<endl;
  } 

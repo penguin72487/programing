@@ -13,8 +13,8 @@ struct penguin
 penguin l;
 int pen(auto a)
 {
-	
-			if(a>0&&a<CHAR_MAX)
+		l.loc.push_back();
+		if(a>0&&a<CHAR_MAX)
 		l.uc.push_back(a);
 		else if(a>CHAR_MAX&&a<USHRT_MAX)
 		l.us.push_back(a);
@@ -26,8 +26,12 @@ int pen(auto a)
 int main()
 {
 	auto a=0;
-	while (cin>>a)
+	int n,i;
+	cin>>n;
+	for(i=0;i<2*n;i++)
 	{
-		
+		cin>>a;
+		pen(a);
 	}
+	
 }

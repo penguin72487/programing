@@ -13,7 +13,7 @@ struct penguin
 penguin l;
 int pen(auto a)
 {
-		l.loc.push_back();
+		l.loc.push_back(a);
 		if(a>0&&a<CHAR_MAX)
 		l.uc.push_back(a);
 		else if(a>CHAR_MAX&&a<USHRT_MAX)
@@ -32,6 +32,7 @@ int main()
 	{
 		cin>>a;
 		pen(a);
+		auto* loc_v = l;
 	}
 	
 }

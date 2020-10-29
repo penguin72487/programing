@@ -1,31 +1,34 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<algorithm>
+#include<string>
 using namespace std;
 int main()
 {
 	int n;
 	cin>>n;
-	vector<char> l;
+	string l;
 	int k[n+1]={0};
-	int i,j;
+	int i,j,r,c;
+	string a;
 	for(i=1;i<=n;i++)
 	{
-		cin>>l;
-		k[i]=l.size();
-	}
-	cout<<l<<endl;
-	int r,c;
-		for(i=1;i<=n;i++) 
+		cin>>a;
+		l+=a;
+		k[i]=l.length();
+	 }	
+			for(i=0;i<n;i++)
 	{
-		cin>>r>>c;
-		reverse(l.begin()+k[i-1]+r,l.begin()+k[i-1]+c);
-	}
-	for(i=0;i<n;i++)
-	{
-		for(j=i+k[i-1];j<k[i];j++)
-		{
-			cout<<l[j];
-		}
-		cout<<" ";
-	}
-	 
+		 cin>>r>>c;
+		 reverse(l.begin()+k[i]+r-1,l.begin()+k[i]+c);
+		 for(j=k[i];j<k[i+1];j++)
+			 {
+			 	cout<<l[j];
+			 }
+			if(i!=n-1)
+		 	cout<<" ";
+		 	else
+		 	cout<<".";
+	 }
+		 
+	
 }

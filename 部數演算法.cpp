@@ -2,19 +2,35 @@
 using namespace std;
 	int n,r,c;
 
-	
+	char l[200][200]; 
 	int i,j,o;
-int stap(int i_begin,int j_begin,int i_end,int j_end)
+void step()
 {
-	int k[r][c]={0};
-	
+	int k[r][c];
+		for(i=0;i<r;i++)
+	{
+		for(j=0;j<c;j++)
+		{
+			if(l[i][j]='*')
+			k[i][j]=-1;
+			if(l[i][j]='Y')
+			k[i][j]=0;
+		}  
+	}
+			for(i=0;i<r;i++)
+	{
+		for(j=0;j<c;j++)
+		{
+			cin>>l[i][j];
+		}  
+	}
 	
 	
 }
 int main()
 {
 	cin>>n>>r>>c;
-	char l[r][c]; 
+
 	for(o=0;0<n;o++)
 	{ 
 		
@@ -23,15 +39,8 @@ int main()
 		for(j=0;j<c;j++)
 			cin>>l[i][j];
 	}
-		for(i=0;i<r;i++)
-	{
-		for(j=0;j<c;j++)
-			{
-				if(l[i][j]='Y')
-				stap(i,j);
-			} 
-	}
-	 
+		step();
+
 	
 	
 	

@@ -28,11 +28,10 @@ int main()
 	auto a=0;
 	int n,i;
 	cin>>n;
-	for(i=0;i<2*n;i++)
+	for(i=0;i<n;i++)
 	{
 		cin>>a;
 		pen(a);
-		auto* loc_v = l;
 	}
 	
 }

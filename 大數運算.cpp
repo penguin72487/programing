@@ -32,6 +32,7 @@ void mi()
 	for(i=0;i<val.size();i++) 
 		{
 			ans.push_back(val[i]-val2[i]);
+			//cout<<ans[i]<<" "; 
 		}
 };
 void tii()
@@ -44,10 +45,15 @@ void ti()
 	for(i=0;i<val.size();i++)
 	{
 		for(j=0;j<val2.size();j++)
-		{
-			ans[i+j]+=val[i]*val2[j];
+		{  
+			if(val[i]!=0&&val2[i]!=0)
+			{
+					ans[i+j]+=val[i]*val2[j];
+					//cout<<val[i]<<"*"<<val2[j]<<" + ";
+			}
+			
 			//cout<<ans[i+j]<<" ";
-			//	cout<<val[i]<<"*"<<val2[j]<<" + ";
+				
 			//	cout<<val[i]<<"*"<<val2[j]<<"*"<<i*10<<" + ";
 		//	cout<<ans[i]<<"="<<val[i]<<"*"<<val2[j]<<"*"<<i*10<<" + ";
 		}
@@ -68,7 +74,21 @@ int main()
 	
 	while (cin>>s_val>>k>>s_val2)
 	{
-		
+		for(i=0;i<max(s_val.length(),s_val2.length());i++)
+		{
+			if(k=='-'&&s_val.length()!=s_val2.length()&&max(s_val.length(),s_val2.length())==s_val2.length())
+			{
+					swap(s_val,s_val2);
+					cout<<"-";
+				break;
+			}
+			else if(s_val[i]<s_val2[i]||s_val.length()!=s_val2.length()&&max(s_val.length(),s_val2.length())==s_val2.length())
+			{
+				swap(s_val,s_val2);
+				break;
+			}
+		}
+
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
 	//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
@@ -130,6 +150,7 @@ int main()
 			
 	for(;i<ans.size();i++)
 	cout<<ans[i];
+	cout<<endl;
 	ans.clear();
 	val.clear();
 	val2.clear();

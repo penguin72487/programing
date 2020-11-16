@@ -8,31 +8,14 @@ using namespace std;
 	vector <int> val,val2,ans;
 	char k;
 	int i,j;
-void pll(int a,int b)
-{
-	ans.push_back(a+b);
-}
+
 void pl()
-{	
-	
-	if(val.size()!=val2.size())//同位數行動 
+{				
+		for(i=0;i<val.size();i++) 
 		{
-			if(val.size()>val2.size())
-			{
-				for(i=val2.size();i<val.size();i++)
-					cout<<val[val.size()-i-1];
-			}
-			else
-			{
-				for(i=val.size();i<val2.size();i++)
-					cout<<val2[val2.size()-i-1];
-			}
-			 
-		}			
-	for(i=0;i<min(val.size(),val2.size());i++) 
-		{
-			pll(val[i],val2[i]);
+			ans.push_back(val[i]+val2[i]);
 		}
+	
 	
 	
 
@@ -43,7 +26,13 @@ void mii(int a,int b)
 };
 void mi()
 {
+	if(s_val==s_val2)
+		cout<<"0"<<endl;
 
+	for(i=0;i<val.size();i++) 
+		{
+			ans.push_back(val[i]-val2[i]);
+		}
 };
 void tii()
 {
@@ -51,13 +40,16 @@ void tii()
 };
 void ti()
 {
-	ans.assign(max(val.size(),val2.size()),0);//reserve + 初始化為 0 
+	ans.assign(val.size()+val2.size(),0);//reserve + 初始化為 0 
 	for(i=0;i<val.size();i++)
 	{
-		for(j=i;j<val2.size();j++)
+		for(j=0;j<val2.size();j++)
 		{
-			ans[j]+=val[i]*val2[j];
-			cout<<val[i]<<"*"<<val2[j]<<" + ";
+			ans[i+j]+=val[i]*val2[j];
+			//cout<<ans[i+j]<<" ";
+			//	cout<<val[i]<<"*"<<val2[j]<<" + ";
+			//	cout<<val[i]<<"*"<<val2[j]<<"*"<<i*10<<" + ";
+		//	cout<<ans[i]<<"="<<val[i]<<"*"<<val2[j]<<"*"<<i*10<<" + ";
 		}
 		
 	}
@@ -80,20 +72,23 @@ int main()
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
 	//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
-	
+	val.assign(max(s_val.length(),s_val2.length()),0);
+	val2.assign(max(s_val.length(),s_val2.length()),0);
 	for(i=0;i<s_val.length();i++)//反轉存vector陣列 
-	val.push_back(s_val[i]-'0');
+		val[i]=s_val[i]-'0';
 	for(i=0;i<s_val2.length();i++)//反轉存vector陣列 
-	val2.push_back(s_val2[i]-'0');
-/*
+		val2[i]=s_val2[i]-'0';
 
+
+/*
 	for(i=0;i<val.size();i++)
-	cout<<"val "<<val[i];
+	cout<<val[i];
 	cout<<endl;
 	for(i=0;i<val2.size();i++)
-	cout<<"val2 "<<val2[i];
+	cout<<val2[i];
 	cout<<endl;
 	*/
+	
 
 	switch (k)
 	{
@@ -122,11 +117,19 @@ int main()
     			ans[i+1]+=ans[i]/10;
     	ans[i]=ans[i]%10;
    		}
+   		if(ans[i]<0)
+   		{
+   			ans[i+1]--;
+   			ans[i]+=10; 
+		   }
 	}
-	
-	
-	for(i=0;i<ans.size();i++)
-	cout<<ans[ans.size()-i-1];
+	reverse(ans.begin(),ans.end());
+	i=0;
+	while(ans[i]==0)
+	i++;
+			
+	for(;i<ans.size();i++)
+	cout<<ans[i];
 	ans.clear();
 	val.clear();
 	val2.clear();

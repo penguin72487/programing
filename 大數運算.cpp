@@ -14,7 +14,6 @@ void pll(int a,int b)
 }
 void pl()
 {	
-	vector <int> more;
 	
 	if(val.size()!=val2.size())//同位數行動 
 		{
@@ -45,8 +44,6 @@ void mii(int a,int b)
 void mi()
 {
 
-
-
 };
 void tii()
 {
@@ -54,7 +51,17 @@ void tii()
 };
 void ti()
 {
-	
+	ans.assign(max(val.size(),val2.size()),0);//reserve + 初始化為 0 
+	for(i=0;i<val.size();i++)
+	{
+		for(j=i;j<val2.size();j++)
+		{
+			ans[j]+=val[i]*val2[j];
+			cout<<val[i]<<"*"<<val2[j]<<" + ";
+		}
+		
+	}
+	cout<<endl;
 };
 void dii()
 {
@@ -79,6 +86,7 @@ int main()
 	for(i=0;i<s_val2.length();i++)//反轉存vector陣列 
 	val2.push_back(s_val2[i]-'0');
 /*
+
 	for(i=0;i<val.size();i++)
 	cout<<"val "<<val[i];
 	cout<<endl;

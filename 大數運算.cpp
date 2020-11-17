@@ -41,12 +41,12 @@ void tii()
 };
 void ti()
 {
-	ans.assign(val.size()+val2.size(),0);//reserve + ªì©l¤Æ¬° 0 
+	ans.assign(val.size()+val2.size(),0);//reserve + åˆå§‹åŒ–ç‚º 0 
 	for(i=0;i<val.size();i++)
 	{
 		for(j=0;j<val2.size();j++)
 		{  
-			if(val[i]!=0&&val2[i]!=0)
+			if(val[i]!=0&&val2[j]!=0)
 			{
 					ans[i+j]+=val[i]*val2[j];
 					//cout<<val[i]<<"*"<<val2[j]<<" + ";
@@ -89,14 +89,14 @@ int main()
 			}
 		}
 
-	reverse(s_val.begin(),s_val.end());//¤ÏÂà 
-	reverse(s_val2.begin(),s_val2.end());//¤ÏÂà 
+	reverse(s_val.begin(),s_val.end());//åè½‰ 
+	reverse(s_val2.begin(),s_val2.end());//åè½‰ 
 	//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
 	val.assign(max(s_val.length(),s_val2.length()),0);
 	val2.assign(max(s_val.length(),s_val2.length()),0);
-	for(i=0;i<s_val.length();i++)//¤ÏÂà¦svector°}¦C 
+	for(i=0;i<s_val.length();i++)//åè½‰å­˜vectoré™£åˆ— 
 		val[i]=s_val[i]-'0';
-	for(i=0;i<s_val2.length();i++)//¤ÏÂà¦svector°}¦C 
+	for(i=0;i<s_val2.length();i++)//åè½‰å­˜vectoré™£åˆ— 
 		val2[i]=s_val2[i]-'0';
 
 
@@ -127,7 +127,7 @@ int main()
 		
 	}
 	
-		for(i=0;i<ans.size();i++)						//²Î¤@¶i¦ì 
+		for(i=0;i<ans.size();i++)						//çµ±ä¸€é€²ä½ 
 	{
 		if(ans[i]>9)
 		 {

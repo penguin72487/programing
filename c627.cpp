@@ -8,17 +8,8 @@ unsigned long f(int n)
 	return 1;
 	if(l[n]!=0)
 	return l[n];
-	return l[n]=f(n-1)*n ;
+	return l[n]=(f(n-1)*n)% 100000007 ;
 }
-unsigned long p(int n,int m)
-{
-	return f(n)/f(m);
-}
-unsigned long c(int n,int m)
-{
-	return p(n,m)/f(n);
-}
-
 int main()
 {
 

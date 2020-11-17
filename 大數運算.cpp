@@ -46,7 +46,7 @@ void ti()
 	{
 		for(j=0;j<val2.size();j++)
 		{  
-			if(val[i]!=0&&val2[i]!=0)
+			if(val[i]!=0&&val2[j]!=0)
 			{
 					ans[i+j]+=val[i]*val2[j];
 					//cout<<val[i]<<"*"<<val2[j]<<" + ";
@@ -74,21 +74,17 @@ int main()
 	
 	while (cin>>s_val>>k>>s_val2)
 	{
-		for(i=0;i<max(s_val.length(),s_val2.length());i++)
-		{
-			if(k=='-'&&s_val.length()!=s_val2.length()&&max(s_val.length(),s_val2.length())==s_val2.length())
-			{
-					swap(s_val,s_val2);
+		int n=max(s_val.length(),s_val2.length());
+		
+	if(s_val.length()<s_val2.length())
+	{
+			swap(s_val,s_val2);
+		//cout<<"!\n";
+		if(k=='-')
 					cout<<"-";
-				break;
-			}
-			else if(s_val[i]<s_val2[i]||s_val.length()!=s_val2.length()&&max(s_val.length(),s_val2.length())==s_val2.length())
-			{
-				swap(s_val,s_val2);
-				break;
-			}
-		}
-
+		
+	}
+	
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
 	//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
@@ -98,7 +94,26 @@ int main()
 		val[i]=s_val[i]-'0';
 	for(i=0;i<s_val2.length();i++)//反轉存vector陣列 
 		val2[i]=s_val2[i]-'0';
-
+	
+	
+	
+	for(i=0;i<n;i++)
+		{
+			if(s_val==s_val2||s_val.length()>s_val.length())
+			break;
+			else if(val[n-i]>val2[n-i])
+			break;
+			else if (val[n-i]==val2[n-i])
+			continue;
+			else if(val[n-i]<val2[n-i]) 
+			{
+				swap(val,val2);
+				cout<<"$\n";
+				if(k=='-')
+					cout<<"-";
+					break;
+			}
+		}
 
 /*
 	for(i=0;i<val.size();i++)
@@ -106,8 +121,8 @@ int main()
 	cout<<endl;
 	for(i=0;i<val2.size();i++)
 	cout<<val2[i];
-	cout<<endl;
-	*/
+	cout<<endl;*/
+	
 	
 
 	switch (k)

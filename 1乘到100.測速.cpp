@@ -6,14 +6,15 @@ vector <unsigned long> ans;
 int i,j,k,o;
 int main ()
 {
-	int a=300;
+	int a=500;
+	
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 100!碞琌1 100Ω299Ω...1001Ω 
 		{
 			int m=0;
-			
+			printf("%d ",i); 
 			int num = i-1;
-			while(num>5)//衡猭纔て 
+			while(num>5)
 			{
 				m+=num/5;
 				num/=5;
@@ -21,16 +22,22 @@ int main ()
 			}
 			
 			for(o=a-i;o>=0;o--)  //北i璶ぶΩ 
-			{			
+			{
+			
+			
 				for(k=m;k<ans.size();k++)
 			{
 				if(ans[k]!=0)
 				{
-						ans[k]*=i;	
+						ans[k]*=i;
+					
 				} 
+			    //debugノ 
+				
 			}
-						
-			for(j=0;j<ans.size();j++)						//参秈 
+				
+			
+		for(j=0;j<ans.size();j++)						//参秈 
 			{
 				if(ans[j]>9)
 		 		{
@@ -40,17 +47,21 @@ int main ()
     					ans[j+1]+=ans[j]/10;
     				ans[j]=ans[j]%10;
    				}
-			}	
-			}	
+   		
+			}
+				
+			}
+			
 		}
 	reverse(ans.begin(),ans.end());
 	i=0;
-	
 	while(ans[i]==0)  //计繷0 
 	i++;
 			
 	for(;i<ans.size();i++)
-	printf("%d\n",ans[i]);
+	printf("%d",ans[i]);
 	printf("\n");
-	ans.clear();		
+	ans.clear();
+	
+		
 }

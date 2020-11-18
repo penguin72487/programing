@@ -6,6 +6,7 @@ vector <int> ans;
 int i,j,k;
 int main ()
 {
+	
 	ans.push_back(1);
 	 for(i=1;i<=100;i++)
 		{

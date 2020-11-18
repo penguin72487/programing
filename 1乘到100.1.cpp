@@ -6,14 +6,16 @@ vector <unsigned long> ans;
 int i,j,k,o;
 int main ()
 {
-	int a=300;
+	int a;
+	while(cin>>a&&a!=-1) 
+	{
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 乘到100!就是1乘 100次，2乘99次...100乘1次 
 		{
 			int m=0;
 			
 			int num = i-1;
-			while(num>5)//算法優化 
+			while(num>5)
 			{
 				m+=num/5;
 				num/=5;
@@ -26,11 +28,15 @@ int main ()
 			{
 				if(ans[k]!=0)
 				{
-						ans[k]*=i;	
+						ans[k]*=i;
+					
 				} 
+			    //debug用 
+				
 			}
-						
-			for(j=0;j<ans.size();j++)						//統一進位 
+				
+			
+		for(j=0;j<ans.size();j++)						//統一進位 
 			{
 				if(ans[j]>9)
 		 		{
@@ -40,17 +46,23 @@ int main ()
     					ans[j+1]+=ans[j]/10;
     				ans[j]=ans[j]%10;
    				}
-			}	
-			}	
+   		
+			}
+				
+			}
+			
 		}
 	reverse(ans.begin(),ans.end());
 	i=0;
-	
 	while(ans[i]==0)  //去數字頭的0 
 	i++;
 			
 	for(;i<ans.size();i++)
-	printf("%d\n",ans[i]);
+	printf("%d",ans[i]);
 	printf("\n");
-	ans.clear();		
+	ans.clear();
+		
+	}
+	
+		
 }

@@ -4,16 +4,6 @@
 using namespace std;
 vector <unsigned long> ans;
 int i,j,k,o;
-unsigned long l[100];
-unsigned long f(int n)
-{
-
-	if(n==0||n==1)
-	return 1;
-	if(l[n]!=0)
-	return l[n];
-	return l[n]=f(n-1)*n ;
-}
 int main ()
 {
 	ans.push_back(1);

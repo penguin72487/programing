@@ -6,7 +6,7 @@ vector <unsigned long> ans;
 int i,j,k,o;
 int main ()
 {
-	int a=1000;
+	int a=100;
 	
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 乘到100!就是1乘 100次，2乘99次...100乘1次 
@@ -25,8 +25,9 @@ int main ()
 			{
 			
 			
-				for(k=m;k<ans.size();k++)
+				for(k=m+(i%5==0)*(a-i-o);k<ans.size();k++)
 			{
+				 	printf("%d",ans[k]); 
 				if(ans[k]!=0)
 				{
 						ans[k]*=i;

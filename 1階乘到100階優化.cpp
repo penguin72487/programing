@@ -6,8 +6,10 @@ vector <unsigned long> ans;
 unsigned long i,j,k,o,m,num,t,tum;
 int main ()
 {
-	int a=1000;
-	m=0;
+	int a;
+	while(cin>>a)
+	{
+		m=0;
 	t=0;
 	tum=0;
 		ans.push_back(1);
@@ -63,6 +65,8 @@ int main ()
 	printf("%d",ans[i]);
 	printf("\n");
 	ans.clear();
+	}
+	
 	
 		
 }

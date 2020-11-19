@@ -1,4 +1,4 @@
-#include<iostream>
+ #include<iostream>
 #include<vector>//vector陣烈 
 #include<algorithm>//reverse 
 using namespace std;
@@ -6,20 +6,12 @@ vector <unsigned long> ans;
 int i,j,k,o;
 int main ()
 {
-	int a=1000;
+	int a=200;
 	
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 乘到100!就是1乘 100次，2乘99次...100乘1次 
 		{
 			int m=0;
-			printf("%d ",i); 
-			int num = i-1;
-			while(num>5)
-			{
-				m+=num/5;
-				num/=5;
-				//cout<<num<<" ";
-			}
 			
 			for(o=a-i;o>=0;o--)  //控制i要乘多少次 
 			{

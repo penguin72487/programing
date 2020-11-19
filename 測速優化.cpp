@@ -3,31 +3,33 @@
 #include<algorithm>//reverse 
 using namespace std;
 vector <unsigned long> ans;
-int i,j,k,o;
+unsigned long i,j,k,o,m,num,t,tum;
 int main ()
 {
-	int a=100;
-	
+	int a=300;
+	m=0;
+	t=0;
+	tum=0;
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 100!碞琌1 100Ω299Ω...1001Ω 
 		{
-			int m=0;
-			printf("%d ",i); 
-			int num = i-1;
-			while(num>5)
+			tum=i;
+			t=0;
+			while(tum%5==0)
 			{
-				m+=num/5;
-				num/=5;
-				//cout<<num<<" ";
+				tum/=5; 
+				t++;
+				
 			}
 			
-			for(o=a-i;o>=0;o--)  //北i璶ぶΩ 
+			printf("%d ",i);
+			for(o=a-i+1;o>0;o--)  //北i璶ぶΩ 
 			{
+				m=num+t*(a-i+1-o);
 			
-			
-				for(k=m+(i%5==0)*(a-i-o);k<ans.size();k++)
+				for(k=m;k<ans.size();k++)
 			{
-				 	printf("%d",ans[k]); 
+				 	//printf("%d",ans[k]); 
 				if(ans[k]!=0)
 				{
 						ans[k]*=i;
@@ -38,7 +40,7 @@ int main ()
 			}
 				
 			
-		for(j=0;j<ans.size();j++)						//参秈 
+		for(j=m;j<ans.size();j++)						//参秈 
 			{
 				if(ans[j]>9)
 		 		{
@@ -52,6 +54,7 @@ int main ()
 			}
 				
 			}
+			num=m;
 			
 		}
 	reverse(ans.begin(),ans.end());

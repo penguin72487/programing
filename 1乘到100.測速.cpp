@@ -6,7 +6,7 @@ vector <unsigned long> ans;
 int i,j,k,o;
 int main ()
 {
-	int a=300;
+	int a=100 00;
 	
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 乘到100!就是1乘 100次，2乘99次...100乘1次 

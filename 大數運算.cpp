@@ -52,7 +52,7 @@ void di()
 	reverse(val.begin(),val.end());
 	reverse(val2.begin(),val2.end());
 	
-	/*
+	
 	for(i=0;i<val.size()-val2.size()+1;i++)
 	{
 		if(val.size()<val2.size())
@@ -87,7 +87,7 @@ void di()
 			//cout<<endl;			
 		}
 	}
-	*/
+	
 	
 }
 int main()

@@ -12,33 +12,17 @@ using namespace std;
 void pl()
 {				
 		for(i=0;i<val.size();i++) 
-		{
 			ans.push_back(val[i]+val2[i]);
-		}
-	
-	
-	
-
 }
-void mii(int a,int b)
-{
-	
-};
+
 void mi()
 {
 	if(s_val==s_val2)
 		cout<<"0"<<endl;
-
+		
 	for(i=0;i<val.size();i++) 
-		{
 			ans.push_back(val[i]-val2[i]);
-			//cout<<ans[i]<<" "; 
-		}
-};
-void tii()
-{
-	
-};
+}
 void ti()
 {
 	ans.assign(val.size()+val2.size(),0);//reserve + 初始化為 0 
@@ -61,14 +45,51 @@ void ti()
 	}
 	cout<<endl;
 };
-void dii()
-{
-	
-};
+
 void di()
 {
+	ans.assign(val.size()-val2.size()+1,0);
+	reverse(val.begin(),val.end());
+	reverse(val2.begin(),val2.end());
 	
-};
+	/*
+	for(i=0;i<val.size()-val2.size()+1;i++)
+	{
+		if(val.size()<val2.size())
+		{
+			val2.pop_back();
+			break;
+		}
+		else if(val[i]==val2[i])
+			continue;
+		else if(val[i]<val2[i])
+		{
+			val2.pop_back();
+			break;
+		}
+		else
+		{
+			ans[i]++;
+			for(j=i;j<val2.size();j++)
+			{
+				val[j]-=val2[j];
+			//	cout<<val[j]<<endl;
+				if(ans[j]<0)
+   				{
+   					ans[j-1]--;
+   					ans[j]+=10; 
+				}
+				i--;
+			}
+			
+			//for(i=0;i<ans.size();i++)
+			//cout<<val[i];
+			//cout<<endl;			
+		}
+	}
+	*/
+	
+}
 int main()
 {
 	
@@ -88,12 +109,14 @@ int main()
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
 	//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
+	
 	val.assign(max(s_val.length(),s_val2.length()),0);
 	val2.assign(max(s_val.length(),s_val2.length()),0);
 	for(i=0;i<s_val.length();i++)//反轉存vector陣列 
 		val[i]=s_val[i]-'0';
 	for(i=0;i<s_val2.length();i++)//反轉存vector陣列 
 		val2[i]=s_val2[i]-'0';
+	
 	
 	
 	
@@ -142,10 +165,10 @@ int main()
 		
 	}
 	
-		for(i=0;i<ans.size();i++)						//統一進位 
+	for(i=0;i<ans.size();i++) 	//統一進位 
 	{
 		if(ans[i]>9)
-		 {
+		{
 		 	if(ans.size()==i+1)
 		 		ans.push_back(ans[i]/10);
 		 	else
@@ -156,7 +179,7 @@ int main()
    		{
    			ans[i+1]--;
    			ans[i]+=10; 
-		   }
+		}
 	}
 	reverse(ans.begin(),ans.end());
 	i=0;
@@ -169,11 +192,6 @@ int main()
 	ans.clear();
 	val.clear();
 	val2.clear();
-		
-	
-	
-	
-	
-		
+			
 	}
 }

@@ -3,25 +3,23 @@
 #include<algorithm>//reverse 
 using namespace std;
 vector <unsigned long> ans;
-unsigned long i,j,k,o,m,num,t,tum;
+unsigned long i,j,k,o,m,num;
 int main ()
 {
 	int a;
 	while(cin>>a)
 	{
 		m=0;
-	t=0;
-	tum=0;
+		num=0;
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 乘到100!就是1乘 100次，2乘99次...100乘1次 
 		{
-			tum=i;
-			t=0;
+			int tum =i;
+			int t =0;//加權 
 			while(tum%5==0)
 			{
-				tum/=5; 
 				t++;
-				
+				tum/=5;
 			}
 			
 			printf("%d ",i);
@@ -31,7 +29,7 @@ int main ()
 			
 				for(k=m;k<ans.size();k++)
 			{
-				 	//printf("%d",ans[k]); 
+				 //	printf("%d",ans[k]); 
 				if(ans[k]!=0)
 				{
 						ans[k]*=i;	

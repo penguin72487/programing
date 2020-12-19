@@ -1,35 +1,42 @@
- #include<iostream>
-#include<vector>//vector皚疨 
+#include<iostream>
+#include<vector>//vector皚 
 #include<algorithm>//reverse 
 using namespace std;
 vector <unsigned long> ans;
-int i,j,k,o;
+unsigned long i,j,k,o,m,num;
 int main ()
 {
-	int a=100 00;
-	
+	int a=100;
+
+		m=0;
+		num=0;
 		ans.push_back(1);
 	 for(i=1;i<=a;i++)//1! 100!碞琌1 100Ω299Ω...1001Ω 
 		{
-			int m=0;
-			
-			for(o=a-i;o>=0;o--)  //北i璶ぶΩ 
+			int tum =i;
+			int t =0;//舦 
+			while(tum%5==0)
 			{
+				t++;
+				tum/=5;
+			}
 			
+			printf("%d ",i);
+			for(o=a-i+1;o>0;o--)  //北i璶ぶΩ 
+			{
+				m=num+t*(a-i+1-o);
 			
 				for(k=m;k<ans.size();k++)
 			{
+				 //	printf("%d",ans[k]); 
 				if(ans[k]!=0)
 				{
-						ans[k]*=i;
-					
+						ans[k]*=i;	
 				} 
-			    //debugノ 
-				
 			}
 				
 			
-		for(j=0;j<ans.size();j++)						//参秈 
+		for(j=m;j<ans.size();j++)						//参秈 
 			{
 				if(ans[j]>9)
 		 		{
@@ -43,6 +50,7 @@ int main ()
 			}
 				
 			}
+			num=m;
 			
 		}
 	reverse(ans.begin(),ans.end());
@@ -54,6 +62,5 @@ int main ()
 	printf("%d",ans[i]);
 	printf("\n");
 	ans.clear();
-	
 		
 }

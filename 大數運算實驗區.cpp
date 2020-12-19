@@ -4,8 +4,7 @@
 #include<algorithm>
 #include<stdlib.h>
 using namespace std;
-	string s_val,s_val2;
-	vector <int> val,val2,ans;
+	vector <int> ans;
 	char k;
 	int i,j;
 
@@ -92,6 +91,8 @@ void di()
 }
 int main()
 {
+	string s_val,s_val2;
+	vector <int> val,val2;
 	
 	while (cin>>s_val>>k>>s_val2)
 	{
@@ -131,7 +132,7 @@ int main()
 			else if(val[n-i]<val2[n-i]) 
 			{
 				swap(val,val2);
-				cout<<"$\n";
+			//	cout<<"$\n";
 				if(k=='-')
 					cout<<"-";
 			break;

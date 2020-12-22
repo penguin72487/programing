@@ -6,7 +6,7 @@ vector <unsigned long> ans;
 unsigned long i,j,k,o,m,num;
 int main ()
 {
-	int a=500;
+	int a=2000;
 
 		m=0;
 		num=0;

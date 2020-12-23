@@ -28,20 +28,24 @@ int main()
 			
 			//out<<"ans: "<<ans<<" \n";
 			//out<<"m: "<<m<<" \n";
-			out<<m<<" ";
+			out<<m-i-1<<" ";
 			//num.erase(num.begin());
 			reverse(num.begin(),num.end());
-			out<<num[m-1]<<" ";
-			for(j=0;j<m-1;j++)
+			out<<num[m-i-1]<<" ";
+			for(j=0;j<m-i+1;j++)
 			{
 				out<<num[j]<<" ";
 			}
 			out<<"\n";
-			
-			
-			
 			//out<<ans<<" ";
 		}
+		cout<<"«¢«¢ ";
+		for(j=0;j<m-i;j++)
+		{
+			cout<<num[j]<<" ";
+		}
+		cout<<"«¢«¢µ²§ô "<<endl;
+		
 		num.clear();
 		i=m;
 		temp=0;

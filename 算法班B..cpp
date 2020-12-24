@@ -20,6 +20,7 @@ int main()
 	 }
 	 for(i=1;i<=n;i++)
 	 {
+	 	//cout<<"HIHI"<<endl;
 	 	bool gp[n+1]={0};
 	 	if(loc[i]!=i)
 	 	{
@@ -28,39 +29,42 @@ int main()
 			
 			//out<<"ans: "<<ans<<" \n";
 			//out<<"m: "<<m<<" \n";
-			out<<m-i-1<<" ";
+			//out<<m-i-1<<" ";
 			//num.erase(num.begin());
 			reverse(num.begin(),num.end());
-			out<<num[m-i-1]<<" ";
+			out<<m-i+1<<" ";
 			for(j=0;j<m-i+1;j++)
 			{
 				out<<num[j]<<" ";
 			}
 			out<<"\n";
+			num.clear();
+			i=m;
 			//out<<ans<<" ";
 		}
+		/*
 		cout<<"«¢«¢ ";
 		for(j=0;j<m-i;j++)
 		{
 			cout<<num[j]<<" ";
 		}
 		cout<<"«¢«¢µ²§ô "<<endl;
+		*/
 		
-		num.clear();
-		i=m;
+		
 		temp=0;
 	 }
 	 cout<<ans<<" \n";
-	 cout<<"Á`¿é¥X\n"<<out.str()<<endl;
+	 cout<<out.str()<<endl;
 	 
 	 
 } 
- fn_grup(bool gp[],int loc[],int i)
+int fn_grup(bool gp[],int loc[],int i)
  {
  	
  	if(gp[i]==1)
  	{
- 		
+ 		num.push_back(num[0]);
  		return temp;	
 	}
  	

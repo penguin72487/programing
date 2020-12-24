@@ -4,7 +4,8 @@ int main()
 {
 	int r,c,r2,c2;
 	cin>>r>>c;
-	int val[r][c]={0};
+	long long int val[r][c]={0};
+	int mod =100000007;
 	int i,j,k;
 	long long int temp;
 	for(i=0;i<r;i++)
@@ -12,17 +13,17 @@ int main()
 		for(j=0;j<c;j++)
 		{
 			cin>>temp;
-			val[i][j]=temp%100000007;
+			val[i][j]=temp%mod;
 		}
 	}
 	cin>>r2>>c2;
-	int val2[r2][c2]={0};
+	long long int val2[r2][c2]={0};
 	for(i=0;i<r2;i++)
 	{
 		for(j=0;j<c2;j++)
 		{
 			cin>>temp;
-			val2[i][j]=temp%100000007;
+			val2[i][j]=temp%mod;
 		}
 	}
 	if(c==r2)
@@ -35,7 +36,7 @@ int main()
 				ans[i][j]=0;
 				for(k=0;k<c;k++)
 				{
-					ans[i][j]+=val[i][k]*val2[k][j];
+					ans[i][j]+=(val[i][k]*val2[k][j])%mod;
 				
 				}
 			
@@ -46,20 +47,10 @@ int main()
 		{
 			for(j=0;j<c;j++)
 			{
-				
-				if(ans[i][j]<0)
-				cout<<ans[i][j]%100000007+100000007<<" ";
-				else
-				cout<<ans[i][j]%100000007<<" ";
+				cout<<(mod+ans[i][j])%mod <<" ";
 			}
 			cout<<endl;
 		}	
-		
-		
-		
-		
-		
-		
 	}
 	else if(c2==r)
 	cout<<"incommutable!"<<endl;

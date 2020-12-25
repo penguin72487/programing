@@ -13,7 +13,7 @@ int main()
 		for(j=0;j<c;j++)
 		{
 			cin>>temp;
-			val[i][j]=temp%mod;
+			val[i][j]=(temp%mod+mod)%mod;
 		}
 	}
 	cin>>r2>>c2;
@@ -23,7 +23,7 @@ int main()
 		for(j=0;j<c2;j++)
 		{
 			cin>>temp;
-			val2[i][j]=temp%mod;
+			val2[i][j]=(temp%mod+mod)%mod;
 		}
 	}
 	if(c==r2)
@@ -31,7 +31,7 @@ int main()
 		long long int ans[r][c]={0};
 		for(i=0;i<r;i++)
 		{
-			for(j=0;j<c;j++)
+			for(j=0;j<c2;j++)
 			{
 				ans[i][j]=0;
 				for(k=0;k<c;k++)
@@ -45,7 +45,7 @@ int main()
 		
 		for(i=0;i<r;i++)
 		{
-			for(j=0;j<c;j++)
+			for(j=0;j<c2;j++)
 			{
 				cout<<(mod+ans[i][j])%mod <<" ";
 			}

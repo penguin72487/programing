@@ -46,92 +46,158 @@ while(cin>>n>>m>>k>>type)
 		k--;
 	}
 	int ans=0;
+	int chess2[n*m]={0};
 	
+	cout<<"r>>c·j´M\n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			chess2[i*m+j]=chess[i*m+j];
+		}
+	}
 	for(i=0;i<n;i++)  //r>>c·j´M 
 	{
 		for(j=0;j<m;j++)
 		{
 			if(chess[i*m+j]==0)
 			{
-				step(i,j,type,chess);
+				step(i,j,type,chess2);
 				ans++;
 			} 
 			
 		}
 	} 
+	cout<<"ans: "<<ans<<endl;
 	
-	/* 
+	
+	cout<<"c>>r·j´M \n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			chess2[i*m+j]=chess[i*m+j];
+		}
+	}
 	for(i=0;i<m;i++)//c>>r·j´M 
 	{
 		for(j=0;j<n;j++)
 		{
 			if(chess[j*n+i]==0)
 			{
-				step(j,i,type,chess);
+				step(j,i,type,chess2);
 				ans++;
 			} 
 			
 		}
 	} 
-	*/
-	/*
+	cout<<"ans: "<<ans<<endl;
+	
+	
+	
+	
+	
+	
+	cout<<"-c>>r·j´M \n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			chess2[i*m+j]=chess[i*m+j];
+		}
+	}
 	for(i=n-1;i>=0;i--)//-c>>r·j´M 
 	{
 		for(j=0;j<m;j++)
 		{
 			if(chess[i*m+j]==0)
 			{
-				step(i,j,type,chess);
+				step(i,j,type,chess2);
 				ans++;
 			} 
 			
 		}
 	} 
-	*/
-	/* 
+	cout<<"ans: "<<ans<<endl;
+	
+	
+	
+	
+	
+	
+	
+	cout<<"-r>>c·j´M \n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			chess2[i*m+j]=chess[i*m+j];
+		}
+	}
 	for(i=n-1;i>=0;i--)//-r>>c·j´M 
 	{
 		for(j=0;j<m;j++)
 		{
 			if(chess[j*n+i]==0)
 			{
-				step(j,i,type,chess);
+				step(j,i,type,chess2);
 				ans++;
 			} 
 			
 		}
 	} 
-	*/
-	/*
+	cout<<"ans: "<<ans<<endl;
+	
+	
+	cout<<"-c>>-r·j´M \n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			chess2[i*m+j]=chess[i*m+j];
+		}
+	}
 	for(i=m-1;i>=0;i--)//-c>>-r·j´M 
 	{
 		for(j=n-1;j>=0;j--)
 		{
 			if(chess[i*m+j]==0)
 			{
-				step(i,j,type,chess);
+				step(i,j,type,chess2);
 				ans++;
 			} 
 			
 		}
 	} 
-	*/
-	/* 
+	cout<<"ans: "<<ans<<endl;
+	
+	
+	
+	
+	
+	cout<<"-r>>-c·j´M\n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<m;j++)
+		{
+			chess2[i*m+j]=chess[i*m+j];
+		}
+	}
 	for(i=m-1;i>=0;i--)//-r>>-c·j´M 
 	{
 		for(j=n-1;j>=0;j--)
 		{
 			if(chess[j*n+i]==0)
 			{
-				step(j,i,type,chess);
+				step(j,i,type,chess2);
 				ans++;
 			} 
 			
 		}
 	} 
-	*/
 	
-	cout<<ans<<endl;
+	
+	cout<<"ans: "<<ans<<endl;
 	
 }
 return 0;

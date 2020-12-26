@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-void step(int x,int y,int type,int chess[],vector<int> decar);
+void step(int x,int y,int type,int chess[]/*,vector<int> decar*/);
 int n,m;
 int main()
 {
@@ -10,7 +10,7 @@ int main()
 	int i,j;	
 	cin>>n>>m>>k>>type;
 	int chess[n*m]={0};
-	vector <int> decar;//decar[K+][3]//decar(i*3+j)
+	//vector <int> decar;//decar[K+][3]//decar(i*3+j)
 	/* 
 	for(i=0;i<n;i++)
 	{
@@ -38,14 +38,14 @@ int main()
 		cin>>x>>y>>t;
 		x--;
 		y--;
-		if(type=2)
+		if(type==2)
 		{
 			t=2;
 		}
-		decar.push_back(x);
-		decar.push_back(y);
-		decar.push_back(t);
-		step(x,y,t,chess,decar);
+		//decar.push_back(x);
+		//decar.push_back(y);
+		//decar.push_back(t);
+		step(x,y,t,chess/*,decar*/);
 		k--;
 	}
 	int ans=0;
@@ -56,7 +56,7 @@ int main()
 		{
 			if(chess[i*m+j]==0)
 			{
-				step(i,j,type,chess,decar);
+				step(i,j,type,chess/*,decar*/);
 				ans++;
 			} 
 			
@@ -66,13 +66,13 @@ int main()
 	cout<<ans<<endl;
 	return 0;
 }
-void step(int x,int y,int type,int chess[],vector<int> decar)
+void step(int x,int y,int type,int chess[]/*,vector<int> decar*/)
 {
 	//cout<<"«¢«¢\n";
 	int i,j;
-	decar.push_back(x);
-	decar.push_back(y);
-	decar.push_back(type);
+	//decar.push_back(x);
+	//decar.push_back(y);
+	//decar.push_back(type);
 	for(i=0;i<n;i++)
 	{
 		//cout<<"«¢«¢NNN\n";
@@ -91,7 +91,7 @@ void step(int x,int y,int type,int chess[],vector<int> decar)
 	}
 	chess[x*m+y]=2;
 	//cout<<"«¢«¢\n";
-	/*
+	
 	for(i=0;i<n;i++)
 	{
 		for(j=0;j<m;j++)
@@ -100,6 +100,6 @@ void step(int x,int y,int type,int chess[],vector<int> decar)
 		}
 		cout<<endl;
 	}
-	*/
+	
 }
 

@@ -58,10 +58,11 @@ int main ()
 	i=0;
 	while(ans[i]==0)  //去數字頭的0 
 	i++;
-			
+	printf("\n總共是%d位數\n",ans.size()-i);		
 	for(;i<ans.size();i++)
 	printf("%d",ans[i]);
 	printf("\n");
+//	printf("總共是%d位數",ans.size()-i);
 	ans.clear();
 	}
 	

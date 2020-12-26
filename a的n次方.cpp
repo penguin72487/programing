@@ -12,8 +12,10 @@ unsigned long f(int a,int n)
 	return l[a][n];
 	return l[a][n]=f(a,n-1)*a ;
 }
+
 int main()
 {
+
 	int a,n;
 
 while (cin>>a>>n)

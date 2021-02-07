@@ -5,7 +5,7 @@ using namespace std;
 vector <unsigned long> factorial;
 int i,j,k;
 
-void  f(int n)
+void  f(int n,int m)
 {
 	
 	factorial.push_back(1);
@@ -13,7 +13,7 @@ void  f(int n)
 		{
 			for(k=0;k<factorial.size();k++)
 			{
-				factorial[k]*=i;
+				factorial[k]*=m;
 				//cout<<factorial[k]<<" "<<i<<" ";
 				
 			}
@@ -48,10 +48,10 @@ void out()
 }
 int main ()
 {
-	int n;
-	while(cin>>n)
+	int n,m;
+	while(cin>>n>>m)
 	{
-		f(n);
+		f(m,n);
 		out();
 	}
 	

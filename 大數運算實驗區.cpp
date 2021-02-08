@@ -16,9 +16,7 @@ void pl(vector <int> val,vector <int> val2)
 
 void mi(vector <int> val,vector <int> val2)
 {
-	if(s_val==s_val2)
-		cout<<"0"<<endl;
-		
+	
 	for(i=0;i<val.size();i++) 
 			ans.push_back(val[i]-val2[i]);
 }
@@ -45,49 +43,9 @@ void ti(vector <int> val,vector <int> val2)
 	cout<<endl;
 };
 
-void di()
+void di(vector <int> val,vector <int> val2)
 {
-	ans.assign(val.size()-val2.size()+1,0);
-	reverse(val.begin(),val.end());
-	reverse(val2.begin(),val2.end());
-	
-	
-	for(i=0;i<val.size()-val2.size()+1;i++)
-	{
-		if(val.size()<val2.size())
-		{
-			val2.pop_back();
-			break;
-		}
-		else if(val[i]==val2[i])
-			continue;
-		else if(val[i]<val2[i])
-		{
-			val2.pop_back();
-			break;
-		}
-		else
-		{
-			ans[i]++;
-			for(j=i;j<val2.size();j++)
-			{
-				val[j]-=val2[j];
-			//	cout<<val[j]<<endl;
-				if(ans[j]<0)
-   				{
-   					ans[j-1]--;
-   					ans[j]+=10; 
-				}
-				i--;
-			}
-			
-			//for(i=0;i<ans.size();i++)
-			//cout<<val[i];
-			//cout<<endl;			
-		}
-	}
-	
-	
+		
 }
 int main()
 {
@@ -155,13 +113,20 @@ int main()
 			pl(val,val2);
 		break;
 		case '-':
+			if(s_val==s_val2)
+			{
+				cout<<"0"<<endl;
+				break;
+			}
+		
+		
 			mi(val,val2);
 		break;
 		case '*':
 			ti(val,val2);
 		break;
 		case '/':
-			di();
+			di(val,val2);
 		break;
 		
 	}

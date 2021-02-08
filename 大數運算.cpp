@@ -17,8 +17,6 @@ void pl()
 
 void mi()
 {
-	if(s_val==s_val2)
-		cout<<"0"<<endl;
 		
 	for(i=0;i<val.size();i++) 
 			ans.push_back(val[i]-val2[i]);
@@ -154,6 +152,12 @@ int main()
 			pl();
 		break;
 		case '-':
+			if(s_val==s_val2)
+			{
+				cout<<"0"<<endl;
+				break;
+			}
+		
 			mi();
 		break;
 		case '*':

@@ -6,12 +6,18 @@ int main()
 {
 	int a;
 	vector<int> n;
-	int* loc= n;
-	n.reserve(100); 
-	while(cin>>a)
+	vector<int> ten{1,0}; 
+	while(cin>>a&&a!=-1)
 	{
 		n.push_back(a);
-		cout<<&loc<<" "<<loc<<endl;
+	}
+	while(cin>>a)
+	{
+		n.erase(n.end()-1);
+		for(int i=0;i<n.size();i++)
+		cout<<n[i];
+		cout<<endl;
+		
 	}
 	
 	/*n[87]=a;

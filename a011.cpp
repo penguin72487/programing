@@ -1,17 +1,31 @@
 #include<iostream>
-#include<string>
+#include<sstream>
 using namespace std;
 int main()
 {
-	string a;
-	int h=0,i;
-	cin>>a;
-	int n=a.length();
-	for(i=0;i<n;i++)
+	string s;
+	while(getline(cin,s))
 	{
-		if(a[i]==' ')
-		h++;
+			for(int i=0;i<s.size();i++)
+		{
+            if(!isalpha(s[i])) 
+			s[i]=' ';
+
+		}
+		string tmp;
+	int ans=0;
+	
+	stringstream ss(s);
+	
+	while(ss>>tmp)
+	{
+	        ans++;
+	}
+	cout<<ans<<endl;
 		
 	}
+
+
+
 
 }

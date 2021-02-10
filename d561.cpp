@@ -1,27 +1,36 @@
 #include<iostream>
-#include<string>
+#include<iomanip>
 using namespace std;
-string round(string a,int p)
-{
-	int n=a.find('.');
-	if(a[n+p+1]>='5')
-	{
-		a[n+p]++;
-		erase(0,1);
-		return a;
-	 } 
-	 else
-	 {
-	 	erase(a.begin()+n+p,a.end());
-		return a;
-	 }
-	 
-}
+string f(string a);
 int main()
 {
-	string l;
-	int p;
-	cin>>l>>p;
-	cout<<round(l,p)<<endl;
+	string a;
+	while(cin>>a)
+	{
+		cout<<f(a)<<endl;
+	} 
+	
+	
 		
+}
+string f(string a)
+{
+	string s;
+	s.l
+	auto it=a.begin();
+	for(;*it!='.';it++)
+	{
+		s+=*it;
+	}
+	s+=*(it++);
+	s+=*(it++);
+	s+=*(it++);
+	if(*it>'5')
+	{
+		it--;
+		*it++;
+	}
+	cout<<s<<endl;
+	 
+	
 }

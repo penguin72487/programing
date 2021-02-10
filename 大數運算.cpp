@@ -3,7 +3,7 @@
 #include<algorithm>
 using namespace std;
 	vector <int> ans;
-	char k;
+
 	int i,j;
 bool zero(vector <int> val);  //檢查是否為0 是回傳1  
 bool big(vector <int> val,vector <int> val2);//比大小，val2>val1時回傳1 
@@ -13,6 +13,7 @@ void ti(vector <int> val,vector <int> val2);
 void di(vector <int> val,vector <int> val2);
 int main()
 {
+	char k;
 	string s_val,s_val2;
 	vector <int> val,val2;
 	
@@ -248,4 +249,3 @@ void di(vector <int> val,vector <int> val2)
 	val2.clear();
 	reverse(ans.begin(),ans.end());	
 }
-

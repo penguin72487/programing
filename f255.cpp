@@ -1,69 +1,41 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<map>
 using namespace std;
-vector <unsigned long long> factorial;
-int i,j,k;
-
-void  f(int n)
+vector<vector<int> > val(10000, vector<int>(1,0));
+vector<int> f(vector<int> val,int n)
 {
-	
-	factorial.push_back(1);
-	 for(i=1;i<=n;i++)
-		{
-			k=0;
-			/*
-			int num = i;
-			while(num>=5)
-			{
-				k+=i/5;
-				num/=5;
-			}
-			*/
-			for(;k<factorial.size();k++)
-			{
-				factorial[k]*=2;
-				//cout<<factorial[k]<<" "<<i<<" ";
-				
-			}
-				
-			
-		for(j=0;j<factorial.size();j++)						//統一進位 
-			{
-				if(factorial[j]>9)
-		 	{
-		 		if(factorial.size()==j+1)
-		 			factorial.push_back(factorial[j]/10);
-		 		else
-    				factorial[j+1]+=factorial[j]/10;
-    			factorial[j]=factorial[j]%10;
-   			}
-   		
+	if(val[n]!=0)
+	{
+		return val[n];
 	}
-		}
-	reverse(factorial.begin(),factorial.end());
-			
+	else
+	{
+		return f(val,n-1);
+	}
 }
-void out()
+void out(vector<int> val)
 {
-		i=0;
-	while(factorial[i]==0)  //去數字頭的0 
+	int i=0;
+	while(val[i]==0)  //去數字頭的0 
 	i++;
 			
-	for(;i<factorial.size();i++)
-	printf("%d",factorial[i]);
+	for(;i<val.size();i++)
+	printf("%d",val[i]);
 	printf("\n");
-	factorial.clear();
+	val.clear();
 }
 int main ()
 {
+	
+	val[0].push_back(1);
 	int n;
-	unsigned long long a=1152921504606846976;
-	cout<<a<<endl;
 	while(cin>>n&&n!=0)
 	{
-		f(n);
-		out();
+		
+		f(val[n],n);
+		out(val[n]);
 	}
 	
 } 

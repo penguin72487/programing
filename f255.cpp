@@ -1,69 +1,60 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<map>
 using namespace std;
-vector <unsigned long long> factorial;
-int i,j,k;
+vector<vector<int> > val(10000, vector<int> (1,0));
 
-void  f(int n)
+void out(vector<int> val)
 {
-	
-	factorial.push_back(1);
-	 for(i=1;i<=n;i++)
-		{
-			k=0;
-			/*
-			int num = i;
-			while(num>=5)
-			{
-				k+=i/5;
-				num/=5;
-			}
-			*/
-			for(;k<factorial.size();k++)
-			{
-				factorial[k]*=2;
-				//cout<<factorial[k]<<" "<<i<<" ";
-				
-			}
-				
-			
-		for(j=0;j<factorial.size();j++)						//参秈 
-			{
-				if(factorial[j]>9)
-		 	{
-		 		if(factorial.size()==j+1)
-		 			factorial.push_back(factorial[j]/10);
-		 		else
-    				factorial[j+1]+=factorial[j]/10;
-    			factorial[j]=factorial[j]%10;
-   			}
-   		
-	}
-		}
-	reverse(factorial.begin(),factorial.end());
-			
-}
-void out()
-{
-		i=0;
-	while(factorial[i]==0)  //计繷0 
+	int i=0;
+	while(val[i]==0)  //计繷0 
 	i++;
 			
-	for(;i<factorial.size();i++)
-	printf("%d",factorial[i]);
+	for(;i<val.size();i++)
+	printf("%d",val[i]);
 	printf("\n");
-	factorial.clear();
+	val.clear();
 }
 int main ()
 {
+	cin.tie(0);
+	ios_base::sync_with_stdio(1);
+	val[0][0]=1;
 	int n;
-	unsigned long long a=1152921504606846976;
-	cout<<a<<endl;
 	while(cin>>n&&n!=0)
 	{
-		f(n);
-		out();
+		for(int i=1;i<=n;i++)
+		{
+			//cout<<"yes"<<endl;
+			if(val[i][0]!=0)
+			continue;
+			val[i].clear();
+			val[i].assign(val[i-1].rbegin(),val[i-1].rend());
+			for(auto it=val[i].begin();it!=val[i].end();it++)
+			{
+				(*it) *= 2;
+			}
+			for(int j=0;j<val[i].size();j++) 	//参秈 
+			{
+				
+				if(val[i][j]>9)
+				{
+				 	if(val[i].size()==j+1)
+				 		val[i].push_back(val[i][j]/10);
+		 			else
+    					val[i][j+1]+=val[i][j]/10;
+    			val[i][j]=val[i][j]%10;
+   				}
+			}
+			reverse(val[i].begin(),val[i].end());
+		}
+			for(auto it=val[n].begin();it!=val[n].end();it++)
+			{
+				cout<<*it;
+			}
+			cout<<"\n";
+		
 	}
 	
 } 

@@ -125,8 +125,13 @@ int main()
 		}
 	}
 	*/
+	while(*(ans.end()-1)==0&&ans.length()>1)
+	{
+		ans.erase(ans.end()-1);
+	}
 	reverse(ans.begin(),ans.end());
 	//cout<<"ans = ";
+
 	for(auto it =ans.begin();it!=ans.end();it++)
 	*it+='0';
 	cout<<ans<<endl;
@@ -225,7 +230,7 @@ void mi(string s_val,string s_val2)
 		for(;jt!=s_val2.end();it++,jt++) 
 		{
 			ans.push_back(*it-*jt);
-			cout<<*it<<"-"<<*jt<<"="<<*it-*jt<<endl;
+			//cout<<*it<<"-"<<*jt<<"="<<*it-*jt<<endl;
 			
 		}
 		
@@ -284,12 +289,6 @@ void ti(string s_val,string s_val2)
     			*(it+1)+=*it/10;
     	*it=*it%10;
    		}
-   		if(*it<0)
-   		{
-   			*(it+1)--;
-   			*it+=10;
-		
-		}
 	}
 	while(*(ans.end()-1)==0&&ans.length()>1)
 	{
@@ -300,10 +299,9 @@ void ti(string s_val,string s_val2)
 void di(string s_val,string s_val2)
 {
 	string ans_di,val_di,val2_di;
-	
-	val_di.assign(s_val.begin(),s_val.end());
+
+	val_di=s_val;
 	val2_di.assign(s_val.length()-s_val2.length(),0); 
-	
 	for(auto it=s_val2.begin();it!=s_val2.end();it++)
 		val2_di.push_back(*it);
 	/*
@@ -333,61 +331,21 @@ void di(string s_val,string s_val2)
 			{
 				ans.erase(ans.end()-1);
 			} 
-			/*
-			cout<<"val_di =  ";
-			for(int j=0;j<val_di.length();j++)
-			cout<<val_di[j];
-			cout<<endl;
-			cout<<"«¢«¢«¢"<<endl; 
-			cout<<"val2_di = ";
-			for(int j=0;j<val2_di.length();j++)
-			cout<<val2_di[j];
-			cout<<endl;
 			
-			cout<<"­pºâans = ";
-			for(int j=0;j<ans.length();j++)
-			cout<<ans[j];
-			cout<<endl;
-			
-			*/
 			val_di.clear();
 			val_di.assign(ans.begin(),ans.end());
-			/*
-			cout<<"val_di = ";
-			for(int j=0;j<val_di.length();j++)
-			cout<<val_di[j];
-			cout<<endl;
-			*/
 			ans.clear();
-			
-			//cout<<i<<endl;
-		
-			
+
 			
 		}
-		//cout<<"i = "<<i<<endl;
+
 		ans_di.push_back(i);
 		val2_di.erase(val2_di.begin());
-		//val2_di.push_back(0);
-		/*
-		if(big(val_di,val2_di))
-		continue;
-	*/
+
 		
 	}
 	ans.clear();
-	//cout<<"fXXK"<<endl;
-	/*
-	for(int j=0;j<ans_di.length();j++)
-			cout<<ans_di[j];
-			cout<<endl;
-			*/
-			/*
-	i=0;
-	while(ans_di[i]==0)
-	i++;
-	ans.assign(ans_di.begin()+i,ans_di.end());
-	*/
+
 	ans.assign(ans_di.begin(),ans_di.end());
 	ans_di.clear();
 	s_val.clear();
@@ -409,10 +367,6 @@ void di(string s_val,string s_val2)
 		}
 	}
 	reverse(ans.begin(),ans.end());
-	/*
-	for(int j=0;j<ans.length();j++)
-			cout<<ans[j];
-			cout<<endl;
-			*/
+
 		
 }

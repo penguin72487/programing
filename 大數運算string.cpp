@@ -1,11 +1,9 @@
 #include<iostream>
-#include<vector>
 #include<algorithm>
 
 using namespace std;
-	string ans;
-
-	int i,j;
+string ans;
+int i,j;
 bool zero(string s_val);  //檢查是否為0 是回傳1  
 bool big(string s_val,string s_val2);//比大小，val2>val1時回傳1 
 void pl(string s_val,string s_val2);
@@ -14,8 +12,7 @@ void ti(string s_val,string s_val2);
 void di(string s_val,string s_val2);
 int main()
 {
-	
-	vector <int> val,val2;
+
 	char k='-';
 	string s_val,s_val2;
 	while (cin>>s_val>>k>>s_val2)
@@ -269,7 +266,15 @@ void ti(string s_val,string s_val2)
 	{
 		for(int j=0;j<s_val2.length();j++)
 		{  
-					ans[i+j]+=s_val[i]*s_val2[j];
+			ans[i+j]+=s_val[i]*s_val2[j];
+			if(ans[i+j]>9)
+			{
+			 	if(ans.length()==i+j+1)
+			 		ans.push_back(ans[i+j]/10);
+			 	else
+    				ans[i+j+1]+=ans[i+j]/10;
+    			ans[i+j]=ans[i+j]%10;
+   			}
 					//cout<<val[i]<<"*"<<val2[j]<<" + ";
 			
 			//cout<<ans[i+j]<<" ";
@@ -279,17 +284,7 @@ void ti(string s_val,string s_val2)
 		}
 		
 	}
-	for(auto it=ans.begin();it!=ans.end();it++) 	//統一進位 
-	{
-		if(*it>9)
-		{
-		 	if(it+1==ans.end())
-		 		ans.push_back(*it/10);
-		 	else
-    			*(it+1)+=*it/10;
-    	*it=*it%10;
-   		}
-	}
+	
 	while(*(ans.end()-1)==0&&ans.length()>1)
 	{
 		ans.erase(ans.end()-1);

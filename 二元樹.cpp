@@ -1,44 +1,41 @@
 #include<iostream>
+#include<vector>
 using namespace std;
 
 struct tree{
+	fuck(){
+		cout<<"fuck"<<endl;
+	};
 	int val;
 	tree *l,*r;	
 	
-}a;
-tree *find(int val);
-bool dfs(tree *p,int val);
+};
+
 int main()
 {
 
 	int n;
 	cin>>n;
-	int val,l,r;
-	cin>>a.val>>a.l->val>>a.r->val;
-	for(int i=1;i<n;i++)
+vector <tree*> root;
+	tree* a,l,r;
+	cin>>a->val;
+	root.push_back(a);
+	cin>>l.val;
+	root.push_back(&l);
+	cin>>r.val;
+	root.push_back(&r);
+	a->l=&l;
+	a->r=&r;
+	l.l= NULL;
+	l.r=NULL;
+	r.l=NULL;
+	r.r=NULL;
+	cout<<a->val<<" "<<l.val<<" "<<r.val<<" \n";
+	for(auto it=root.begin();it!=root.end();it++)
 	{
-		cin>>val>>l>>r;
-		tree *temp=find(val)->l;
-		temp->val=val;
-		temp->l->val=l;
-		temp->r->val=r;
-		
+		cout<<(*it)->val<<" ";
 	}
 }
-tree *find(int val)
-{
-	
 	
 
-}
-bool dfs(tree *p,int val)
-{
-	if(!p) 
-	return 0;
-	dfs(p->l,val);
-	dfs(p->r,val);
-	if(p->val==val)
-	{
-		return 1;
-	}
-}
+

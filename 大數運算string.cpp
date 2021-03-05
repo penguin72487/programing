@@ -5,7 +5,7 @@ using namespace std;
 string ans;
 int i,j;
 bool zero(string s_val);  //檢查是否為0 是回傳1  
-bool big(string s_val,string s_val2);//比大小，val2>val1時回傳1 
+bool small(string s_val,string s_val2);//比大小，val<val2時回傳1 
 void pl(string s_val,string s_val2);
 void mi(string s_val,string s_val2);
 void ti(string s_val,string s_val2);
@@ -64,7 +64,7 @@ int main()
 
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
-	if(big(s_val,s_val2)==1)
+	if(small(s_val,s_val2)==1)
 	{
 		swap(s_val,s_val2);
 		if(k=='-')
@@ -146,7 +146,7 @@ bool zero(string s_val)
 	else
 	return 0;
 }
-bool big(string s_val,string s_val2)
+bool small(string s_val,string s_val2)
 {
 
 	int n=max(s_val.length(),s_val2.length());
@@ -317,7 +317,7 @@ void di(string s_val,string s_val2)
 	{
 		//cout<<"YES"<<endl;
 		int i=0;
-		for(;!big(val_di,val2_di)&&val2_di.length()>=s_val2.length();i++)
+		for(;!small(val_di,val2_di)&&val2_di.length()>=s_val2.length();i++)
 		{
 			
 			mi(val_di,val2_di);

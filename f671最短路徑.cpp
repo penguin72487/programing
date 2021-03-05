@@ -29,28 +29,49 @@ int main()
 		cout<<"\n";
 	}
 	*/
-	cout<<stp(1,1)<<endl;
+	cout<<stp(1,1)+2<<endl;
 } 
 int stp(int x,int y)
 {
-	s[x][y]='#';
-
-	if(s[x-1][y]!='#')
+	cout<<x<<" "<<y<<endl;
+	/*
+	for(int i=0;i<n+2;i++)
 	{
-		return stp(x-1,y)+1;
+		for(int j=0;j<m+2;j++)
+		{
+				cout<<s[i][j];	
+		}	
+		cout<<"\n";
 	}
-	if(s[x+1][y]!='#')
+	 */
+	s[x][y]=32;
+	int a=100000000,b=100000000,c=100000000,d=100000000;
+	if(s[x-1][y]!='#'&&s[x-1][y]!=' ')
 	{
-		return stp(x+1,y)+1;
+		a=stp(x-1,y)+1;
+		s[x][y]='.';
+	//	cout<<a<<endl;
 	}
-	if(s[x][y-1]!='#')
+	if(s[x+1][y]!='#'&&s[x+1][y]!=' ')
 	{
-		return stp(x,y-1)+1;
+		b=stp(x+1,y)+1;
+		s[x][y]='.';
+	//	cout<<b<<endl;
 	}
-	if(s[x][y+1]!='#')
+	if(s[x][y-1]!='#'&&s[x][y-1]!=' ')
 	{
-		return stp(x,y+1)+1;
+		c=stp(x,y-1)+1;
+		s[x][y]='.';
+	//	cout<<c<<endl;
 	}
+	if(s[x][y+1]!='#'&&s[x][y+1]!=' ')
+	{
+		d=stp(x,y+1)+1;
+		s[x][y]='.';
+	//	cout<<d<<endl;
+	}
+	cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl; 
 	if(x==n&&y==m)
-	return 1;
+	return min(min(a,b),min(c,d))+1;
+	return 100000000;
 }

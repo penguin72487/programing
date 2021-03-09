@@ -5,9 +5,8 @@ struct tree{
 	int val;
 	tree *l,*r;	
 	
-}a;
-tree *find(int val);
-bool dfs(tree *p,int val);
+}a,e;
+tree dfs(tree *p,int val);
 int main()
 {
 
@@ -15,30 +14,27 @@ int main()
 	cin>>n;
 	int val,l,r;
 	cin>>a.val>>a.l->val>>a.r->val;
+	cout<<"+++++++++++++"<<endl;
 	for(int i=1;i<n;i++)
 	{
 		cin>>val>>l>>r;
-		tree *temp=find(val)->l;
-		temp->val=val;
-		temp->l->val=l;
-		temp->r->val=r;
+		tree temp=dfs(&a,val);
+		temp.val=val;
+		temp.l->val=l;
+		temp.r->val=r;
 		
 	}
 }
-tree *find(int val)
+tree dfs(tree *p,int val)
 {
-	
-	
-
-}
-bool dfs(tree *p,int val)
-{
-	if(!p) 
-	return 0;
-	dfs(p->l,val);
-	dfs(p->r,val);
+	cout<<p->val<<endl;
+//	if(!p) 
+//	return e;
 	if(p->val==val)
 	{
-		return 1;
+		return *p;
 	}
+	dfs(p->l,val);
+	dfs(p->r,val);
+
 }

@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-class bignum{
+struct bignum {
 };
 bool zero(vector <int> val);  //檢查是否為0 是回傳1  
 bool big(vector <int> val,vector <int> val2);//比大小，val2>val1時回傳1 
@@ -220,12 +220,11 @@ bool big(bignum val,bignum val2)
 	return 0;
 	
 }
-class bignum
+struct bignum
 {
 	
-	public: vector <int> val;//存反值 
+	public: string val;//存反值 
 	public: string str;//存正值 
-	
 	//以下是輸入的多載有支援字串int long long int;   大數 << 
 	
 	operator << (bignum val2)

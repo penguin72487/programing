@@ -1,11 +1,11 @@
 #include<iostream>
 #include<algorithm>
-
+#include<string>
 using namespace std;
 string ans;
 int i,j;
 bool zero(string s_val);  //檢查是否為0 是回傳1  
-bool big(string s_val,string s_val2);//比大小，val2>val1時回傳1 
+bool small(string s_val,string s_val2);//比大小，val<val2時回傳1 
 void pl(string s_val,string s_val2);
 void mi(string s_val,string s_val2);
 void ti(string s_val,string s_val2);
@@ -64,7 +64,7 @@ int main()
 
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
-	if(big(s_val,s_val2)==1)
+	if(small(s_val,s_val2)==1)
 	{
 		swap(s_val,s_val2);
 		if(k=='-')
@@ -122,7 +122,7 @@ int main()
 		}
 	}
 	*/
-	while(*(ans.end()-1)==0&&ans.length()>1)
+	while(*(ans.end()-1)<=0&&ans.length()>1)
 	{
 		ans.erase(ans.end()-1);
 	}
@@ -146,7 +146,7 @@ bool zero(string s_val)
 	else
 	return 0;
 }
-bool big(string s_val,string s_val2)
+bool small(string s_val,string s_val2)
 {
 
 	int n=max(s_val.length(),s_val2.length());
@@ -192,7 +192,7 @@ void pl(string s_val,string s_val2)
 		auto it=s_val.begin();
 		auto jt=s_val2.begin();
 		for(;jt!=s_val2.end();it++,jt++) 
-		ans.push_back(*it+*jt);
+		ans+=(*it+*jt);
 		for(;it!=s_val.end();it++) 
 			ans.push_back(*it);
 			
@@ -203,7 +203,7 @@ void pl(string s_val,string s_val2)
 		if(*it>9)
 		{
 		 	if(it+1==ans.end())
-		 		ans.push_back(*it/10);
+		 		ans+=(*it/10);
 		 	else
     			*(it+1)+=*it/10;
     	*it=*it%10;
@@ -226,7 +226,7 @@ void mi(string s_val,string s_val2)
 		auto jt=s_val2.begin();
 		for(;jt!=s_val2.end();it++,jt++) 
 		{
-			ans.push_back(*it-*jt);
+			ans+=(*it-*jt);
 			//cout<<*it<<"-"<<*jt<<"="<<*it-*jt<<endl;
 			
 		}
@@ -241,7 +241,7 @@ void mi(string s_val,string s_val2)
 		if(ans[i]>9)
 		{
 		 	if(ans.length()==i+1)
-		 		ans.push_back(ans[i]/10);
+		 		ans+=(ans[i]/10);
 		 	else
     			ans[i+1]+=ans[i]/10;
     	ans[i]=ans[i]%10;
@@ -298,7 +298,7 @@ void di(string s_val,string s_val2)
 	val_di=s_val;
 	val2_di.assign(s_val.length()-s_val2.length(),0); 
 	for(auto it=s_val2.begin();it!=s_val2.end();it++)
-		val2_di.push_back(*it);
+		val2_di+=(*it);
 	/*
 	for(int j=0;j<val2_di.length();j++)
 			cout<<val2_di[j];
@@ -317,7 +317,7 @@ void di(string s_val,string s_val2)
 	{
 		//cout<<"YES"<<endl;
 		int i=0;
-		for(;!big(val_di,val2_di)&&val2_di.length()>=s_val2.length();i++)
+		for(;!small(val_di,val2_di)&&val2_di.length()>=s_val2.length();i++)
 		{
 			
 			mi(val_di,val2_di);
@@ -334,7 +334,7 @@ void di(string s_val,string s_val2)
 			
 		}
 
-		ans_di.push_back(i);
+		ans_di+=(i);
 		val2_di.erase(val2_di.begin());
 
 		
@@ -350,7 +350,7 @@ void di(string s_val,string s_val2)
 		if(*it>9)
 		{
 		 	if(it+1==ans.end())
-		 		ans.push_back(*it/10);
+		 		ans+=(*it/10);
 		 	else
     			*(it+1)+=*it/10;
     	*it=*it%10;

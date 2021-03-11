@@ -1,18 +1,24 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
-using namespace std;
+//using namespace std;
+using std::reverse;
+using std::string;
+using std::cout;
+using std::cin;
+using std::endl;
 string ans;
 int i,j;
 bool zero(string s_val);  //檢查是否為0 是回傳1  
 bool small(string s_val,string s_val2);//比大小，val<val2時回傳1 
 void pl(string s_val,string s_val2);
-void mi(string s_val,string s_val2);
+string mi(string s_val,string s_val2);
 void ti(string s_val,string s_val2);
 void di(string s_val,string s_val2);
 int main()
 {
-
+	cin.tie(0);
+	cout.tie(0);
 	char k='-';
 	string s_val,s_val2;
 	while (cin>>s_val>>k>>s_val2)
@@ -60,7 +66,6 @@ int main()
 			
 		}
 		
-		 int n=max(s_val.length(),s_val2.length());
 
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
@@ -149,7 +154,6 @@ bool zero(string s_val)
 bool small(string s_val,string s_val2)
 {
 
-	int n=max(s_val.length(),s_val2.length());
 	while(*(s_val.end()-1)==0&&s_val.length()>s_val2.length())
 	{
 		s_val.erase(s_val.end()-1);
@@ -219,7 +223,7 @@ void pl(string s_val,string s_val2)
 		
 }
 
-void mi(string s_val,string s_val2)
+string mi(string s_val,string s_val2)
 {	
 		{
 		auto it=s_val.begin();
@@ -256,7 +260,7 @@ void mi(string s_val,string s_val2)
 	{
 		ans.erase(ans.end()-1);
 	} 
-			
+	return ans;	
 }
 void ti(string s_val,string s_val2)
 {
@@ -320,15 +324,9 @@ void di(string s_val,string s_val2)
 		for(;!small(val_di,val2_di)&&val2_di.length()>=s_val2.length();i++)
 		{
 			
-			mi(val_di,val2_di);
+			val_di=mi(val_di,val2_di);
 			//cout<<"哈哈哈"<<endl; 
-			while(*(ans.end()-1)==0&&ans.length()>val2_di.length())
-			{
-				ans.erase(ans.end()-1);
-			} 
-			
-			val_di.clear();
-			val_di.assign(ans.begin(),ans.end());
+			//val_di.assign(ans.begin(),ans.end());
 			ans.clear();
 
 			

@@ -1,7 +1,6 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
-//using namespace std;
 using std::reverse;
 using std::string;
 using std::cout;
@@ -22,11 +21,7 @@ int main()
 	string s_val,s_val2;
 	while (cin>>s_val>>k>>s_val2)
 	{
-	//	cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
-		for(auto it=s_val.begin();it!=s_val.end();it++)
-		*it-='0';
-		for(auto it=s_val2.begin();it!=s_val2.end();it++)
-		*it-='0';
+		
 		if(k=='/')
 		{
 			if(s_val=="0")
@@ -65,7 +60,10 @@ int main()
 			
 		}
 		
-
+	for(auto it=s_val.begin();it!=s_val.end();it++)
+	*it-='0';
+	for(auto it=s_val2.begin();it!=s_val2.end();it++)
+	*it-='0';
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
 	if(small(s_val,s_val2)==1)
@@ -86,52 +84,25 @@ int main()
 	switch (k)
 	{
 		case '+':
-			//cout<<"加法喔"<<endl; 
 			pl(s_val,s_val2);
 		break;
 		case '-':
-			//cout<<"減法喔"<<endl; 
 			mi(s_val,s_val2);
 		break;
 		case '*':
-			//cout<<"乘法喔"<<endl; 
 			ti(s_val,s_val2);
 		break;
 		case '/':
-			//cout<<"除法喔"<<endl; 
 			di(s_val,s_val2);
 		break;
 		
 	}
-	/*
-	for(i=0;i<ans.length();i++)
-	cout<<ans[i];
-	cout<<endl;
-	*/
-	/*
-	for(int i=0;i<ans.length();i++) 	//統一進位 
-	{
-		if(ans[i]>9)
-		{
-		 	if(ans.length()==i+1)
-		 		ans.push_back(ans[i]/10);
-		 	else
-    			ans[i+1]+=ans[i]/10;
-    	ans[i]=ans[i]%10;
-   		}
-   		if(ans[i]<0)
-   		{
-   			ans[i+1]--;
-   			ans[i]+=10; 
-		}
-	}
-	*/
+
 	while(*(ans.end()-1)<=0&&ans.length()>1)
 	{
 		ans.erase(ans.end()-1);
 	}
 	reverse(ans.begin(),ans.end());
-	//cout<<"ans = ";
 
 	for(auto it =ans.begin();it!=ans.end();it++)
 	*it+='0';
@@ -230,7 +201,6 @@ string mi(string s_val,string s_val2)
 		for(;jt!=s_val2.end();it++,jt++) 
 		{
 			ans+=(*it-*jt);
-			//cout<<*it<<"-"<<*jt<<"="<<*it-*jt<<endl;
 			
 		}
 		
@@ -278,12 +248,6 @@ void ti(string s_val,string s_val2)
     				ans[i+j+1]+=ans[i+j]/10;
     			ans[i+j]=ans[i+j]%10;
    			}
-					//cout<<val[i]<<"*"<<val2[j]<<" + ";
-			
-			//cout<<ans[i+j]<<" ";
-				
-			//	cout<<val[i]<<"*"<<val2[j]<<"*"<<i*10<<" + ";
-		//	cout<<ans[i]<<"="<<val[i]<<"*"<<val2[j]<<"*"<<i*10<<" + ";
 		}
 		
 	}
@@ -302,30 +266,14 @@ void di(string s_val,string s_val2)
 	val2_di.assign(s_val.length()-s_val2.length(),0); 
 	for(auto it=s_val2.begin();it!=s_val2.end();it++)
 		val2_di+=(*it);
-	/*
-	for(int j=0;j<val2_di.length();j++)
-			cout<<val2_di[j];
-			cout<<endl;
-			*/
-	/*
-	for(i=0;i<val_di.length();i++)
-	cout<<val_di[i];
-	cout<<endl;
-	for(i=0;i<val2_di.length();i++)
-	cout<<val2_di[i];
-	cout<<endl;
-	*/
 	while(val2_di.length()>=s_val2.length())
 	//while(!zero(val2_di)) 
 	{
-		//cout<<"YES"<<endl;
 		int i=0;
 		for(;!small(val_di,val2_di)&&val2_di.length()>=s_val2.length();i++)
 		{
 			
 			val_di=mi(val_di,val2_di);
-			//cout<<"哈哈哈"<<endl; 
-			//val_di.assign(ans.begin(),ans.end());
 			ans.clear();
 
 			

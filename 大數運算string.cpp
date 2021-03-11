@@ -6,9 +6,9 @@ using std::reverse;
 using std::string;
 using std::cout;
 using std::cin;
-using std::endl;
+
 string ans;
-int i,j;
+
 bool zero(string s_val);  //檢查是否為0 是回傳1  
 bool small(string s_val,string s_val2);//比大小，val<val2時回傳1 
 void pl(string s_val,string s_val2);
@@ -32,13 +32,13 @@ int main()
 		{
 			if(s_val=="0")
 			{
-				cout<<"0"<<endl;
+				cout<<"0\n";
 				return 0;
 				
 			}
 			else if(s_val2=="1")
 			{
-				cout<<s_val<<endl;
+				cout<<s_val<<"\n";
 				return 0;
 			}
 		}
@@ -46,12 +46,12 @@ int main()
 		{
 			if(s_val2=="0")
 			{
-				cout<<"0"<<endl;
+				cout<<"0\n";
 				return 0;
 			}
 			else if(s_val2=="1")
 			{
-				cout<<s_val<<endl;
+				cout<<s_val<<"\n";
 				return 0;
 			}
 			
@@ -60,7 +60,7 @@ int main()
 		{
 			if(s_val==s_val2)
 			{
-				cout<<"0"<<endl;
+				cout<<"0\n";
 				return 0;
 			}
 			
@@ -76,7 +76,7 @@ int main()
 		cout<<"-";
 		else if(k=='/')
 		{
-			cout<<"0"<<endl;
+			cout<<"0\n";
 			return 0;	
 		}	
 	}
@@ -110,7 +110,7 @@ int main()
 	cout<<endl;
 	*/
 	/*
-	for(i=0;i<ans.length();i++) 	//統一進位 
+	for(int i=0;i<ans.length();i++) 	//統一進位 
 	{
 		if(ans[i]>9)
 		{
@@ -136,7 +136,7 @@ int main()
 
 	for(auto it =ans.begin();it!=ans.end();it++)
 	*it+='0';
-	cout<<ans<<endl;
+	cout<<ans<<"\n";
 	ans.clear();
 	s_val.clear();
 	s_val2.clear();		

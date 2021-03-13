@@ -4,7 +4,7 @@
 using namespace std;
 	vector <int> ans;
 
-	int i,j;
+
 bool zero(vector <int> val);  //檢查是否為0 是回傳1  
 bool big(vector <int> val,vector <int> val2);//比大小，val2>val1時回傳1 
 void pl(vector <int> val,vector <int> val2);
@@ -43,9 +43,9 @@ int main()
 	val2.assign(max(s_val.length(),s_val2.length()),0);
 	else
 	val2.assign(s_val2.length(),0);
-	for(i=0;i<s_val.length();i++)//反轉存vector陣列 
+	for(int i=0;i<s_val.length();i++)//反轉存vector陣列 
 		val[i]=s_val[i]-'0';
-	for(i=0;i<s_val2.length();i++)//反轉存vector陣列 
+	for(int i=0;i<s_val2.length();i++)//反轉存vector陣列 
 		val2[i]=s_val2[i]-'0';
 	
 	
@@ -88,7 +88,7 @@ int main()
 		
 	}
 
-	for(i=0;i<ans.size();i++) 	//統一進位 
+	for(int i=0;i<ans.size();i++) 	//統一進位 
 	{
 		if(ans[i]>9)
 		{
@@ -105,7 +105,7 @@ int main()
 		}
 	}
 	reverse(ans.begin(),ans.end());
-	i=0;
+	int i=0;
 	while(ans[i]==0)
 	i++;
 	for(;i<ans.size();i++)

@@ -23,18 +23,39 @@ int main()
 		{
 			if(s_val=="0")
 			{
-				cout<<"0"<<endl;
-				continue; 
+				cout<<"0\n";
+				return 0;
 				
 			}
-			if(s_val2=="1")
+			else if(s_val2=="1")
 			{
-				cout<<s_val2<<endl;
-				continue;
+				cout<<s_val<<"\n";
+				return 0;
 			}
 		}
-		
-		 int n=max(s_val.length(),s_val2.length());
+		else if(k=='*')
+		{
+			if(s_val=="0"||s_val2=="0")
+			{
+				cout<<"0\n";
+				return 0;
+			}
+			else if(s_val2=="1")
+			{
+				cout<<s_val<<"\n";
+				return 0;
+			}
+			
+		}
+		else if(k=='-')
+		{
+			if(s_val==s_val2)
+			{
+				cout<<"0\n";
+				return 0;
+			}
+			
+		}
 
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 

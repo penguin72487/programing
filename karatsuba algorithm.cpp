@@ -1,14 +1,15 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
-//using namespace std;
+using namespace std;
+/*
 using std::reverse;
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
-
-bool zero(string s_val);  //檢查是否為0 是回傳1  
+*/
+bool zero(string s_val); //檢查是否為0 是回傳1  
 bool small(string s_val,string s_val2);//比大小，val<val2時回傳1 
 string pl(string s_val,string s_val2);
 string mi(string s_val,string s_val2);
@@ -188,15 +189,6 @@ bool small(string s_val,string s_val2)
 } 
 string pl(string s_val,string s_val2)
 {		
-	for(auto it=s_val.begin();it!=s_val.end();it++)
-	*it+='0';
-	for(auto it=s_val2.begin();it!=s_val2.end();it++)
-	*it+='0';
-	cout<<s_val<<" "<<s_val2<<endl;
-	for(auto it=s_val.begin();it!=s_val.end();it++)
-	*it-='0';
-	for(auto it=s_val2.begin();it!=s_val2.end();it++)
-	*it-='0';
 
 	string ans;
 		{
@@ -270,24 +262,65 @@ string mi(string s_val,string s_val2)
 	} 
 	return ans;	
 }
-string ti(string s_val,string s_val2)
+string ti(string val,string val2)
 {
 	string ans;
+	if(small(val,val2)==1)
+	{
+		swap(val,val2);	
+	}
+	if(val.size()&1)
+	val.push_back(0);
+	if(val2.size()&1)
+	val2.push_back(0);
+	if(val.size()!=val2.size())
+	{
+		while(val.size()<val2.size())
+		{
+			val.push_back(0);
+		}
+		while(val.size()>val2.size())
+		{
+			val2.push_back(0);
+		}
+	}
+	/*
+	for(auto it=val.begin();it!=val.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<" * ";
+	for(auto it=val2.begin();it!=val2.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<"\n end \n ";
+	*/
+	ans.clear();
 
 	//ans.assign(s_val.length()+s_val2.length(),0);//reserve + 初始化為 0 
-	if(s_val.length()<=2&&s_val2.length()<=2)
+	if(val.size()<=2&&val2.size()<=2)
 	{
-		cout<<"YES\n";
-		ans.assign(s_val.length()+s_val2.length(),0);//reserve + 初始化為 0 
-	
-		for(int i=0;i<s_val.length();i++)
+		while(val.size()!=2)
 		{
-			for(int j=0;j<s_val2.length();j++)
+			val.push_back(0);
+		}
+		while(val2.size()!=2)
+		{
+			val2.push_back(0);
+		}
+		//cout<<"YES\n";
+		ans.clear();
+		ans.assign(val.size()+val2.size(),0);//reserve + 初始化為 0 
+	
+		for(int i=0;i<val.size();i++)
+		{
+			for(int j=0;j<val2.size();j++)
 			{  
-				ans[i+j]+=s_val[i]*s_val2[j];
+				ans[i+j]+=val[i]*val2[j];
 				if(ans[i+j]>9)
 				{	
-				 	if(ans.length()==i+j+1)
+				 	if(ans.size()==i+j+1)
 				 		ans.push_back(ans[i+j]/10);
 				 	else
    	 				ans[i+j+1]+=ans[i+j]/10;
@@ -296,47 +329,69 @@ string ti(string s_val,string s_val2)
 			}
 			
 		}
-		cout<<"90\n";
+		
+		/* 
+		cout<<"ans=\n";
+		for(auto it=ans.begin();it!=ans.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<"\n";
+		*/
+		while(*(ans.end()-1)==0&&ans.size()>1)
+		{
+			ans.erase(ans.end()-1);
+		} 
 		return ans;
 	}
-	cout<<"FUCK"<<endl;
+	//cout<<"FUCK"<<endl;
 	
 	string a,b,c,d;
-	int n=s_val.length();
+	int n=val.size();
 	n/=2;
-	b.assign(s_val.begin(),s_val.begin()+n);
-	a.assign(s_val.begin()+n,s_val.end());
-	d.assign(s_val2.begin(),s_val2.begin()+n);
-	c.assign(s_val2.begin()+n,s_val2.end());
+	b.assign(val.begin(),val.begin()+n);
+	a.assign(val.begin()+n,val.end());
+	d.assign(val2.begin(),val2.begin()+n);
+	c.assign(val2.begin()+n,val2.end());
 	
-	for(auto it=a.begin();it!=a.end();it++)
-	*it+='0';
-	for(auto it=b.begin();it!=b.end();it++)
-	*it+='0';
-	cout<<a<<endl;
-	cout<<b<<endl;
-	for(auto it=a.begin();it!=a.end();it++)
-	*it-='0';
-	for(auto it=b.begin();it!=b.end();it++)
-	*it-='0';
-	string formul_1=ti(a,c);
-	cout<<"1\n";
-	string formul_2=ti(b,d);
-	cout<<"2\n";
-	string formul_3=ti(pl(a,b),pl(c,d));
-	cout<<"3\n";
-	string formul_4=mi(formul_3,pl(formul_1,formul_2));
-	cout<<"4\n";
+	string formul_1,formul_2,formul_3,formul_4;
+	ti(a,c);
+	formul_1.assign(ans.begin(),ans.end());
+//	cout<<"第1\n";
+	ti(b,d);
+	formul_2.assign(ans.begin(),ans.end());
+//	cout<<"第1POP\n";
+//	cout<<"第2\n";
+	string temp,temp2;
+	pl(a,b);
+	temp.assign(ans.begin(),ans.end());
+	pl(c,d);
+	temp2.assign(ans.begin(),ans.end());
+	ti(temp,temp2);
+	formul_3.assign(ans.begin(),ans.end());
+//	cout<<"第2POP\n";
+//	cout<<"第3\n";
+	pl(formul_1,formul_2);
+	temp.clear();
+	temp.assign(ans.begin(),ans.end());
+	mi(formul_3,temp);
+	formul_4.assign(ans.begin(),ans.end());
+//	cout<<"第3POP\n";
+//	cout<<"第4\n";
 	for(int i=0;i<2*n;i++)
 	{
-		formul_1+=("0"-'0');
+		formul_1.insert(formul_1.begin(),0);
 	}
 	for(int i=0;i<n;i++)
 	{
-		formul_4+=("0"-'0');
+		formul_4.insert(formul_4.begin(),0);
 	}
-	ans=pl(pl(formul_1,formul_2),formul_4);
-	
+	pl(formul_1,formul_2);
+	temp.clear();
+	temp.assign(ans.begin(),ans.end());
+	ans=pl(temp,formul_4);
+//	cout<<"第4POP\n";
+	return ans;
 
 	
 }

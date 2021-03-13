@@ -43,7 +43,7 @@ int main()
 		}
 		else if(k=='*')
 		{
-			if(s_val2=="0")
+			if(s_val=="0"||s_val2=="0")
 			{
 				cout<<"0\n";
 				return 0;

@@ -1,18 +1,19 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
-//using namespace std;
+using namespace std;
+/*
 using std::reverse;
 using std::string;
 using std::cout;
 using std::cin;
 using std::endl;
-
-bool zero(string s_val);  //檢查是否為0 是回傳1  
+*/
+bool zero(string s_val); //檢查是否為0 是回傳1  
 bool small(string s_val,string s_val2);//比大小，val<val2時回傳1 
-string pl(string s_val,string s_val2);
-string mi(string s_val,string s_val2);
-string ti(string s_val,string s_val2);
+string pl(string val,string val2);
+string mi(string val,string val2);
+string ti(string val,string val2);
 int main()
 {
 	string ans;
@@ -186,64 +187,97 @@ bool small(string s_val,string s_val2)
 	return 0;
 	
 } 
-string pl(string s_val,string s_val2)
+string pl(string val,string val2)
 {		
-	for(auto it=s_val.begin();it!=s_val.end();it++)
-	*it+='0';
-	for(auto it=s_val2.begin();it!=s_val2.end();it++)
-	*it+='0';
-	cout<<s_val<<" "<<s_val2<<endl;
-	for(auto it=s_val.begin();it!=s_val.end();it++)
-	*it-='0';
-	for(auto it=s_val2.begin();it!=s_val2.end();it++)
-	*it-='0';
+	for(auto it=val.begin();it!=val.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<" + ";
+	for(auto it=val2.begin();it!=val2.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<"\n";
 
+	while(*(val.end()-1)==0&&val.length()>1)
+	{
+		val.erase(val.end()-1);
+	}	
+	while(*(val2.end()-1)==0&&val2.length()>1)
+	{
+		val2.erase(val2.end()-1);
+	}
+	if(small(val,val2)==1)
+	{
+		swap(val,val2);	
+	}
 	string ans;
 		{
-		auto it=s_val.begin();
-		auto jt=s_val2.begin();
-		for(;jt!=s_val2.end();it++,jt++) 
+		auto it=val.begin();
+		auto jt=val2.begin();
+		for(;jt!=val2.end();it++,jt++) 
 		ans+=(*it+*jt);
-		for(;it!=s_val.end();it++) 
+		for(;it!=val.end();it++) 
 			ans.push_back(*it);
 			
 		}		
-	cout<<"pppppp\n";
 	for(auto it=ans.begin();it!=ans.end();it++) 	//統一進位 
 	{
 		if(*it>9)
 		{
-		 	if(it+1==ans.end())
-		 		ans+=(*it/10);
+		 	if(it==ans.end()-1)
+		 		ans.push_back(*it/10);
 		 	else
-    			*(it+1)+=*it/10;
-    	*it=*it%10;
+		 	{
+		 		auto jt=it;
+		 		it++;
+		 		*(it)+=*jt/10;
+				 it--;
+			}
+    			
+    	*it%=10;
    		}
-   		if(*it<0)
-   		{
-   			*(it+1)--;
-   			*it+=10; 
-		}
 	}
-	
+	while(*(ans.end()-1)==0&&ans.length()>1)
+	{
+		ans.erase(ans.end()-1);
+	} 
+	cout<<"ans= ";
+	for(auto it=ans.begin();it!=ans.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<"\n";
 	return ans;
 		
 }
 
-string mi(string s_val,string s_val2)
+string mi(string val,string val2)
 {	
+
+	for(auto it=val.begin();it!=val.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<" - ";
+	for(auto it=val2.begin();it!=val2.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<"\n";
 	string ans;
 		{
-		auto it=s_val.begin();
-		auto jt=s_val2.begin();
-		for(;jt!=s_val2.end();it++,jt++) 
+		auto it=val.begin();
+		auto jt=val2.begin();
+		for(;jt!=val2.end();it++,jt++) 
 		{
 			ans+=(*it-*jt);
 			//cout<<*it<<"-"<<*jt<<"="<<*it-*jt<<endl;
 			
 		}
 		
-		for(;it!=s_val.end();it++) 
+		for(;it!=val.end();it++) 
 			ans.push_back(*it);
 			
 		}
@@ -268,24 +302,68 @@ string mi(string s_val,string s_val2)
 	{
 		ans.erase(ans.end()-1);
 	} 
+	cout<<"ans= ";
+	for(auto it=ans.begin();it!=ans.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<"\n";
 	return ans;	
 }
-string ti(string s_val,string s_val2)
+string ti(string val,string val2)
 {
 	cout<<"HHHH\n";
 	string ans;
+	if(small(val,val2)==1)
+	{
+		swap(val,val2);	
+	}
+	if(val.length()&1)
+	val.push_back(0);
+	if(val2.length()&1)
+	val2.push_back(0);
+	if(val.length()!=val2.length())
+	{
+		while(val.length()<val2.length())
+		{
+			val.push_back(0);
+		}
+		while(val.length()>val2.length())
+		{
+			val2.push_back(0);
+		}
+	}
+	
+	for(auto it=val.begin();it!=val.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<" * ";
+	for(auto it=val2.begin();it!=val2.end();it++)
+	{
+		cout<<char(*it+'0')<<" ";
+	}
+	cout<<"\n end \n ";
+	
 
 	//ans.assign(s_val.length()+s_val2.length(),0);//reserve + 初始化為 0 
-	if(s_val.length()<=2&&s_val2.length()<=2)
+	if(val.length()<=2&&val2.length()<=2)
 	{
-		cout<<"YES\n";
-		ans.assign(s_val.length()+s_val2.length(),0);//reserve + 初始化為 0 
-	
-		for(int i=0;i<s_val.length();i++)
+		while(val.length()!=2)
 		{
-			for(int j=0;j<s_val2.length();j++)
+			val.push_back(0);
+		}
+		while(val2.length()!=2)
+		{
+			val2.push_back(0);
+		}
+		ans.assign(val.length()+val2.length(),0);//reserve + 初始化為 0 
+	
+		for(int i=0;i<val.length();i++)
+		{
+			for(int j=0;j<val2.length();j++)
 			{  
-				ans[i+j]+=s_val[i]*s_val2[j];
+				ans[i+j]+=val[i]*val2[j];
 				if(ans[i+j]>9)
 				{	
 				 	if(ans.length()==i+j+1)
@@ -297,47 +375,55 @@ string ti(string s_val,string s_val2)
 			}
 			
 		}
-		cout<<"90\n";
+		
+		/* 
+		cout<<"ans=\n";
+		for(auto it=ans.begin();it!=ans.end();it++)
+		{
+			cout<<*it<<" ";
+		}
+		cout<<"\n";
+		*/
+		while(*(ans.end()-1)==0&&ans.length()>1)
+		{
+			ans.erase(ans.end()-1);
+		} 
 		return ans;
 	}
 	cout<<"FUCK"<<endl;
 	
 	string a,b,c,d;
-	int n=s_val.length();
+	int n=val.length();
 	n/=2;
-	b.assign(s_val.begin(),s_val.begin()+n);
-	a.assign(s_val.begin()+n,s_val.end());
-	d.assign(s_val2.begin(),s_val2.begin()+n);
-	c.assign(s_val2.begin()+n,s_val2.end());
+	b.assign(val.begin(),val.begin()+n);
+	a.assign(val.begin()+n,val.end());
+	d.assign(val2.begin(),val2.begin()+n);
+	c.assign(val2.begin()+n,val2.end());
 	
-	for(auto it=a.begin();it!=a.end();it++)
-	*it+='0';
-	for(auto it=b.begin();it!=b.end();it++)
-	*it+='0';
-	cout<<a<<endl;
-	cout<<b<<endl;
-	for(auto it=a.begin();it!=a.end();it++)
-	*it-='0';
-	for(auto it=b.begin();it!=b.end();it++)
-	*it-='0';
-	string formul_1=ti(a,c);
-	cout<<"1\n";
-	string formul_2=ti(b,d);
-	cout<<"2\n";
-	string formul_3=ti(pl(a,b),pl(c,d));
-	cout<<"3\n";
-	string formul_4=mi(formul_3,pl(formul_1,formul_2));
-	cout<<"4\n";
+	string formul_1,formul_2,formul_3,formul_4;
+	
+	formul_1=ti(a,c);
+	cout<<"第1\n";
+	formul_2=ti(b,d);
+	cout<<"第1POP\n";
+	cout<<"第2\n";
+	formul_3=ti(pl(a,b),pl(c,d));
+	cout<<"第2POP\n";
+	cout<<"第3\n";
+	formul_4=mi(formul_3,pl(formul_1,formul_2));
+	cout<<"第3POP\n";
+	cout<<"第4\n";
 	for(int i=0;i<2*n;i++)
 	{
-		formul_1+=("0"-'0');
+		formul_1.insert(formul_1.begin(),0);
 	}
 	for(int i=0;i<n;i++)
 	{
-		formul_4+=("0"-'0');
+		formul_4.insert(formul_4.begin(),0);
 	}
 	ans=pl(pl(formul_1,formul_2),formul_4);
-	
+	cout<<"第4POP\n";
+	return ans;
 
 	
 }

@@ -43,7 +43,7 @@ int main()
 		}
 		else if(k=='*')
 		{
-			if(s_val2=="0")
+			if(s_val=="0"||s_val2=="0")
 			{
 				cout<<"0\n";
 				return 0;
@@ -209,7 +209,7 @@ void pl(string s_val,string s_val2)
 		 		ans+=(*it/10);
 		 	else
     			*(it+1)+=*it/10;
-    	*it=*it%10;
+    	*it%=10;
    		}
    		if(*it<0)
    		{

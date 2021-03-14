@@ -209,7 +209,7 @@ void pl(string s_val,string s_val2)
 		 		ans+=(*it/10);
 		 	else
     			*(it+1)+=*it/10;
-    	*it=*it%10;
+    	*it%=10;
    		}
    		if(*it<0)
    		{

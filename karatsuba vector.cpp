@@ -224,8 +224,12 @@ void pl(vector <int> val,vector <int> val2)
 		 	if(it+1==ans.end())
 		 		ans.push_back(*it/10);
 		 	else
-    			*(it+1)+=*it/10;
-    	*it=*it%10;
+		 	{
+		 		
+		 		*(++it)+=*it/10;
+				 it--;	
+			}
+    	*it%=10;
    		}
    		if(*it<0)
    		{
@@ -238,14 +242,14 @@ void pl(vector <int> val,vector <int> val2)
 	{
 		ans.erase(ans.end()-1);
 	} 
-	/*
+	
 	cout<<"ans=\n";
 	for(auto it=ans.begin();it!=ans.end();it++)
 	{
 		cout<<*it<<" ";
 	}
 	cout<<"\n";
-	*/
+	
 			
 }
 

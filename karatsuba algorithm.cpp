@@ -272,6 +272,7 @@ string mi(string s_val,string s_val2)
 }
 string ti(string s_val,string s_val2)
 {
+	cout<<"HHHH\n";
 	string ans;
 
 	//ans.assign(s_val.length()+s_val2.length(),0);//reserve + ªì©l¤Æ¬° 0 

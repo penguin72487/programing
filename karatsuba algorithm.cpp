@@ -312,6 +312,7 @@ string mi(string val,string val2)
 }
 string ti(string val,string val2)
 {
+	cout<<"HHHH\n";
 	string ans;
 	if(small(val,val2)==1)
 	{

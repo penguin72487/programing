@@ -14,6 +14,7 @@ bool small(string s_val,string s_val2);//比大小，val<val2時回傳1
 string pl(string val,string val2);
 string mi(string val,string val2);
 string ti(string val,string val2);
+string di(string val,string val2);
 int main()
 {
 	string ans;
@@ -21,7 +22,7 @@ int main()
 	cout.tie(0);
 	char k='*';
 	string s_val="5678",s_val2="1234";
-	//while (cin>>s_val>>k>>s_val2)
+	while (cin>>s_val>>k>>s_val2)
 	{
 	//	cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
 		
@@ -98,7 +99,9 @@ int main()
 			//cout<<"乘法喔"<<endl; 
 		ans=ti(s_val,s_val2);
 		break;
-
+		case '/':
+		ans=di(s_val,s_val2);
+		break;
 		
 	}
 	/*
@@ -188,7 +191,8 @@ bool small(string s_val,string s_val2)
 	
 } 
 string pl(string val,string val2)
-{		
+{	
+	/*	
 	for(auto it=val.begin();it!=val.end();it++)
 	{
 		cout<<char(*it+'0')<<" ";
@@ -199,7 +203,7 @@ string pl(string val,string val2)
 		cout<<char(*it+'0')<<" ";
 	}
 	cout<<"\n";
-
+	*/
 	while(*(val.end()-1)==0&&val.length()>1)
 	{
 		val.erase(val.end()-1);
@@ -222,40 +226,42 @@ string pl(string val,string val2)
 			ans.push_back(*it);
 			
 		}		
-	for(auto it=ans.begin();it!=ans.end();it++) 	//統一進位 
+	for(int i=0;i<ans.length();i++) 	//統一進位 
 	{
-		if(*it>9)
+		if(ans[i]>9)
 		{
-		 	if(it==ans.end()-1)
-		 		ans.push_back(*it/10);
+		 	if(ans.length()==i+1)
+		 		ans+=(ans[i]/10);
 		 	else
-		 	{
-		 		auto jt=it;
-		 		it++;
-		 		*(it)+=*jt/10;
-				 it--;
-			}
-    			
-    	*it%=10;
+    			ans[i+1]+=ans[i]/10;
+    	ans[i]=ans[i]%10;
    		}
+   		else if(ans[i]<0)
+   		{
+   			ans[i+1]--;
+   			ans[i]+=10; 
+		}
 	}
+	
 	while(*(ans.end()-1)==0&&ans.length()>1)
 	{
 		ans.erase(ans.end()-1);
-	} 
+	}
+	/* 
 	cout<<"ans= ";
 	for(auto it=ans.begin();it!=ans.end();it++)
 	{
 		cout<<char(*it+'0')<<" ";
 	}
 	cout<<"\n";
+	*/
 	return ans;
 		
 }
 
 string mi(string val,string val2)
 {	
-
+	/*
 	for(auto it=val.begin();it!=val.end();it++)
 	{
 		cout<<char(*it+'0')<<" ";
@@ -266,6 +272,7 @@ string mi(string val,string val2)
 		cout<<char(*it+'0')<<" ";
 	}
 	cout<<"\n";
+	*/
 	string ans;
 		{
 		auto it=val.begin();
@@ -292,7 +299,7 @@ string mi(string val,string val2)
     			ans[i+1]+=ans[i]/10;
     	ans[i]=ans[i]%10;
    		}
-   		if(ans[i]<0)
+   		else if(ans[i]<0)
    		{
    			ans[i+1]--;
    			ans[i]+=10; 
@@ -302,17 +309,18 @@ string mi(string val,string val2)
 	{
 		ans.erase(ans.end()-1);
 	} 
+	/*
 	cout<<"ans= ";
 	for(auto it=ans.begin();it!=ans.end();it++)
 	{
 		cout<<char(*it+'0')<<" ";
 	}
 	cout<<"\n";
+	*/
 	return ans;	
 }
 string ti(string val,string val2)
 {
-	cout<<"HHHH\n";
 	string ans;
 	if(small(val,val2)==1)
 	{
@@ -333,7 +341,7 @@ string ti(string val,string val2)
 			val2.push_back(0);
 		}
 	}
-	
+	/*
 	for(auto it=val.begin();it!=val.end();it++)
 	{
 		cout<<char(*it+'0')<<" ";
@@ -344,7 +352,7 @@ string ti(string val,string val2)
 		cout<<char(*it+'0')<<" ";
 	}
 	cout<<"\n end \n ";
-	
+	*/
 
 	//ans.assign(s_val.length()+s_val2.length(),0);//reserve + 初始化為 0 
 	if(val.length()<=2&&val2.length()<=2)
@@ -390,7 +398,7 @@ string ti(string val,string val2)
 		} 
 		return ans;
 	}
-	cout<<"FUCK"<<endl;
+//	cout<<"FUCK"<<endl;
 	
 	string a,b,c,d;
 	int n=val.length();
@@ -403,16 +411,16 @@ string ti(string val,string val2)
 	string formul_1,formul_2,formul_3,formul_4;
 	
 	formul_1=ti(a,c);
-	cout<<"第1\n";
+//	cout<<"第1\n";
 	formul_2=ti(b,d);
-	cout<<"第1POP\n";
-	cout<<"第2\n";
+//	cout<<"第1POP\n";
+//	cout<<"第2\n";
 	formul_3=ti(pl(a,b),pl(c,d));
-	cout<<"第2POP\n";
-	cout<<"第3\n";
+//	cout<<"第2POP\n";
+//	cout<<"第3\n";
 	formul_4=mi(formul_3,pl(formul_1,formul_2));
-	cout<<"第3POP\n";
-	cout<<"第4\n";
+//	cout<<"第3POP\n";
+//	cout<<"第4\n";
 	for(int i=0;i<2*n;i++)
 	{
 		formul_1.insert(formul_1.begin(),0);
@@ -422,9 +430,77 @@ string ti(string val,string val2)
 		formul_4.insert(formul_4.begin(),0);
 	}
 	ans=pl(pl(formul_1,formul_2),formul_4);
-	cout<<"第4POP\n";
+//	cout<<"第4POP\n";
 	return ans;
 
 	
+}
+
+string di(string val,string val2)
+{
+	string ans_di,val_di,val2_di;
+	string ans;
+	val_di=val;
+	val2_di.assign(val.length()-val2.length(),0); 
+	for(auto it=val2.begin();it!=val2.end();it++)
+		val2_di+=(*it);
+	/*
+	for(int j=0;j<val2_di.length();j++)
+			cout<<val2_di[j];
+			cout<<endl;
+			*/
+	/*
+	for(i=0;i<val_di.length();i++)
+	cout<<val_di[i];
+	cout<<endl;
+	for(i=0;i<val2_di.length();i++)
+	cout<<val2_di[i];
+	cout<<endl;
+	*/
+	while(val2_di.length()>=val2.length())
+	//while(!zero(val2_di)) 
+	{
+		//cout<<"YES"<<endl;
+		int i=0;
+		for(;!small(val_di,val2_di)&&val2_di.length()>=val2.length();i++)
+		{
+			
+			val_di=mi(val_di,val2_di);
+			//cout<<"哈哈哈"<<endl; 
+			//val_di.assign(ans.begin(),ans.end());
+
+			
+		}
+
+		ans_di+=(i);
+		val2_di.erase(val2_di.begin());
+
+		
+	}
+	
+
+	ans=ans_di;
+	ans_di.clear();
+	val.clear();
+	val2.clear();
+	for(int i=0;i<ans.length();i++) 	//統一進位 
+	{
+		if(ans[i]>9)
+		{
+		 	if(ans.length()==i+1)
+		 		ans+=(ans[i]/10);
+		 	else
+    			ans[i+1]+=ans[i]/10;
+    	ans[i]=ans[i]%10;
+   		}
+   		else if(ans[i]<0)
+   		{
+   			ans[i+1]--;
+   			ans[i]+=10; 
+		}
+	}
+	reverse(ans.begin(),ans.end());
+	return ans;
+		
 }
 

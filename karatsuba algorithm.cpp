@@ -427,4 +427,3 @@ string ti(string val,string val2)
 
 	
 }
-

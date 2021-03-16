@@ -22,15 +22,15 @@ int main()
 	string ans;
 	cin.tie(0);
 	cout.tie(0);
-	stringstream a;
 	fstream file;
-	file.open("") 
-	char k='*';
-	string s_val="5678",s_val2="1234";
-	file.getline()
+	file.open("­¼ªk.txt"); 
+	char k;
+	string s_val,s_val2;
+	file>>s_val>>k>>s_val2;
+	
 	//while (cin>>s_val>>k>>s_val2)
 	{
-	//	cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
+		//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
 		
 		if(k=='/')
 		{

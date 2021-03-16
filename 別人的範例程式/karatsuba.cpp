@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include<fstream>
 using namespace std;
  
 // given two unequal sized bit strings, converts them to
@@ -137,8 +138,11 @@ string KaratsubaMultiply(string num1, string num2) {
  
  
 int main(){
-    string num1("12345678");
-    string num2("94");
+    string num1;
+    string num2;
+    fstream file;
+	file.open("­¼ªk.txt");
+	file>>num1>>num2; 
     string result = KaratsubaMultiply(num1,num2);
     // ?¥X
     cout<<result<<endl;

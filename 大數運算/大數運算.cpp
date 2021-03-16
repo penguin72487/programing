@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<fstream>
 using namespace std;
 	vector <int> ans;
 
@@ -13,24 +14,27 @@ void ti(vector <int> val,vector <int> val2);
 void di(vector <int> val,vector <int> val2);
 int main()
 {
+	fstream file;
+	file.open("­¼ªk.txt"); 
 	char k;
 	string s_val,s_val2;
+	file>>s_val>>k>>s_val2;
 	vector <int> val,val2;
 	
-	while (cin>>s_val>>k>>s_val2)
+	//while (cin>>s_val>>k>>s_val2)
 	{
 		if(k=='/')
 		{
 			if(s_val=="0")
 			{
 				cout<<"0"<<endl;
-				continue; 
+				return 0; 
 				
 			}
 			if(s_val2=="1")
 			{
 				cout<<s_val2<<endl;
-				continue;
+				return 0;
 			}
 		}
 		
@@ -59,7 +63,7 @@ int main()
 		else if(k=='/')
 		{
 			cout<<"0"<<endl;
-			continue;	
+			return 0;	
 		}	
 	}
 

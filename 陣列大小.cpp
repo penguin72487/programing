@@ -1,6 +1,6 @@
 #include<iostream>
 using namespace std;
-int a[536698431];
+int a[536698431 ];
 int main()
 {
 	int *p=new int [2147483648];

@@ -1,7 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<string>
-//using namespace std;
+using namespace std;
 using std::reverse;
 using std::string;
 using std::cout;
@@ -18,9 +18,9 @@ int main()
 {
 	cin.tie(0);
 	cout.tie(0);
-	char k='-';
-	string s_val,s_val2;
-	while (cin>>s_val>>k>>s_val2)
+	char k='/';
+	string s_val="12300000000000004",s_val2="5678";
+	//while (cin>>s_val>>k>>s_val2)
 	{
 	//	cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
 		for(auto it=s_val.begin();it!=s_val.end();it++)
@@ -302,19 +302,19 @@ void di(string s_val,string s_val2)
 	val2_di.assign(s_val.length()-s_val2.length(),0); 
 	for(auto it=s_val2.begin();it!=s_val2.end();it++)
 		val2_di+=(*it);
-	/*
+	
 	for(int j=0;j<val2_di.length();j++)
 			cout<<val2_di[j];
 			cout<<endl;
-			*/
-	/*
-	for(i=0;i<val_di.length();i++)
+			
+	
+	for(int i=0;i<val_di.length();i++)
 	cout<<val_di[i];
 	cout<<endl;
-	for(i=0;i<val2_di.length();i++)
+	for(int i=0;i<val2_di.length();i++)
 	cout<<val2_di[i];
 	cout<<endl;
-	*/
+	
 	while(val2_di.length()>=s_val2.length())
 	//while(!zero(val2_di)) 
 	{

@@ -251,5 +251,5 @@ void di(vector <int> val,vector <int> val2)
 	ans_di.clear();
 	val.clear();
 	val2.clear();
-	reverse(ans.begin(),ans.end());	
+	reverse(ans.begin(),ans.end());	//答案是正的 
 }

@@ -22,13 +22,13 @@ int main()
 	string ans;
 	cin.tie(0);
 	cout.tie(0);
-	fstream file;
-	file.open("乘法.txt"); 
+	//fstream file;
+	//file.open("乘法.txt"); 
 	char k;
 	string s_val,s_val2;
-	file>>s_val>>k>>s_val2;
+	//file>>s_val>>k>>s_val2;
 	
-	//while (cin>>s_val>>k>>s_val2)
+	while (cin>>s_val>>k>>s_val2)
 	{
 		//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
 		
@@ -414,28 +414,28 @@ string ti(string val,string val2)
 	d.assign(val2.begin(),val2.begin()+n);
 	c.assign(val2.begin()+n,val2.end());
 	
-	string formul_1,formul_2,formul_3,formul_4;
+	string cal_1,cal_2,cal_3,cal_4;
 	
-	formul_1=ti(a,c);
+	cal_1=ti(a,c);
 //	cout<<"第1\n";
-	formul_2=ti(b,d);
+	cal_2=ti(b,d);
 //	cout<<"第1POP\n";
 //	cout<<"第2\n";
-	formul_3=ti(pl(a,b),pl(c,d));
+	cal_3=ti(pl(a,b),pl(c,d));
 //	cout<<"第2POP\n";
 //	cout<<"第3\n";
-	formul_4=mi(formul_3,pl(formul_1,formul_2));
+	cal_4=mi(cal_3,pl(cal_1,cal_2));
 //	cout<<"第3POP\n";
 //	cout<<"第4\n";
 	for(int i=0;i<2*n;i++)
 	{
-		formul_1.insert(formul_1.begin(),0);
+		cal_1.insert(cal_1.begin(),0);
 	}
 	for(int i=0;i<n;i++)
 	{
-		formul_4.insert(formul_4.begin(),0);
+		cal_4.insert(cal_4.begin(),0);
 	}
-	ans=pl(pl(formul_1,formul_2),formul_4);
+	ans=pl(pl(cal_1,cal_2),cal_4);
 //	cout<<"第4POP\n";
 	return ans;
 

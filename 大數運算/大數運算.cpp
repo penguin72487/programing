@@ -15,7 +15,7 @@ void di(vector <int> val,vector <int> val2);
 int main()
 {
 	fstream file;
-	file.open("­¼ªk.txt"); 
+	file.open("­¼ªk1.txt"); 
 	char k;
 	string s_val,s_val2;
 	file>>s_val>>k>>s_val2;

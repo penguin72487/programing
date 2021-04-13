@@ -18,8 +18,8 @@ int main()
 {
 	cin.tie(0);
 	cout.tie(0);
-	char k='/';
-	string s_val="12300000000000004",s_val2="5678";
+	char k='*';
+	string s_val="12345678910",s_val2="7006652";
 	//while (cin>>s_val>>k>>s_val2)
 	{
 	//	cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";

@@ -33,32 +33,35 @@ int main()
 			c_a=tmp[0];
 			int a,b;
 				
-				a=val.top();
+				b=val.top();
 			//	cout<<a<<"pop"<<endl;
 				val.pop();
-				b=val.top();
+				a=val.top();
 			//	cout<<b<<"pop"<<endl;
 				val.pop();
-			//	cout<<a<<" ©M "<<b<<endl;
+			//	cout<<a<<" cM "<<b<<endl;
 			 
 			switch(tmp[0])
 			{
 				
 				
 				case '+':
-				
+				//cout<<a<<" + "<<b<<endl;
 				val.push(a+b);
 				//cout<<val.top()<<endl;
 				break;
 				case '-':
+				//cout<<a<<" - "<<b<<endl;
 				val.push(a-b);
 				//cout<<val.top()<<endl;
 				break;
 				case '*':
+				//cout<<a<<" * "<<b<<endl;
 				val.push(a*b);
 				//cout<<val.top()<<endl;
 				break;
 				case '/':
+				//cout<<a<<" / "<<b<<endl;
 				val.push(a/b);
 				//cout<<val.top()<<endl;
 				break;
@@ -67,4 +70,3 @@ int main()
 	}
 	cout<<val.top()<<endl;
 }
-

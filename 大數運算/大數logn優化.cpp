@@ -17,7 +17,7 @@ vector <unsigned long long> stov(string val,int n);
 int main()
 {
 	fstream file;
-	file.open("乘法.txt"); 
+	file.open("除法.txt"); 
 	char k;
 	string s_val,s_val2;
 	file>>s_val>>k>>s_val2;
@@ -42,7 +42,7 @@ int main()
 			else
 			{
 				val=stov(s_val,18);
-				val2==stov(s_val2,18);
+				val2=stov(s_val2,18);
 			}
 		}
 		else if(k=='/')
@@ -60,8 +60,8 @@ int main()
 			}
 			else
 			{
-				val=stov(s_val,18);
-				val2==stov(s_val2,18);
+				val=stov(s_val,8);
+				val2=stov(s_val2,8);
 			}
 		}
 		else if(k=='*')
@@ -95,11 +95,11 @@ int main()
 			else
 			{
 				val=stov(s_val,18);
-				val2==stov(s_val2,18);
+				val2=stov(s_val2,18);
 			}
 		}
 		/* 
-		cout<<"hi\n";
+		
 		for(auto it=val.begin();it!=val.end();it++)
 		{
 			cout<<*it<<" ";
@@ -118,7 +118,6 @@ int main()
 		}	
 	}
 
-	cout<<"hi\n";
 	switch (k)
 	{
 		case '+':
@@ -184,7 +183,7 @@ bool big(vector <unsigned long long> val,vector <unsigned long long> val2)//比大
 {
 	
 	int n=max(val.size(),val2.size());
-	while(*(val.end()-1)==0&&val.size()>val2.size())//把頭的0去掉 
+	while(*(val.end()-1)==0&&val.size()>1)//把頭的0去掉 
 	{
 		val.pop_back();
 	} 
@@ -192,11 +191,11 @@ bool big(vector <unsigned long long> val,vector <unsigned long long> val2)//比大
 	{
 		val2.pop_back();
 	}
-
 	if(zero(val)==1)
 	return 1;
 	if(zero(val2)==1)
 	return 0;
+	
 	for(int i=0;i<n;i++)
 		{
 			if(val.size()<val2.size())
@@ -266,7 +265,18 @@ void pl(vector <unsigned long long> val,vector <unsigned long long> val2)
 
 void mi(vector <unsigned long long> val,vector <unsigned long long> val2)
 {	
-
+/*
+	for(auto it=val.begin();it!=val.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<"\n-\n";
+	for(auto it=val2.begin();it!=val2.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<"\n";
+*/
 	for(int i=0;i<val.size()-val2.size();i++) 
 	{
 		val2.push_back(0);		
@@ -329,7 +339,16 @@ void di(vector <unsigned long long> val,vector <unsigned long long> val2)
 	
 	for(int j=0;j<val2.size();j++)
 		val2_di.push_back(val2[j]);
-
+	for(auto it=val_di.begin();it!=val_di.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<"\n";
+	for(auto it=val2_di.begin();it!=val2_di.end();it++)
+	{
+		cout<<*it<<" ";
+	}
+	cout<<"\n";
 	while(val2_di.size()>=val2.size())
 	{
 		int i=0;
@@ -344,7 +363,9 @@ void di(vector <unsigned long long> val,vector <unsigned long long> val2)
 			val_di.clear();
 			val_di.assign(ans.begin(),ans.end());
 			ans.clear();
+			//cout<<i<<" ";
 		}
+		cout<<i<<" ";
 		ans_di.push_back(i);
 		val2_di.erase(val2_di.begin());		
 	}

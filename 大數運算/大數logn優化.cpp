@@ -154,7 +154,7 @@ vector <unsigned long long> stov(string val,int n)
 	for(int i=val.length();i>0;i-=n)
 	{
 		string temp;
-		temp.assign(val.end()-1,val.end()-1-n);
+		temp.assign(val.end()-1-(),val.end()-1-n);
 		ans.push_back(stoi(temp));
 	}
 	for(auto it=ans.begin();it!=ans.end();it++)

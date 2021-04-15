@@ -7,6 +7,8 @@ int mazesol(int x,int y);
 	int n;
 int main()
 {
+	cin.tie(0);
+	cout.tie(0);
 	cin>>n; 
 	for(int i=0;i<n;i++)
 	{
@@ -56,10 +58,10 @@ int mazesol(int x,int y)
 {
 
 	//cout<<x<<" "<<y<<endl;
-	if(maze2[x][y]!=0)
-	{
-		return maze2[x][y]+1;
-	}
+//	if(maze2[x][y]!=0)
+//	{
+//		return maze2[x][y];
+//	}
 	if(maze[x][y]=='#')
 	{
 		return 1000;

@@ -1,15 +1,18 @@
 #include<iostream>
 #include<algorithm>
 #include<fstream>
+#include<queue> 
 using namespace std;
+struct step;
 int mazesol(int x,int y);
-	char maze[10][10];
-	int maze2[10][10]={1000};
+queue<step> list;
+	char maze[100][100];
+	int maze2[100][100]={1000};
 	int n;
 int main()
 {
 	fstream file;
-	file.open("°g®c.txt");
+	file.open("°g®c1.txt");
 	file>>n;
 	for(int i=0;i<n;i++)
 	{
@@ -36,6 +39,7 @@ int main()
 		}
 		cout<<"\n";
 	}
+	/*
 	for(int i=0;i<n;i++)
 	{
 		for(int j=0;j<n;j++)
@@ -46,16 +50,18 @@ int main()
 		}
 		cout<<"\n";
 	}
+	*/
 	n-=2;
 	cout<<mazesol(n,n)<<endl;
 }
 int mazesol(int x,int y)
 {
 
-	//cout<<x<<" "<<y<<endl;
+	cout<<x<<" "<<y<<endl;
+	
 	if(maze2[x][y]!=0)
 	{
-		return maze2[x][y]+1;
+		return maze2[x][y];
 	}
 	if(maze[x][y]=='#')
 	{
@@ -67,6 +73,14 @@ int mazesol(int x,int y)
 		return 1;
 	}
 	maze[x][y]='#';
+	for(int i=0;i<n+2;i++)
+	{
+		for(int j=0;j<n+2;j++)
+		{
+			cout<<maze[i][j];
+		}
+		cout<<"\n";
+	}
 	int u,d,l,r;
 	d=mazesol(x+1,y);
 	u=mazesol(x-1,y);
@@ -77,4 +91,8 @@ int mazesol(int x,int y)
 	
 
 }
+struct step{
+	int x;
+	int y;
+};
 

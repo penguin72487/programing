@@ -17,7 +17,7 @@ vector <unsigned long long> stov(string val,int n);
 int main()
 {
 	fstream file;
-	file.open("°£ªk.txt"); 
+	file.open("­¼ªk.txt"); 
 	char k;
 	string s_val,s_val2;
 	file>>s_val>>k>>s_val2;
@@ -324,7 +324,8 @@ void ti(vector <unsigned long long> val,vector <unsigned long long> val2)
 			 	else
 	    			ans[i+j+1]+=ans[i+j]/100000000;
 	    		ans[i+j]=ans[i+j]%100000000;
-	   		}		
+	   		}
+			printf("%ull ",ans[i+j]);		
 		}
 		
 	}

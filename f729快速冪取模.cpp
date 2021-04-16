@@ -4,9 +4,14 @@ using namespace std;
 int pow_mod(int a,int b,int c);
 int main()
 {
-	int a,b;
-	cin>>a>>b;
-	cout<<pow_mod(a,b,1000000007)<<endl; 
+	int a,b,n;
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cin>>a>>b;
+		cout<<pow_mod(a,b,1000000007)<<endl; 
+	}
+	
 }
 int pow_mod(int a,int b,int c)
   {

@@ -8,13 +8,13 @@ struct step{
 };
 
 queue<step> list;
-	char maze[100][100];
-	int maze2[100][100]={0};
+	char maze[1000][1000];
+	int maze2[1000][1000]={0};
 	int n;
 int main()
 {
 	cin.tie(0);
-	cout.tie(0); 
+	ios_base::sync_with_stdio(false); 
 	cin>>n;
 	for(int i=0;i<n;i++)
 	{

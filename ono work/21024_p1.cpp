@@ -1,11 +1,11 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 int main()
 {
- int a,b;
- cin>>a>>b;
- cout<<a<<" "<<b<<endl;
- a^=b^=a^=b;
- cout<<a<<" "<<b<<endl;
+	int a,b,c;
+	cin>>a>>b>>c;
+	cout<<min(min(a,b),c)<<endl;
+	
 }
 

@@ -14,14 +14,14 @@ int main()
 		cin>>tre[i];
 		tol+=tre[i];
 	}
-	if(tol%3==0)
+	if(tol%3!=0)
 	{
 		cout<<"NO"<<endl;
 	}
 	else
 	{
+		avg=tol/3;
 		bfs(0,0,0,0);
-			avg=tol/3;
 		if(can)
 		{
 		

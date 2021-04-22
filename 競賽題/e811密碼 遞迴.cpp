@@ -8,10 +8,15 @@ int main()
 {
 	
 	cin>>p>>q>>r>>a[0]>>a[1]>>n;
-	long long int ans=f(n)%10000;
-	for(int i=0;i<3-log10(ans);i++) 
+	//long long int ans=f(n)%10000;
+	for(long long int i=0;i<n;i++)
+	{
+		a[0]^=a[1]^=a[0]^=a[1];
+		a[1]+=a[0]%10000;
+	}
+	for(int i=0;i<3-log10(a[n]);i++) 
 	cout<<"0";
-	cout<<ans<<endl;
+	cout<<a[n]<<endl;
 
 	return 0;
 }

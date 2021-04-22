@@ -34,7 +34,7 @@ int sort_sol(int* arr,int arr_begin,int arr_end)
 		int pivot=arr[arr_end];
 		int i=arr_begin;
 
-		for(int j=arr_begin;j<=arr_end;j++)
+		for(int j=arr_begin;j<arr_end;j++)
 		{
 			if(arr[j]<=pivot)
 			{

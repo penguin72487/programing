@@ -8,14 +8,18 @@ struct step{
 };
 
 queue<step> list;
-	int maze[1000][1000];
-	int maze2[1000][1000]={0};
+	int maze[1001][1001];
+	int maze2[1001][1001]={0};
 	int n;
 int main()
 {
-	cin.tie(0);
+	//cin.tie(0);
 	ios_base::sync_with_stdio(false); 
 	cin>>n;
+	int* x=new int;
+	int* y=new int;
+	cin>>(*x)>>(*y);
+
 	for(int i=0;i<n;i++)
 	{
 		for(int j=0;j<n;j++)
@@ -23,49 +27,46 @@ int main()
 			cin>>maze[i][j];
 		}
 	}
-	int* x=new int;
-	int* y=new int;
-	cin>>*x>>*y;
-	
-	n-=2;
+	//cout<<"**"<<*x<<" "<<*y<<endl; 
+	//n-=2;
 	
 	{
 		step temp;
 		temp.x=*x;
 		temp.y=*y;
 		list.push(temp);
-//		maze2[*x][*y]=1;
-//		if(abs(maze[*x][*y+1]-maze[*x][*y])<3&&maze2[*x][*y+1]>maze2[*x][*y])
-//		{
-//			step temp;
-//			temp.x=*x;
-//			temp.y=*y+1;
-//			list.push(temp);
-//		}
-//	
-//		if(abs(maze[*x][*y-1]-maze[*x][*y])<3&&maze2[*x][*y-1]>maze2[*x][*y])
-//		{
-//			step temp;
-//			temp.x=*x;
-//			temp.y=*y-1;
-//			list.push(temp);
-//		}
-//
-//		if(abs(maze[*x+1][*y]-maze[*x][*y])<3&&maze2[*x+1][*y]>maze2[*x][*y])
-//		{
-//			step temp;
-//			temp.x=*x+1;
-//			temp.y=*y;
-//			list.push(temp);
-//		}
-//
-//		if(abs(maze[*x-1][*y]-maze[*x][*y])<3&&maze2[*x-1][*y]>maze2[*x][*y])
-//		{
-//			step temp;
-//			temp.x=*x-1;
-//			temp.y=*y;
-//			list.push(temp);
-//		}
+		maze2[*x][*y]=1;
+		if(abs(maze[*x][*y+1]-maze[*x][*y])<3)
+		{
+			step temp;
+			temp.x=*x;
+			temp.y=*y+1;
+			list.push(temp);
+		}
+	
+		if(abs(maze[*x][*y-1]-maze[*x][*y])<3)
+		{
+			step temp;
+			temp.x=*x;
+			temp.y=*y-1;
+			list.push(temp);
+		}
+
+		if(abs(maze[*x+1][*y]-maze[*x][*y])<3)
+		{
+			step temp;
+			temp.x=*x+1;
+			temp.y=*y;
+			list.push(temp);
+		}
+
+		if(abs(maze[*x-1][*y]-maze[*x][*y])<3)
+		{
+			step temp;
+			temp.x=*x-1;
+			temp.y=*y;
+			list.push(temp);
+		}
 	}
 	int st_x=*x,st_y=*y;
 	delete x;
@@ -75,13 +76,21 @@ int main()
 
 		int x=list.front().x;
 		int y=list.front().y;
-		if(x==st_x&&y==st_y)
+		//cout<<x<<" "<<y<<endl; 
+		if(x<0||y<0||x>=n||y>=n)
+		{
+			list.pop();
+			continue;
+		}
+		if(maze2[x][y]==1)
+		{
+			list.pop();
+			continue;
+		}
 		maze2[x][y]=1;
-		else
-		maze2[x][y]=min(min(maze2[x-1][y],maze2[x+1][y]),min(maze2[x][y-1],maze2[x][y+1]))+1;
+		//cout<<"+++++++++++++++++1"<<endl;
 		
-		
-		if(abs(maze[x][y+1]-maze[x][y])<3&&maze2[x][y+1]>maze2[x][y])
+		if(abs(maze[x][y+1]-maze[x][y])<3&&maze2[x][y+1]==0)
 		{
 			step temp;
 			temp.x=x;
@@ -89,7 +98,7 @@ int main()
 			list.push(temp);
 		}
 	
-		if(abs(maze[x][y-1]-maze[x][y])<3&&maze2[x][y-1]>maze2[x][y])
+		if(abs(maze[x][y-1]-maze[x][y])<3&&maze2[x][y-1]==0)
 		{
 			step temp;
 			temp.x=x;
@@ -97,7 +106,7 @@ int main()
 			list.push(temp);
 		}
 
-		if(abs(maze[x+1][y]-maze[x][y])<3&&maze2[x+1][y]>maze2[x][y])
+		if(abs(maze[x+1][y]-maze[x][y])<3&&maze2[x+1][y]==0)
 		{
 			step temp;
 			temp.x=x+1;
@@ -105,28 +114,38 @@ int main()
 			list.push(temp);
 		}
 
-		if(abs(maze[x-1][y]-maze[x][y])<3&&maze2[x-1][y]>maze2[x][y])
+		if(abs(maze[x-1][y]-maze[x][y])<3&&maze2[x-1][y]==0)
 		{
 			step temp;
 			temp.x=x-1;
 			temp.y=y;
 			list.push(temp);
 		}
+		list.pop();
 	}
 
-		list.pop();
+		
 
 	
 	//if(list.empty())
 	//cout<<"No solution!"<<endl;
-	
+	/*
+	for(int i=0;i<n;i++)
 	{
-		int ans;
+		for(int j=0;j<n;j++)
+		{
+			cout<<maze2[i][j];
+		}
+		cout<<"\n";
+	}
+	*/
+	{
+		int ans=0;
 		for(int i=0;i<n;i++)
 		{
 			for(int j=0;j<n;j++)
 			{
-				ans=max(maze2[i][j],ans);
+				ans+=maze2[i][j];
 			}
 		}
 		cout<<ans<<endl;

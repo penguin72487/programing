@@ -34,38 +34,38 @@ int main()
 		temp.x=*x;
 		temp.y=*y;
 		list.push(temp);
-		maze2[*x][*y]=1;
-		if(abs(maze[*x][*y+1]-maze[*x][*y])<3&&maze2[*x][*y+1]>maze2[*x][*y])
-		{
-			step temp;
-			temp.x=*x;
-			temp.y=*y+1;
-			list.push(temp);
-		}
-	
-		if(abs(maze[*x][*y-1]-maze[*x][*y])<3&&maze2[*x][*y-1]>maze2[*x][*y])
-		{
-			step temp;
-			temp.x=*x;
-			temp.y=*y-1;
-			list.push(temp);
-		}
-
-		if(abs(maze[*x+1][*y]-maze[*x][*y])<3&&maze2[*x+1][*y]>maze2[*x][*y])
-		{
-			step temp;
-			temp.x=*x+1;
-			temp.y=*y;
-			list.push(temp);
-		}
-
-		if(abs(maze[*x-1][*y]-maze[*x][*y])<3&&maze2[*x-1][*y]>maze2[*x][*y])
-		{
-			step temp;
-			temp.x=*x-1;
-			temp.y=*y;
-			list.push(temp);
-		}
+//		maze2[*x][*y]=1;
+//		if(abs(maze[*x][*y+1]-maze[*x][*y])<3&&maze2[*x][*y+1]>maze2[*x][*y])
+//		{
+//			step temp;
+//			temp.x=*x;
+//			temp.y=*y+1;
+//			list.push(temp);
+//		}
+//	
+//		if(abs(maze[*x][*y-1]-maze[*x][*y])<3&&maze2[*x][*y-1]>maze2[*x][*y])
+//		{
+//			step temp;
+//			temp.x=*x;
+//			temp.y=*y-1;
+//			list.push(temp);
+//		}
+//
+//		if(abs(maze[*x+1][*y]-maze[*x][*y])<3&&maze2[*x+1][*y]>maze2[*x][*y])
+//		{
+//			step temp;
+//			temp.x=*x+1;
+//			temp.y=*y;
+//			list.push(temp);
+//		}
+//
+//		if(abs(maze[*x-1][*y]-maze[*x][*y])<3&&maze2[*x-1][*y]>maze2[*x][*y])
+//		{
+//			step temp;
+//			temp.x=*x-1;
+//			temp.y=*y;
+//			list.push(temp);
+//		}
 	}
 	int st_x=*x,st_y=*y;
 	delete x;

@@ -11,11 +11,7 @@ struct tree{
 		l=NULL;
 		r=NULL;
 	}
-	~tree()
-	{
-		delete l;
-		delete r;
-	}
+
 }high,*tree_end;
 tree* dfserch(int find,tree* tmp);
 int dfshigh(tree* tmp);

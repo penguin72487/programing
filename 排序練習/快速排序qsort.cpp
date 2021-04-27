@@ -15,14 +15,15 @@ int main()
 }
 void qsort(int* arr,int arr_begin,int arr_end)
 {
+	
+	if(arr_begin<arr_end)
+	{
+		int p_index =sort_sol(arr,arr_begin,arr_end);
 	for(int i=0;i<5;i++)
 	{
 		cout<<arr[i]<<" ";
 	}
 	cout<<"\n";
-	if(arr_begin<arr_end)
-	{
-		int p_index =sort_sol(arr,arr_begin,arr_end);
 		qsort(arr,arr_begin,p_index-1);
 		qsort(arr,p_index+1,arr_end);
 			

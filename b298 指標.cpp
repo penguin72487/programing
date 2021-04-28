@@ -1,19 +1,19 @@
 #include<iostream>
 #include<queue>
 #include<vector>
-using namespace std;
+using std::cin;
 struct adj{
-	vector<adj*> list;
+	std::vector<adj*> list;
 	bool TUIHU=0;
 };
 int main()
 {
 	cin.tie(0);
-	cout.tie(0);
-	ios_base::sync_with_stdio(0);
+	std::cout.tie(0);
+	std::ios_base::sync_with_stdio(0);
 	int n,m,l,q;
-	cin>>n>>m>>l>>q;
-	queue<adj*> a;
+	std::cin>>n>>m>>l>>q;
+	std::queue<adj*> a;
 	adj factory[n+1];
 	for(int i=0;i<m;i++)
 	{
@@ -27,17 +27,7 @@ int main()
 		cin>>bad;
 		a.push(&factory[bad]);
 		factory[bad].TUIHU=1;
-	}
-	/*
-	for(int i=0;i<n;i++)
-	{
-		for(auto it=Adj_list[i].begin();it!=Adj_list[i].end();it++)
-		{
-			cout<<*it<<endl;
-		}
-		cout<<endl;
-	} 
-*/		
+	}	
 	while(!a.empty())
 	{
 		adj* tmp=a.front();
@@ -58,11 +48,11 @@ int main()
 		cin>>qu;
 		if(factory[qu].TUIHU==1)
 		{
-			cout<<"TUIHUOOOOOO"<<endl;
+			std::cout<<"TUIHUOOOOOO\n";
 		}
 		else
 		{
-			cout<<"YA~~"<<endl;
+			std::cout<<"YA~~\n";
 		}
 	}
 }

@@ -4,13 +4,20 @@
 using namespace std;
 struct tree{
 	int val;
-	tree *l;
-	tree *r;
+	tree *l=new tree;
+	tree *r=new tree;
 	tree()
 	{
 		l=NULL;
 		r=NULL;
+		
 	}
+	~tree()
+	{
+		delete l;
+		delete r;
+	}
+	
 
 }high,*tree_end;
 tree* dfserch(int find,tree* tmp);
@@ -25,8 +32,8 @@ int main()
 	cin>>val>>l>>r;
 	high.val=val;
 	tree* temp = new tree[2];
-	(*temp).val=l;
-	(*(temp+1)).val=r;
+	temp->val=l;
+	(temp+1)->val=r;
 	high.l=temp;
 	high.r=temp+1; 
 	for(int i=0;i<n-1;i++)

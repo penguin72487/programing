@@ -18,12 +18,12 @@ int main()
 		cin>>tmp>>tmp2;
 		Adj_list[tmp].push_back(tmp2);
 	}
-	int bad[l];
 	for(int i=0;i<l;i++)
 	{
-		cin>>bad[i];
-		a.push(bad[i]);
-		TUIHU[bad[i]]=1;
+		int bad;
+		cin>>bad;
+		a.push(bad);
+		TUIHU[bad]=1;
 	}
 	/*
 	for(int i=0;i<n;i++)

@@ -1,17 +1,28 @@
-#include<iostream>
+#include<stdio.h>
 #include<algorithm>
 using namespace std;
-
+void swap(int& a,int& b)
+{
+	int t;
+	t=a;
+	a=b;
+	b=t;
+}
 void qsort(int* arr,int arr_begin,int arr_end);
 int sort_sol(int* arr,int arr_begin,int arr_end);
 int main()
 {
-	int a[] = {1, 3, 7, 0, 4};
-	int n=5;
-	qsort(a,0,n-1);
+	int n;
+	scanf("%d",&n);
+	int a[n];
 	for(int i=0;i<n;i++)
 	{
-		cout<<a[i]<<" ";
+		scanf("%d",&a[i]);
+	}
+	std::sort(a,a+n);
+	for(int i=0;i<n;i++)
+	{
+		printf("%d ",a[i]);
 	}
 }
 void qsort(int* arr,int arr_begin,int arr_end)
@@ -29,17 +40,20 @@ void qsort(int* arr,int arr_begin,int arr_end)
 }
 int sort_sol(int* arr,int arr_begin,int arr_end)
 {
-		
-		int i=arr_begin;
+		int pivot=arr[arr_end];
+		int i=arr_begin-1;
 		for(int j=arr_begin;j<arr_end;j++)
 		{
-			if(arr[j]<=arr[arr_end])
+			if(arr[j]<pivot)
 			{
-				swap(arr[i],arr[j]);
 				i++;
+
+				swap(arr[i],arr[j]);
  
 			}
 		}
+
+		i++;
 		swap(arr[i],arr[arr_end]);
 		return i;
 		

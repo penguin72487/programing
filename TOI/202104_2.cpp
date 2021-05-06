@@ -2,7 +2,7 @@
 #include<list>
 using namespace std;
 
-int tmp,tmp2;
+
 bool even(int x)
 {
 
@@ -21,26 +21,21 @@ int main()
 	int n;
 	cin>>n;
 	list<int> a;
+	int tmp,tmp2;
 	for(int i=0;i<n;i++)
 	{
 		
 		cin>>tmp>>tmp2;
-		a.push_back(tmp);
-		int tol=tmp;
-		for(auto it=a.begin();it!=(--a.end());it++)
+		
+		unsigned long long tol=0;
+		for(auto it=a.begin();it!=a.end();it++)
 		{
 			*it-=tmp2;
 		}
 		a.remove_if(even);
-		/*
-		cout<<"list\n";
-		for(auto it=a.begin();it!=(a.end());it++)
-		{
-			cout<<*it<<" ";
-		}
-		cout<<"\n";
-		*/
-		for(auto it=a.begin();it!=(--a.end());it++)
+
+		a.push_back(tmp);
+		for(auto it=a.begin();it!=a.end();it++)
 		{
 			tol+=*it;
 		}

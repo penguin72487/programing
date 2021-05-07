@@ -39,11 +39,7 @@ long long  spend(long long op,long long ed,int* so)
     //int low = op, high = ed - 1;
     long long lv;
 
-<<<<<<< .mine
-    while (op<ed-1)
-=======
     while (op <ed)
->>>>>>> .theirs
     {
        	lv = (op + ed) / 2;
 		//cout<<op<<" "<<ed<<endl;
@@ -60,23 +56,13 @@ long long  spend(long long op,long long ed,int* so)
 		}
         else if ( totle > c)
         {
-<<<<<<< .mine
-            ed = lv;
-
-=======
         //	cout<<"1"<<endl;
             ed = lv-1;
->>>>>>> .theirs
         }
         else if (totle < c)
         {
-<<<<<<< .mine
-            op = lv ;
-
-=======
         //	cout<<"2"<<endl; 
             op = lv +1;
->>>>>>> .theirs
         }
     }
 

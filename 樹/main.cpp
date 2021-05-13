@@ -9,7 +9,34 @@ class Node{
         cp_Next = nullptr;
     }
 };
-
+template<class CL1>
+class iter{
+	public :Node<CL1>* now;
+	public :iter(Node<CL1>* tmp)
+	{
+		now=tmp;
+	}
+	public :iter<CL1>operator=(Node<CL1>* tmp)
+	{
+		return tmp;
+	}
+	public :CL1& operator*()
+	{
+		return now->c_Field;
+	}
+	public :iter<CL1>operator++()
+	{
+		return now=now->cp_Next;
+	}
+	public :iter<CL1>operator++(int)
+	{
+		return now=now->cp_Next;
+	}
+	public :bool operator!=(iter<CL1> tmp)
+	{
+		return bool(!tmp.now);
+	}
+};
 template<class CL1>
 class Sp1LS{
     public: Node<CL1>* cp_Start;
@@ -28,7 +55,16 @@ class Sp1LS{
             op_TmpC = op_TmpN;
         }
     }
-
+	public: iter<CL1> begin()
+	{
+		//iter<CL1> tmp(cp_Start);
+		return iter<CL1> (cp_Start);
+	 } 
+	public: iter<CL1> end()
+	{
+		//iter<CL1> tmp(cp_Start);
+		return  iter<CL1> (cp_Curr->cp_Next);
+	 }  
     public: void fn_Trace(){
         std::cout<< "start->";
         for(Node<CL1>* op_TmpC= cp_Start;
@@ -89,35 +125,23 @@ class Sp1LS{
     }
 
     public: void fn_UpdNode(int i_Ind, CL1 c_Field){
-        Node<CL1>* tmp=cp_Start;
+        iter<CL1> it= cp_Start;
         int n=i_Ind;
         while(n--)
         {
-            tmp=tmp->cp_Next;
+            ++it;
         }
-        tmp->c_Field=c_Field;
-        Node<CL1>* op_Node = new Node<CL1>(c_Field);
-        if(tmp == cp_Start){
-            cp_Start = op_Node;
-            cp_Curr = op_Node;
-        }
-        else{
-            cp_Curr->cp_Next = op_Node;
-            cp_Curr = op_Node;
-        }
-        i_NumNd++;
-
-
+        *it=c_Field;
     }
 
     public: void fn_InsNode(int i_Ind, CL1 c_Field){
-        Node<CL1>* tmp=cp_Start;
+        iter<CL1> it=cp_Start;
         int n=i_Ind;
         while(n--)
         {
-            tmp=tmp->cp_Next;
+            it++;
         }
-        tmp->c_Field=c_Field;
+        *it=c_Field;
 
 
     }
@@ -141,6 +165,10 @@ int main(){
     o_LS.fn_Trace();
     o_LS.fn_InsNode(2,87);
     o_LS.fn_Trace();
-
+    std::cout<<"HI\n";
+	for(auto it=o_LS.begin();it!=o_LS.end();++it)
+	{
+		std::cout<<*it<<" ";
+	}
     return 0;
 }

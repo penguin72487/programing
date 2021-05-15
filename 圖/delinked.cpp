@@ -5,6 +5,7 @@ class node{
     public: T val;
     public: node* next=nullptr;
     public: node* pre=nullptr;
+public:
     node()
     {
     	cout<<"節點出現拉\n"; 
@@ -17,48 +18,25 @@ class node{
     {
     	
 	}
+	node<T>* operator=(node<T>* tmp)
+	{
+		return tmp;
+	}
+	T& operator*()
+	{
+		return val;
+	}
+	node<T>* operator++(int k)
+	{
+		return next;
+	}
+	node<T>* operator--(int k)
+	{
+		return pre;
+	}
+	
 };
-template<class T>
-class iter{
-	public :node<T>* now=nullptr;
-	public :iter(node<T> tmp)
-	{
-		 now=&tmp;
-		 //return this;
-	}
-	public :iter<T>operator=(iter<T> tmp)
-	{
-		return now=tmp->now;
-	}
-	public :T& operator*()
-	{
-		return now->val;
-	}
-	public :iter<T>operator++()
-	{
-		//cout<<"又要往下'\n";
-		return iter<T>(now->next);
-	}
-	public :iter<T>operator++(int k)
-	{
-		//cout<<"又要妄下'\n";
-		return iter<T> (now->next);
-	}
-	public :bool operator!=(iter<T> tmp)
-	{
-	//	cout<<this<<" "<<&tmp<<"\n"; 
-		if(now==tmp.now)
-		{
-			cout<<"0"<<endl; 
-			return 0;
-		}
-		else
-		{
-			cout<<"1"<<endl; 
-			return 1;
-		}
-	}
-};
+
 template<class T>
 class vector{
 public:
@@ -74,14 +52,14 @@ public:
 	}
 	~vector()
 	{
-		auto it=this->begin();
+		auto it=red;
 		for(;it!=this->end();++it)
 		{
 			auto tmp=it;
-			cout<<*tmp<<"刪除\n";
-			delete tmp.now;
+			cout<<&tmp<<"刪除\n";
+			delete tmp;
 		}
-		delete it.now;
+		delete it;
 	}
 	void clear()
 	{
@@ -99,15 +77,20 @@ public:
 		ed->next=new node<T>(ed);
 		ed=ed->next;
 	}
-	public: iter<T> begin()
+	public: node<T>* begin()
 	{
-		return iter<T> (op);
+		return op;
 	 }
-	public: iter<T> end()
+	public: node<T>* end()
 	{
 		//iter<CL1> tmp(cp_Start);
-		return  iter<T> (ed);
-	 }
+		return  ed;
+	}
+	public: istream &operator>>(istream &s, T tmp )
+	{
+		this.push_back(tmp);
+		return s;
+	}
 };
 int main()
 {
@@ -120,9 +103,9 @@ int main()
 		cin>>tmp;
 		a.push_back(tmp);
 	}
-	for(iter<int> it=a.begin();it!=a.end();it++)
+	for(auto it=a.begin();it!=a.end();it++)
 	{
-		cout<<*it<<" ";
+		cout<<it<<" ";
 	}
 }
 

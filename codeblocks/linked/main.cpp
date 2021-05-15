@@ -15,20 +15,21 @@ class node{
 	}
 };
 template<class T>
-class p_vector{
+
+class vector{
 public:
 	node<T>* red=new node<T> ;
 	node<T>* op=new node<T>;
 	node<T>* ed;
 	int num=0;
-	p_vector()
+	vector()
 	{
 		op->pre=red;
 		red->next=op;
 		ed=op;
 
 	}
-	~p_vector()
+	~vector()
 	{
 		for(auto it=red;it!=nullptr;++it)
 		{
@@ -58,10 +59,13 @@ public:
 };
 
 template<class T>
-    class iter: public p_vector{
+class iter: public vector<T>{
 
 
 	public: node<T>* now;
+	iter(){
+
+	}
 	public: iter(node<T>* tmp)
 	{
 		now=tmp;
@@ -101,7 +105,7 @@ template<class T>
 };
 int main()
 {
-	p_vector<int> a;
+	vector<int> a;
 	int n;
 	cin>>n;
 	for(int i=0;i<n;i++)
@@ -110,5 +114,6 @@ int main()
 		cin>>tmp;
 		a.push_back(tmp);
 	}
+
 return 0;
 }

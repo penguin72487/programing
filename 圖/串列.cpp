@@ -36,6 +36,7 @@ template <class T>
 		void push_back(T a)
 		{
 			ed->val=a;
+			op=ed;
 			ed=new node<T>;
 			num++;
 		}

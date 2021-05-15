@@ -7,7 +7,7 @@ class node{
     public: node* pre=nullptr;
     node()
     {
-    	cout<<"葉子出現拉\n"; 
+    	cout<<"葉子出現拉\n";
 	}
     ~node()
     {
@@ -34,22 +34,22 @@ class iter{
 		cout<<"又要往下'\n";
 		return now->next;
 	}
-	public :iter<T>operator++(int k)
+	public :iter<T>operator++(int )
 	{
 		cout<<"又要妄下'\n";
-		return now->next;
+		return iter(now->next);
 	}
 	public :bool operator!=(iter<T> tmp)
 	{
-		cout<<this<<" "<<&tmp<<"\n"; 
+		cout<<this<<" "<<&tmp<<"\n";
 		if(this==&tmp)
 		{
-			cout<<"0"<<endl; 
+			cout<<"0"<<endl;
 			return 0;
 		}
 		else
 		{
-			cout<<"1"<<endl; 
+			cout<<"1"<<endl;
 			return 1;
 		}
 	}
@@ -92,7 +92,7 @@ public:
 		ed->val=tmp;
 		ed->next=new node<T>;
 		ed=ed->next;
-		
+
 	}
 	public: iter<T> begin()
 	{
@@ -121,4 +121,3 @@ int main()
 		cout<<*it<<" ";
 	}
 }
-

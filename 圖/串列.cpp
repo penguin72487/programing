@@ -12,7 +12,19 @@ template <class T>
 			pre=nullptr;
 		}
 	};
-	
+template <class T> 
+	class iter
+	{
+		public :node<T>* now;
+		operator=(node<T>* tmp)
+		{
+			return now=tmp;
+		}
+		operator++ ()
+		{
+		 return now.next;	
+		} 
+	};
 template <class T> 
 	class vector
 	{

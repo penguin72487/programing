@@ -10,6 +10,7 @@ struct adj{
 bool out=0;
 int main()
 {
+	
 	int n,m;
 	while(cin>>n>>m)
 	{

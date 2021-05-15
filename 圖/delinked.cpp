@@ -7,15 +7,57 @@ class node{
     public: node* pre=nullptr;
     node()
     {
-    	cout<<"葉子出現拉\n"; 
+    	
 	}
     ~node()
     {
-    	delete this;
+    	
 	}
 };
 template<class T>
-class iter{
+class vector{
+public:
+	node<T>* red=new node<T> ;
+	node<T>* op=new node<T>;
+	node<T>* ed;
+	int num=0;
+	vector()
+	{
+		op->pre=red;
+		red->next=op;
+		ed=op;
+		
+	}
+	~vector()
+	{
+		for(auto it=red;it!=nullptr;++it)
+		{
+			auto tmp=it;
+
+			delete tmp;
+		}
+	}
+	void clear()
+	{
+		for(auto it=op;it!=ed;++it)
+		{
+			auto tmp=it;
+
+			delete tmp;
+		}
+	}
+	void push_back(T tmp)
+	{
+		num++;
+		ed->val=tmp;
+		ed->next=new node<T>;
+		ed=ed->next;
+		
+	}
+
+};
+template<class T>
+class iter: public vector{
 	public :node<T>* now;
 	public :iter(node<T>* tmp)
 	{
@@ -54,56 +96,6 @@ class iter{
 		}
 	}
 };
-template<class T>
-class vector{
-public:
-	node<T>* red=new node<T> ;
-	node<T>* op=new node<T>;
-	node<T>* ed;
-	int num=0;
-	vector()
-	{
-		op->pre=red;
-		red->next=op;
-		ed=op;
-	}
-	~vector()
-	{
-		for(auto it=red;it!=nullptr;++it)
-		{
-			auto tmp=it;
-
-			delete tmp;
-		}
-	}
-	void clear()
-	{
-		for(auto it=op;it!=ed;++it)
-		{
-			auto tmp=it;
-
-			delete tmp;
-		}
-	}
-	void push_back(T tmp)
-	{
-		num++;
-		cout<<"又要加一\n";
-		ed->val=tmp;
-		ed->next=new node<T>;
-		ed=ed->next;
-		
-	}
-	public: iter<T> begin()
-	{
-		return iter<T> (op);
-	 }
-	public: iter<T> end()
-	{
-		//iter<CL1> tmp(cp_Start);
-		return  iter<T> (ed);
-	 }
-};
 int main()
 {
 	vector<int> a;
@@ -115,10 +107,6 @@ int main()
 		cin>>tmp;
 		a.push_back(tmp);
 	}
-	for(iter<int> it=a.begin();it!=a.end();it++)
-	{
-		cout<<"hi\n";
-		cout<<*it<<" ";
-	}
+	
 }
 

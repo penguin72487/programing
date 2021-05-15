@@ -7,67 +7,28 @@ class node{
     public: node* pre=nullptr;
     node()
     {
-    	cout<<"葉子出現拉\n";
+
 	}
     ~node()
     {
-    	delete this;
+
 	}
 };
 template<class T>
-class iter{
-	public :node<T>* now;
-	public :iter(node<T>* tmp)
-	{
-		now=tmp;
-	}
-	public :iter<T>operator=(iter<T>* tmp)
-	{
-		return tmp;
-	}
-	public :T& operator*()
-	{
-		return now->val;
-	}
-	public :iter<T>operator++()
-	{
-		cout<<"又要往下'\n";
-		return now->next;
-	}
-	public :iter<T>operator++(int )
-	{
-		cout<<"又要妄下'\n";
-		return iter(now->next);
-	}
-	public :bool operator!=(iter<T> tmp)
-	{
-		cout<<this<<" "<<&tmp<<"\n";
-		if(this==&tmp)
-		{
-			cout<<"0"<<endl;
-			return 0;
-		}
-		else
-		{
-			cout<<"1"<<endl;
-			return 1;
-		}
-	}
-};
-template<class T>
-class vector{
+class p_vector{
 public:
 	node<T>* red=new node<T> ;
 	node<T>* op=new node<T>;
 	node<T>* ed;
 	int num=0;
-	vector()
+	p_vector()
 	{
 		op->pre=red;
 		red->next=op;
 		ed=op;
+
 	}
-	~vector()
+	~p_vector()
 	{
 		for(auto it=red;it!=nullptr;++it)
 		{
@@ -88,25 +49,59 @@ public:
 	void push_back(T tmp)
 	{
 		num++;
-		cout<<"又要加一\n";
 		ed->val=tmp;
 		ed->next=new node<T>;
 		ed=ed->next;
 
 	}
-	public: iter<T> begin()
+
+};
+
+template<class T>
+    class iter: public p_vector{
+
+
+	public: node<T>* now;
+	public: iter(node<T>* tmp)
 	{
-		return iter<T> (op);
-	 }
-	public: iter<T> end()
+		now=tmp;
+	}
+	public :iter<T>operator=(iter<T>* tmp)
 	{
-		//iter<CL1> tmp(cp_Start);
-		return  iter<T> (ed);
-	 }
+		return tmp;
+	}
+	public :T& operator*()
+	{
+		return now->val;
+	}
+	public :iter<T>operator++()
+	{
+		cout<<"又要往下'\n";
+		return now->next;
+	}
+	public :iter<T>operator++(int k)
+	{
+		cout<<"又要妄下'\n";
+		return now->next;
+	}
+	public :bool operator!=(iter<T> tmp)
+	{
+		cout<<this<<" "<<&tmp<<"\n";
+		if(this==&tmp)
+		{
+			cout<<"0"<<endl;
+			return 0;
+		}
+		else
+		{
+			cout<<"1"<<endl;
+			return 1;
+		}
+	}
 };
 int main()
 {
-	vector<int> a;
+	p_vector<int> a;
 	int n;
 	cin>>n;
 	for(int i=0;i<n;i++)
@@ -115,9 +110,5 @@ int main()
 		cin>>tmp;
 		a.push_back(tmp);
 	}
-	for(iter<int> it=a.begin();it!=a.end();it++)
-	{
-		cout<<"hi\n";
-		cout<<*it<<" ";
-	}
+return 0;
 }

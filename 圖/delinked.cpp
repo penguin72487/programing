@@ -56,7 +56,7 @@ public:
 		for(;it!=this->end();++it)
 		{
 			auto tmp=it;
-			cout<<&tmp<<"§R°£\n";
+		//	cout<<&tmp<<"§R°£\n";
 			delete tmp;
 		}
 		delete it;
@@ -86,11 +86,7 @@ public:
 		//iter<CL1> tmp(cp_Start);
 		return  ed;
 	}
-	public: istream &operator>>(istream &s, T tmp )
-	{
-		this.push_back(tmp);
-		return s;
-	}
+
 };
 int main()
 {
@@ -103,9 +99,9 @@ int main()
 		cin>>tmp;
 		a.push_back(tmp);
 	}
-	for(auto it=a.begin();it!=a.end();it++)
+	for(auto it=a.begin();it!=a.end();++it)
 	{
-		cout<<it<<" ";
+		cout<<it->val<<" ";
 	}
 }
 

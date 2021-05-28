@@ -6,6 +6,7 @@ class node{
     public: node* next=nullptr;
     public: node* pre=nullptr;
 public:
+	typedef T& reference;
     node()
     {
     	cout<<"節點出現拉\n"; 
@@ -13,14 +14,11 @@ public:
 	node(node<T>* tmp)
 	{
 		this->pre=tmp;
+		cout<<"節點出現拉\n";
 	}
     ~node()
     {
     	
-	}
-	node<T>* operator=(node<T>* tmp)
-	{
-		return tmp;
 	}
 	T& operator*()
 	{
@@ -30,13 +28,26 @@ public:
 	{
 		return next;
 	}
+	node<T>& operator++()
+	{
+		return next;
+	}
 	node<T>* operator--(int k)
 	{
 		return pre;
 	}
+
 	
 };
-
+template<class T>
+class iter{
+	T* ptr;
+public:
+	typedef T value_type;
+	typedef T* pointer;
+	typedef T& reference;
+public: 
+};
 template<class T>
 class vector{
 public:
@@ -53,10 +64,10 @@ public:
 	~vector()
 	{
 		auto it=red;
-		for(;it!=this->end();++it)
+		for(;it!=ed;++it)
 		{
 			auto tmp=it;
-		//	cout<<&tmp<<"刪除\n";
+			cout<<tmp->val<<"刪除\n";
 			delete tmp;
 		}
 		delete it;

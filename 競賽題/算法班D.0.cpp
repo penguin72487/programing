@@ -42,7 +42,7 @@ int main()
 			
 			}
 		}
-		
+		cout<<r<<" "<<c2<<"\n";
 		for(i=0;i<r;i++)
 		{
 			for(j=0;j<c2;j++)

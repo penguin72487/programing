@@ -200,20 +200,27 @@ public:
 
 	matrix pow(int n)
 	{
-		matrix A=*this;
 		matrix ans(2,2,{1,0,0,1});
-
-		while(n){
-			if(n&1){
-
-				ans = ans*A;
-
-			}
-			A =A*A;
-
-			n >>= 1;
-
+		if(n>=0)
+		{
+			matrix A=*this;	
+			while(n){
+				if(n&1){
+	
+					ans = ans*A;
+	
+				}
+				A =A*A;
+	
+				n >>= 1;
+	
+			}	
 		}
+		else
+		{
+			ans=re();	
+		}
+		
 		
 		return ans;
 
@@ -247,7 +254,7 @@ int main()
 	matrix P(2,2,{1,2,-1,-1});
 	matrix c{2,2,{-3,-6,2,2}};
 	cout<<c*P<<"\n";
-	matrix ans=P.re()*A*P;
+	matrix ans=P.pow(-1)*A*P;
 
 	cout<<ans<<"\n";
 

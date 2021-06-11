@@ -18,6 +18,7 @@ int main()
 	queue<step> list;
 	char maze[n][n];
 	int maze2[n][n]={0};
+	int dx[4]={0,-1,0,1},dy[4]={-1,0,1,0};
 	for(int i=0;i<n;i++)
 	{
 		for(int j=0;j<n;j++)
@@ -59,38 +60,17 @@ int main()
 		else
 		maze2[x][y]=min(min(maze2[x-1][y],maze2[x+1][y]),min(maze2[x][y-1],maze2[x][y+1]))+1;
 		
-		
-		if(maze[x][y+1]!='#'&&maze2[x][y+1]>maze2[x][y])
+		for(int k=0;k<4;k++)
 		{
-			step temp;
-			temp.x=x;
-			temp.y=y+1;
-			list.push(temp);
+			if(maze[x+dx[k]][y+dy[k]]!='#'&&maze2[x+dx[k]][y+dy[k]]>maze2[x][y])
+			{
+				step temp;
+				temp.x=x+dx[k];
+				temp.y=y+dy[k];
+				list.push(temp);
+			}
 		}
 	
-		if(maze[x][y-1]!='#'&&maze2[x][y-1]>maze2[x][y])
-		{
-			step temp;
-			temp.x=x;
-			temp.y=y-1;
-			list.push(temp);
-		}
-
-		if(maze[x+1][y]!='#'&&maze2[x+1][y]>maze2[x][y])
-		{
-			step temp;
-			temp.x=x+1;
-			temp.y=y;
-			list.push(temp);
-		}
-
-		if(maze[x-1][y]!='#'&&maze2[x-1][y]>maze2[x][y])
-		{
-			step temp;
-			temp.x=x-1;
-			temp.y=y;
-			list.push(temp);
-		}
 	}
 	if(maze2[n-2][n-2]==1000000)
 	cout<<"-1"<<"\n";

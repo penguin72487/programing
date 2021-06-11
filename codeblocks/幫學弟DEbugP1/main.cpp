@@ -4,12 +4,12 @@ using namespace std;
 int main()
 {
 	ios::sync_with_stdio(0);
-	cin.tie(0);
+	//cin.tie(0);
 	int dx[4]={0,-1,0,1},dy[4]={-1,0,1,0};
     int ans[10][10];
     int f[10][10];
 	int r,c,sum,count;
-	cout<<"hi\n";
+
 	while(cin>>r>>c)
 	{
 

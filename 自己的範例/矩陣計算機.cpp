@@ -29,6 +29,18 @@ public:
 		}
 
 	}
+	matrix(int i_r,int i_c,int**& tmp)
+	{
+		r=i_r;
+		c=i_c;
+		data = new int*[r];
+		for(int i = 0; i < r; i++)
+		{
+			data[i] = new int[c];
+		}
+		*this=tmp;
+
+	}
 	matrix(int I)
 	{
         r=I;
@@ -99,6 +111,7 @@ public:
 				data[i][j]=*it++;
 			}
 		}
+		//	cout<<"{}"<<endl;
 	}
 	void operator=(int tmp[][sizeof(data[0])/sizeof(data[0][0])])
 	{
@@ -109,7 +122,7 @@ public:
 				data[i][j]=tmp[i][j];
 			}
 		}
-
+		cout<<"[][]"<<endl;
 	}
 	void operator=(int** tmp)
 	{
@@ -120,7 +133,7 @@ public:
 				data[i][j]=tmp[i][j];
 			}
 		}
-
+		//cout<<"**"<<endl;
 	}
 
 	void operator=(matrix tmp)
@@ -135,8 +148,22 @@ public:
 				data[i][j]=tmp[i][j];
 			}
 		}
+		cout<<"re"<<endl;
+	}
 
+	void operator=(matrix& tmp)
+	{
+		r=tmp.r;
+		c=tmp.c;
 
+		for(int i=0;i<r;i++)
+		{
+			for(int j=0;j<c;j++)
+			{
+				data[i][j]=tmp[i][j];
+			}
+		}
+		cout<<"&"<<endl;
 	}
 	matrix re()
 	{
@@ -144,7 +171,7 @@ public:
 		int d=det();
 		if(d==0)
         {
-            cout<<*this<<"¨S¦³¤Ï¯x°}³á!\n";
+            cout<<*this<<"¡LS|3?I¡Âx¢X}3a!\n";
         }
 		ans[0][0]=data[1][1];
 		ans[1][1]=data[0][0];
@@ -249,8 +276,17 @@ public:
 
 			}
 		}
+		r=ans.r;
+		c=ans.c;
 
-		*this=ans;
+		for(int i=0;i<r;i++)
+		{
+			for(int j=0;j<c;j++)
+			{
+				data[i][j]=ans[i][j];
+			}
+		}
+		
 	}
 	void operator*=(int tmp)
 	{
@@ -293,7 +329,7 @@ public:
             {
                 if(data[i][j]!=tmp[i][j])
                 {
-                    cout<<data[i][j]<<" "<<tmp[i][j]<<"³á";
+                    cout<<data[i][j]<<" "<<tmp[i][j]<<"3a";
                     return 0;
                 }
             }
@@ -306,7 +342,10 @@ public:
 		matrix ans(2);
 		if(n>=0)
 		{
-			matrix A=*this;
+			matrix A(2,2,data);
+			
+			
+
 			while(n){
 				if(n&1){
 
@@ -363,22 +402,31 @@ int det(matrix& tmp)
 	int ans=tmp[0][0]*tmp[1][1]-tmp[1][0]*tmp[0][1];
 	return ans;
 }
+matrix operator*(int tmp,matrix b)
+{
+	matrix ans=b;
+	for(int i=0;i<ans.r;i++)
+	{
+		for(int j=0;j<ans.c;j++)
+		{
+			ans[i][j]*=tmp;
+		}
+	}
+	return ans;
+}
 int main()
 {
 
-	matrix A(2,2,{1,-2,1,4});
-	matrix B(2,2,{-1,-1,5,4});
+	matrix A(2,2,{9,2,1,8});
+	matrix B(2,2,{1,-1,1,1});
 	matrix P(2,2,{1,2,-1,-1});
 	matrix C{2,2,{-3,-6,2,2}};
 
-	//cout<<c*P<<"\n";
-	matrix ans=P.pow(-1)*A*P;
+	//cout<<C*P<<"\n";
 
-	cout<<ans<<"\n";
-	cout<<(A*B).pow(4)<<"\n";
-	cout<<B.pow(t)*A.pow(t)<<endl;
-	cout<<(A*B).pow(t)<<endl;
-	cout<<((B.pow(t)*A.pow(t))==(A*B).pow(t));
+	cout<<A.pow(4)<<"\n";
+	cout<<4*A<<endl;
+
 
 	return 0;
 }

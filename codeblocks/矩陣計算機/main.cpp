@@ -366,14 +366,14 @@ int det(matrix& tmp)
 int main()
 {
 
-	matrix A(2,2,{1,1,-1,1});
+	matrix A(2,2,{9,2,1,8});
 	matrix B(2,2,{1,-1,1,1});
 	matrix P(2,2,{1,2,-1,-1});
 	matrix C{2,2,{-3,-6,2,2}};
 
 	//cout<<C*P<<"\n";
 
-	cout<<B*A.pow(-1)<<"\n";
+	cout<<A.pow(4)<<"\n";
 
 
 	return 0;

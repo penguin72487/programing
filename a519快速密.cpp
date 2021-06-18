@@ -29,6 +29,18 @@ public:
 		}
 
 	}
+	matrix(int i_r,int i_c,int**& tmp)
+	{
+		r=i_r;
+		c=i_c;
+		data = new int*[r];
+		for(int i = 0; i < r; i++)
+		{
+			data[i] = new int[c];
+		}
+		*this=tmp;
+
+	}
 	matrix(int I)
 	{
         r=I;
@@ -63,10 +75,7 @@ public:
 		{
 			delete [] data[i];
 		}
-		for (int i=1; i<r; i++)
-		{
-			delete  data[i];
-		}
+		delete [] data;
 	}
 	int det()
 	{
@@ -80,10 +89,7 @@ public:
 		{
 			delete [] data[i];
 		}
-		for (int i=1; i<r; i++)
-		{
-			delete  data[i];
-		}
+		delete data;
 	}
 	int* operator[](int i)
 	{
@@ -99,6 +105,7 @@ public:
 				data[i][j]=*it++;
 			}
 		}
+		//	cout<<"{}"<<endl;
 	}
 	void operator=(int tmp[][sizeof(data[0])/sizeof(data[0][0])])
 	{
@@ -109,7 +116,7 @@ public:
 				data[i][j]=tmp[i][j];
 			}
 		}
-
+		cout<<"[][]"<<endl;
 	}
 	void operator=(int** tmp)
 	{
@@ -120,7 +127,7 @@ public:
 				data[i][j]=tmp[i][j];
 			}
 		}
-
+		//cout<<"**"<<endl;
 	}
 
 	void operator=(matrix tmp)
@@ -135,8 +142,22 @@ public:
 				data[i][j]=tmp[i][j];
 			}
 		}
+		cout<<"re"<<endl;
+	}
 
+	void operator=(matrix& tmp)
+	{
+		r=tmp.r;
+		c=tmp.c;
 
+		for(int i=0;i<r;i++)
+		{
+			for(int j=0;j<c;j++)
+			{
+				data[i][j]=tmp[i][j];
+			}
+		}
+		cout<<"&"<<endl;
 	}
 	matrix re()
 	{
@@ -144,7 +165,7 @@ public:
 		int d=det();
 		if(d==0)
         {
-            cout<<*this<<"¨S¦³¤Ï¯x°}³á!\n";
+            cout<<*this<<"¡LS|3?I¡Âx¢X}3a!\n";
         }
 		ans[0][0]=data[1][1];
 		ans[1][1]=data[0][0];
@@ -230,12 +251,13 @@ public:
 		}
 		return ans;
 	}
-	void operator*=(matrix& tmp)
+	void operator*=(matrix tmp)
 	{
 		//cout<<*this<<"\n*\n";
 		//cout<<tmp<<"\n=\n";
-			
+
 		matrix ans(r,tmp.c);
+
 		for(int i=0;i<r;i++)
 		{
 			for(int j=0;j<tmp.c;j++)
@@ -248,7 +270,6 @@ public:
 
 			}
 		}
-		
 		r=ans.r;
 		c=ans.c;
 
@@ -302,7 +323,7 @@ public:
             {
                 if(data[i][j]!=tmp[i][j])
                 {
-                    cout<<data[i][j]<<" "<<tmp[i][j]<<"³á";
+                    cout<<data[i][j]<<" "<<tmp[i][j]<<"3a";
                     return 0;
                 }
             }
@@ -311,22 +332,24 @@ public:
     }
 	matrix pow(int n)
 	{
-		
+
 		matrix ans(2);
 		if(n>=0)
 		{
+			matrix A(2,2,data);
 			
-			matrix A=*this;
-				
+			
+
 			while(n){
-				if(n&1)
-				{
+				if(n&1){
+
 					ans*=A;
-					
-	cout<<"hi\n";
+
 				}
 				A*=A;
+
 				n >>= 1;
+
 			}
 		}
 		else
@@ -335,6 +358,7 @@ public:
 			ans=re();
 
 		}
+
 		return ans;
 
 	}
@@ -372,7 +396,6 @@ int det(matrix& tmp)
 	int ans=tmp[0][0]*tmp[1][1]-tmp[1][0]*tmp[0][1];
 	return ans;
 }
-
 int main()
 {
 	matrix A(2,2,{1,1,1,0});
@@ -382,7 +405,7 @@ int main()
     {
     	
 		matrix ans=A.pow(n);
-		cout<<"hi\n";
+		
         cout<<ans[0][0]<<"\n";
 
     }

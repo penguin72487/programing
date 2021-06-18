@@ -1,5 +1,6 @@
 #include<iostream>
 #include<sstream>
+#include<vector>
 using namespace std;
 class rational//分數運算 
 {
@@ -149,6 +150,17 @@ public:
 		
 		
 	}
+	bool operator==(int tmp)
+	{
+		if(c==1)
+		{
+			if(a==tmp)
+			{
+				return 1;
+			}
+		}
+		return 0;
+	}
 	rational simple()
 	{
 		
@@ -202,7 +214,7 @@ public:
 			}
 			
 		}
-		return ans;
+		return ans.simple();
 	}
 	friend istream &operator>>(ostream &s, rational& ob);
 	friend ostream &operator<<(ostream &s, rational ob);
@@ -242,15 +254,58 @@ ostream &operator<<(ostream &s, rational ob)
 	s<<ob.a;
 	return s;
 }
+class numeral//數字or符號  e.g. -7 or X^2 
+{	
+public:
+	char sign='+';
+	rational pow=1;
+	rational val=1;
+	string letter;
+	numeral(int tmp)
+	{
+		val=tmp;
+	}
+	numeral(const char tmp)
+	{
+		
+	}
+	friend ostream &operator<<(ostream &s,numeral ob);
+
+};
+ostream &operator<<(ostream &s,numeral ob)
+{
+	if(ob.letter.size()==0)
+	{
+		if(ob.sign=='+')
+		{
+			if(ob.pow==1)
+			{
+				s<<ob.val;
+			}
+		}
+	}
+	else
+	{
+		
+	}
+	return s;
+}
+class equation //多項式  e.g. -7*X^2+X+87  
+{
+	char sign;
+	vector<numeral> list;
+		
+};
 int main()
 {
 	
 	string ss="77/7";
-	rational a="-77/8";
+	rational a="77/8";
 	rational b="64/7";
 	//cin>>a;
-	cout<<a<<"\n";
-	cout<<a.pow(2)<<endl;
+	cout<<a/8<<"\n";
+	a/=b;
+	cout<<a<<endl;
 
 }
 

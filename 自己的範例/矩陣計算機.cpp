@@ -339,10 +339,10 @@ public:
 	matrix pow(int n)
 	{
 
-		matrix ans(2);
+		matrix ans(r);
 		if(n>=0)
 		{
-			matrix A(2,2,data);
+			matrix A(r,c,data);
 			
 			
 
@@ -387,9 +387,9 @@ public:
 };
 ostream& operator<<(ostream &s, matrix ob)
 {
-	for(int i=0;i<2;i++)
+	for(int i=0;i<ob.r;i++)
 	{
-		for(int j=0;j<2;j++)
+		for(int j=0;j<ob.c;j++)
 		{
 			s<<ob[i][j]<<" ";
 		}
@@ -417,14 +417,14 @@ matrix operator*(int tmp,matrix b)
 int main()
 {
 
-	matrix A(2,2,{9,2,1,8});
+	matrix A(4,4,{1,1,1,-1,1,1,-1,1,1,-1,1,1,-1,1,1,1});
 	matrix B(2,2,{1,-1,1,1});
 	matrix P(2,2,{1,2,-1,-1});
 	matrix C{2,2,{-3,-6,2,2}};
 
 	//cout<<C*P<<"\n";
 
-	cout<<A.pow(4)<<"\n";
+	cout<<A.pow(3)<<"\n";
 	cout<<4*A<<endl;
 
 

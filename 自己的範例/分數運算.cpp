@@ -246,11 +246,11 @@ int main()
 {
 	
 	string ss="77/7";
-	rational a="-77/8";
-	rational b="64/7";
+	rational a="17857125/99999900";
+	rational b="423/990";
 	//cin>>a;
-	cout<<a<<"\n";
-	cout<<a.pow(2)<<endl;
+	cout<<b.simple()<<"\n";
+	cout<<a.simple()<<endl;
 
 }
 

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1627097875 source:d:\porjetgrup\zero-judge-practice\codeblocks\18pr4\main.cpp
+	<iostream>
+	<algorithm>
+	<vector>
+

@@ -3,22 +3,23 @@
 #include <deque>
 #include <vector>
 #include <map>
+#include <unordered_map> 
 using namespace std;
 struct node{
 public: 
 	char c_Name;
-	vector<node*> list_Ptr;
+	unordered_map<char,int> list_Ptr;
 };
 struct Adj_List{
 public:
 	vector<node*> node_Ptr;
-	map<char,node*> cb_Map;
-	map<char,bool> cb_Trlist;
+	unordered_map<char,node*> cb_Map;
+	unordered_map<char,bool> cb_Trlist;
 	Adj_List()
 	{
 		
 	}
-	void insert(char c_Name,char ct_Name)
+	void insert(char c_Name,int i_weight,char ct_Name)
 	{
 		node* it;
 		node* jt;
@@ -42,8 +43,8 @@ public:
 		{
 			jt=cb_Map[ct_Name];
 		}
-		it->list_Ptr.push_back(jt);
-		jt->list_Ptr.push_back(it);
+		it->list_Ptr[c_Name]=i_weight; 
+		jt->list_Ptr[ct_Name]=i_weight;
 	}
 	int size()
 	{
@@ -55,14 +56,16 @@ public:
 		cb_Trlist[op_Name]=1;
 		for(auto it=cb_Map[op_Name]->list_Ptr.begin();it!=cb_Map[op_Name]->list_Ptr.end();++it)
 		{
-			//cout<<"cb_Trlist[(*it)->c_Name]"; 
-			if(!cb_Trlist[(*it)->c_Name])
+			cout<<"cb_Trlist[(*it)->c_Name]"; 
+			if(cb_Trlist.find(it->first)!=cb_Trlist.end())
 			{
-				DFS((*it)->c_Name);
-				cb_Trlist[(*it)->c_Name]=1;
+				cb_Trlist[it->first]=1;
+				DFS(it->first);
+				
 			}
 		}
 		cout<<cb_Map[op_Name]->c_Name<<"\n";
+		cb_Trlist.clear();
 //		if(cb_Trlist.size()+1==cb_Map.size())
 //		{
 //			cb_Trlist.clear();
@@ -80,10 +83,10 @@ public:
 			cout<<list.front().c_Name<<"\n";
 			for(auto it=list.front().list_Ptr.begin();it!=list.front().list_Ptr.end();++it)
 			{
-				if(!cb_Trlist[(*it)->c_Name])
+				if(!cb_Trlist[it->first])
 				{
-					list.push_back(**it);
-					cb_Trlist[(*it)->c_Name]=1;
+					list.push_back(*cb_Map[it->first]);
+					cb_Trlist[it->first]=1;
 				}
 			}
 			list.pop_front();
@@ -103,14 +106,14 @@ public:
 int main()
 {
 	Adj_List test;
-	test.insert('A','A');
-	test.insert('A','B');
-	test.insert('A','C');
-	test.insert('A','D');
-	test.insert('B','E');
-	test.insert('C','E');
-	test.insert('B','C');
-	test.insert('D','C');
+	test.insert('A',2,'A');
+	test.insert('A',3,'B');
+	test.insert('A',7,'C');
+	test.insert('A',3,'D');
+	test.insert('B',8,'E');
+	test.insert('C',6,'E');
+	test.insert('B',11,'C');
+	test.insert('D',8,'C');
 	cout<<test.cb_Map.size()<<"\n";
 	cout<<"DFS\n";
 	test.DFS();

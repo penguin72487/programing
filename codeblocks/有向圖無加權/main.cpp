@@ -3,10 +3,10 @@
 #include <deque>
 #include <vector>
 #include <map>
-#include <unordered_map> 
+#include <unordered_map>
 using namespace std;
 struct node{
-public: 
+public:
 	char c_Name;
 	unordered_map<int,int> list_Ptr;
 };
@@ -16,7 +16,7 @@ public:
 	unordered_map<int,bool> cb_Trlist;
 	Adj_List()
 	{
-		
+
 	}
 	void insert(int c_Name,int ct_Name,int i_Vector)
 	{
@@ -42,7 +42,7 @@ public:
 		{
 			jt=in_Ptr[ct_Name];
 		}
-		it->list_Ptr[c_Name]=i_Vector; 
+		it->list_Ptr[c_Name]=i_Vector;
 		jt->list_Ptr[ct_Name]=i_Vector;
 	}
 	int size()
@@ -59,17 +59,17 @@ public:
 		int i_estPath[n];
 		fill(i_estPath,i_estPath+n,2147483647);
 		i_estPath[op]=0;
+
 		for(auto it=in_Ptr[op]->list_Ptr.begin();it!=in_Ptr[op]->list_Ptr.end();++it)
 		{
-			i_estPath[it->first]=it->second;
+			for(int i=1;i<=n;++i)
+			{
+
+				i_estPath[op]=min(i_estPath[op],i_estPath[it->first]+distance(it->first,ed));
+			}
+
 		}
-//		for(auto it=in_Ptr[op]->list_Ptr.begin();it!=in_Ptr[op]->list_Ptr.end();++it)
-//		{
-//			i_estPath[ed]=min(i_estPath[ed],i_estPath[it->first]+distance(it->first,ed));
-//
-//		}
-//		return i_estPath[ed];
-		 
+
 	}
 	~Adj_List()
 	{
@@ -79,7 +79,7 @@ public:
 		}
 		in_Ptr.clear();
 	}
-	
+
 };
 int main()
 {
@@ -94,7 +94,6 @@ int main()
 	test.insert(5,6,3);
 	cout<<test.in_Ptr.size()<<"\n";
 	cout<<"³Ìµu¶ZÂ÷\n"<<test.distance(1,6)<<"\n";
-	
+
 
 }
-

@@ -1,77 +1,76 @@
 #include<iostream>
 #include<algorithm>
+#include<deque>
 using namespace std;
-char s[10][10]={0};
-int n,m;
-int stp(int x,int y);
+class step{
+public :
+	int x;
+	int y;
+	step(int xt,int yt)
+	{
+		x=xt;
+		y=yt;
+	}
+};
 int main()
 {
-
+	ios::sync_with_stdio(0);
+	int n,m;
 	cin>>n>>m;
-	//char s[n+2][m+2];
-	for(int i=0;i<n+2;i++)
+	n+=2;
+	m+=2;
+	char maze[n][m];
+	int maze2[n][m];
+	fill(maze[0],maze[n-1]+m,'#');
+	fill(maze2[0],maze2[n-1]+m,2147483647);
+
+	for(int i=1;i<n-1;++i)
 	{
-		for(int j=0;j<m+2;j++)
+		for(int j=1;j<m-1;++j)
 		{
-			if(i==0||j==0||i==n+1||j==m+1)
-				s[i][j]='#';
-			else
-				cin>>s[i][j];	
-		}	
+			cin>>maze[i][j];
+		}
 	}
-	/*
-	for(int i=0;i<n+2;i++)
+
+	deque<step> list;
+	step op(1,1);
+	list.push_back(op);
+	while(!list.empty())
 	{
-		for(int j=0;j<m+2;j++)
+	
+		
+		step now=list.front();
+		int x=now.x;
+		int y=now.y;
+		list.pop_front();
+		if(x==n-2&&y==m-2)
+ 		{
+ 		  	maze2[x][y]=min(min(maze2[x-1][y],maze2[x+1][y]),min(maze2[x][y-1],maze2[x][y+1]))+1;
+  			break;
+  		}
+  		if(x==1&&y==1)
+  		maze2[x][y]=0;
+  		else
+  		maze2[x][y]=min(min(maze2[x-1][y],maze2[x+1][y]),min(maze2[x][y-1],maze2[x][y+1]))+1;
+		
+		int dx[4]={0,-1,0,1},dy[4]={-1,0,1,0};
+		for(int i=0;i<4;i++)
 		{
-				cout<<s[i][j];	
-		}	
-		cout<<"\n";
+			if(maze[x+dx[i]][y+dy[i]]!='#'&&maze2[x+dx[i]][y+dy[i]]>maze2[x][y])
+			{
+				step temp(x+dx[i],y+dy[i]);
+			    list.push_back(temp);
+			}
+		}
+		
 	}
-	*/
-	cout<<stp(1,1)+2<<endl;
-} 
-int stp(int x,int y)
-{
-	cout<<x<<" "<<y<<endl;
-	/*
-	for(int i=0;i<n+2;i++)
+
+	if(maze2[n-2][m-2]==2147483647)
 	{
-		for(int j=0;j<m+2;j++)
-		{
-				cout<<s[i][j];	
-		}	
-		cout<<"\n";
+		cout<<"-1\n";
 	}
-	 */
-	s[x][y]=32;
-	int a=100000000,b=100000000,c=100000000,d=100000000;
-	if(s[x-1][y]!='#'&&s[x-1][y]!=' ')
+	else
 	{
-		a=stp(x-1,y)+1;
-		s[x][y]='.';
-	//	cout<<a<<endl;
+		cout<<maze2[n-2][m-2]<<"\n";
 	}
-	if(s[x+1][y]!='#'&&s[x+1][y]!=' ')
-	{
-		b=stp(x+1,y)+1;
-		s[x][y]='.';
-	//	cout<<b<<endl;
-	}
-	if(s[x][y-1]!='#'&&s[x][y-1]!=' ')
-	{
-		c=stp(x,y-1)+1;
-		s[x][y]='.';
-	//	cout<<c<<endl;
-	}
-	if(s[x][y+1]!='#'&&s[x][y+1]!=' ')
-	{
-		d=stp(x,y+1)+1;
-		s[x][y]='.';
-	//	cout<<d<<endl;
-	}
-	cout<<a<<" "<<b<<" "<<c<<" "<<d<<endl; 
-	if(x==n&&y==m)
-	return min(min(a,b),min(c,d))+1;
-	return 100000000;
 }

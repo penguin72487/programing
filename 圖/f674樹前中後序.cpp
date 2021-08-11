@@ -20,6 +20,11 @@ public :
 		
 	
 	}
+	~tree()
+	{
+		dfs_disNode(this->op);
+	
+	}
 	void insert(int i_Pa,int i_L,int i_R)
 	{
 		if(size==0)
@@ -111,6 +116,7 @@ public :
 			list.push_back(now->r_Node);
 			list.pop_front();
 		}
+		
 	}
 	void dfs_Trfrom(node* now)
 	{
@@ -139,6 +145,16 @@ public :
 			dfs_Trfrom(now->l_Node);
 			dfs_Trfrom(now->r_Node);
 			cout<<now->data<<" ";
+		}
+
+	}
+	void dfs_disNode(node* now)
+	{
+		if(now)
+		{
+			dfs_Trfrom(now->l_Node);
+			dfs_Trfrom(now->r_Node);
+			delete now;
 		}
 
 	}

@@ -1,5 +1,4 @@
 #include<iostream>
-#include<map>
 #include<deque>
 using namespace std;
 class node{
@@ -19,7 +18,7 @@ public :
 	}
 	~tree()
 	{
-		dfs_disNode(op);
+		//dfs_disNode(op);
 	
 	}
 	void insert(int i_Pa,int i_L,int i_R)
@@ -123,17 +122,17 @@ public :
 	{
 		if(!now)
 		return ;
-		dfs_Trfrom(now->l_Node);
+		dfs_Trmid(now->l_Node);
 		cout<<now->data<<" ";
-		dfs_Trfrom(now->r_Node);
+		dfs_Trmid(now->r_Node);
 		
 	}
 	void dfs_Trend(node* now)
 	{
 		if(!now)
 		return ;
-		dfs_Trfrom(now->l_Node);
-		dfs_Trfrom(now->r_Node);
+		dfs_Trend(now->l_Node);
+		dfs_Trend(now->r_Node);
 		cout<<now->data<<" ";
 		
 
@@ -143,8 +142,8 @@ public :
 		if(!now) 
 		return
 		
-		dfs_Trfrom(now->l_Node);
-		dfs_Trfrom(now->r_Node);
+		dfs_disNode(now->l_Node);
+		dfs_disNode(now->r_Node);
 		delete now;
 
 	}

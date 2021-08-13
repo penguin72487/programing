@@ -1,97 +1,132 @@
 #include<iostream>
-#include<algorithm>
+#include<map>
 #include<deque>
 using namespace std;
-struct tree{
-	int val;
-	tree *l=new tree;
-	tree *r=new tree;
+class node{
+public :
+	int data;
+	int high=0;
+	
+	node* l_Node=nullptr;
+	node* r_Node=nullptr;
+};
+class tree{
+public :
+	node* op=nullptr;
+	int highest=0;
+	int size=0; 
 	tree()
 	{
-		l=NULL;
-		r=NULL;
 		
-	}
-	~tree()
-	{
-		delete l;
-		delete r;
-	}
 	
-
-}high,*tree_end;
-tree* dfserch(int find,tree* tmp);
-int dfshigh(tree* tmp);
-void insert(int val,int l,int r);
+	}
+	void insert(int i_Pa,int i_L,int i_R)
+	{
+		if(size==0)
+		{
+			op=new node;
+			op->data=i_Pa;
+			node* lt_Node;
+			if(i_L!=-1)
+			{
+				lt_Node=new node;
+				lt_Node->data=i_L;
+				lt_Node->high=op->high+1;
+				++size;
+			}
+			else
+			{
+				lt_Node=nullptr;
+			} 
+			node* rt_Node;
+			if(i_R!=-1)
+			{
+				rt_Node=new node;
+				rt_Node->data=i_R;
+				rt_Node->high=op->high+1;	
+				++size;
+			}
+			else
+			{
+				rt_Node=nullptr;
+			}
+			op->l_Node=lt_Node;
+			op->r_Node=rt_Node;
+			highest=1;
+			
+		}
+		else
+		{
+			node* n_Pa=bfs_NodePtr(i_Pa);
+			node* lt_Node;
+			if(i_L!=-1)
+			{
+				lt_Node=new node;
+				lt_Node->data=i_L;
+				lt_Node->high=n_Pa->high+1;
+				++size;
+			}
+			else
+			{
+				lt_Node=nullptr;
+			} 
+			node* rt_Node;
+			if(i_R!=-1)
+			{
+				rt_Node=new node;
+				rt_Node->data=i_R;
+				rt_Node->high=n_Pa->high+1;	
+				++size;
+			}
+			else
+			{
+				rt_Node=nullptr;
+			}
+			n_Pa->l_Node=lt_Node;
+			n_Pa->r_Node=rt_Node;
+			highest=max(highest,(n_Pa->high));
+			
+		}
+	}
+	int tree_High()
+	{
+		return highest;
+	}
+	node* bfs_NodePtr(int goal)
+	{
+		deque<node*> list;
+		list.push_back(op);
+		while(!list.empty())
+		{
+			
+			node* now=list.front();
+			//cout<<now->data<<"\n";
+			if(now->data==goal)
+			{
+				return now;
+			}
+			if(now->l_Node)
+			list.push_back(now->l_Node);
+			if(now->r_Node)
+			list.push_back(now->r_Node);
+			list.pop_front();
+		}
+	}
+		
+};
 int main()
 {
-
 	int n;
 	cin>>n;
-	int val,l,r;
-	cin>>val>>l>>r;
-	high.val=val;
-	tree* temp = new tree[2];
-	temp->val=l;
-	(temp+1)->val=r;
-	high.l=temp;
-	high.r=temp+1; 
-	for(int i=0;i<n-1;i++)
+	tree tr_Tmp;
+	for(int i=0;i<n;++i)
 	{
-		tree* temp = new tree; 
-		int val,r,l;
-		cin>>val>>r>>l;
-		insert(val,l,r);
+		int a,b,c;
+		cin>>a>>b>>c;
+		tr_Tmp.insert(a,b,c);
 	}
-	 dfserch(3,&high);
-	cout<<"h="<<dfshigh(&high)<<endl;
+	cout<<tr_Tmp.tree_High()<<"\n";
+	return 0;
 	
 }
-void insert(int val,int l,int r)
-{
-	//cout<<val<<" "<<l<<" "<<r<<endl; 
-	tree* it=dfserch(val,&high);
-	if(it!=tree_end)
-	{
-		tree* temp = new tree[2];
-		temp->val=l;
-		(temp+1)->val=r;
-		it->l=temp;
-		it->r=temp+1; 
-	}
-	
-}
-tree* dfserch(int find,tree* tmp)
-{
-	cout<<tmp->val<<endl;
-	if((*tmp).val=find)
-	{
-		return tmp;
-	}
-	if(!tmp)
-	{
-		return tree_end;
-	}
-	tree* it=dfserch(find,tmp->l);
-	tree* jt=dfserch(find,tmp->r);
-	if(it!=tree_end)
-	{
-		return it;
-	}
-	else if(jt!=tree_end)
-	{
-		return jt;
-	}
-	else
-	{
-		return tree_end;
-	}
 
-}
-int dfshigh(tree* tmp)
-{
-	//cout<<tmp->val<<endl;
-	if(tmp->val==-1)
-	return 1;
-	return max(dfshigh(tmp->l), dfshigh(tmp->r))+1;
-}

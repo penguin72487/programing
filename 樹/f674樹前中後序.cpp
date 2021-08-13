@@ -20,6 +20,11 @@ public :
 		
 	
 	}
+	~tree()
+	{
+		dfs_disNode(this->op);
+	
+	}
 	void insert(int i_Pa,int i_L,int i_R)
 	{
 		if(size==0)
@@ -111,11 +116,53 @@ public :
 			list.push_back(now->r_Node);
 			list.pop_front();
 		}
+		
+	}
+	void dfs_Trfrom(node* now)
+	{
+		if(now)
+		{
+			cout<<now->data<<" ";
+			dfs_Trfrom(now->l_Node);
+			dfs_Trfrom(now->r_Node);
+		}
+	}
+	void dfs_Trmid(node* now)
+	{
+		
+		if(now)
+		{
+			dfs_Trfrom(now->l_Node);
+			cout<<now->data<<" ";
+			dfs_Trfrom(now->r_Node);
+			
+		}
+	}
+	void dfs_Trend(node* now)
+	{
+		if(now)
+		{
+			dfs_Trfrom(now->l_Node);
+			dfs_Trfrom(now->r_Node);
+			cout<<now->data<<" ";
+		}
+
+	}
+	void dfs_disNode(node* now)
+	{
+		if(now)
+		{
+			dfs_Trfrom(now->l_Node);
+			dfs_Trfrom(now->r_Node);
+			delete now;
+		}
+
 	}
 		
 };
 int main()
 {
+	ios::sync_with_stdio(0);
 	int n;
 	cin>>n;
 	tree tr_Tmp;
@@ -125,7 +172,14 @@ int main()
 		cin>>a>>b>>c;
 		tr_Tmp.insert(a,b,c);
 	}
-	cout<<tr_Tmp.tree_High()<<"\n";
+	//cout<<tr_Tmp.tree_High()<<"\n";
+	tr_Tmp.dfs_Trfrom(tr_Tmp.op);
+	cout<<"\n";
+	tr_Tmp.dfs_Trmid(tr_Tmp.op);
+	cout<<"\n";
+	tr_Tmp.dfs_Trend(tr_Tmp.op);
+	cout<<"\n";
+	
 	return 0;
 	
 }

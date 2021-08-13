@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 class node{
 public :
@@ -76,21 +77,28 @@ public:
 	}
 	bool ib_find(int tmp,node* now)
 	{
-		if(now->data!=tmp&&now)
+		bool bt_L,bt_R;
+		if(now)
 		{
-			if(now->data>tmp)
+			if(now->data!=tmp)
 			{
-				return ib_find(tmp,now->l_Node);
+				if(now->data>tmp)
+				{
+					return ib_find(tmp,now->l_Node);
+				}
+				else
+				{
+					return ib_find(tmp,now->r_Node);
+				}
 			}
 			else
 			{
-				return ib_find(tmp,now->r_Node);
+				return 1;
 			}
+			
 		}
-		else
-		{
-			return 1;
-		}	
+		return 0;
+	
 	}
 	
 };
@@ -99,16 +107,20 @@ int main()
 	ios::sync_with_stdio(0);
 	int n;
 	cin>>n;
+	int list[n];
 	BinaryTree tree;
 	for(int i=0;i<n;++i)
 	{
-		int tmp;
-		cin>>tmp;
-		tree.insert(tmp);
+		cin>>list[i];
+		tree.insert(list[i]);
 	}
+	sort(list,list+n);
 	int tmp;
+	for(int i=0;i<n;++i)
+	{
+		cout<<list[i]<<"\n";
+	}
 	cin>>tmp;
-	cout<<tree.ib_find(tmp,tree.op)<<"\n";
 	if(tree.ib_find(tmp,tree.op))
 	{
 		cout<<"Yes\n";

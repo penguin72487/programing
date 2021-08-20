@@ -104,7 +104,7 @@ int main()
 	tmp.insert(1,2);
 	tmp.insert(2,3);
 	tmp.insert(3,4);
-	tmp.insert(3,1);
+	//tmp.insert(3,1);
     cout<<tmp.b_Circle()<<"\n";
     return 0;
 }

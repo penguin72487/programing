@@ -21,7 +21,7 @@
     ],
     "clang.cxxflags": [ 
       "--target=x86_64-w64-mingw",
-      "-std=c++11",
+      "-std=c++17",
       "-Wall"
     ],
     "clang.completion.enable": true 

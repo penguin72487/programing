@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+      
       {
         "name": "(gdb) Launch", 
         "type": "cppdbg", 
@@ -13,7 +14,7 @@
         "externalConsole": true, 
         "internalConsoleOptions": "neverOpen",
         "MIMode": "gdb",
-        "miDebuggerPath": "gdb.exe", 
+        "miDebuggerPath": "C:\\Program Files\\LLVM\\bin\\gdb.exe",
         "setupCommands": [ 
           {
             "description": "Enable pretty-printing for gdb",

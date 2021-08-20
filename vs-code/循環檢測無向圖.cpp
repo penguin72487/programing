@@ -108,4 +108,3 @@ int main()
     cout<<tmp.b_Circle()<<"\n";
     return 0;
 }
-

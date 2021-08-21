@@ -98,7 +98,9 @@ class min_Tree{
             else
             {
                 u_Node->ni_Vec.erase(v_Node);
+                u_Node->ni_Backup.erase(v_Node);
                 v_Node->ni_Vec.erase(u_Node);
+                v_Node->ni_Backup.erase(u_Node);
 
                 return 0;
             }
@@ -134,7 +136,7 @@ class min_Tree{
             }
             
         }
-       // cout << "\n";
+        cout << "\n";
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
             it->second->ni_Vec = it->second->ni_Backup;
@@ -144,10 +146,10 @@ class min_Tree{
 	bool b_Circle(node* op,node* ed)
 	{
         bool bt_Circle=0;
-        //cout<<ed->data<<" ";
+        cout<<ed->data<<" ";
         if(ib_TrNode.find(ed->data)!=ib_TrNode.end())
         {
-            
+            ib_TrNode[ed->data]=1;   
             return 1;
         }
         else 
@@ -176,7 +178,7 @@ class min_Tree{
             ib_TrNode[now->data] = 1;
             for (auto it = now->ni_Vec.begin(); it != now->ni_Vec.end();++it)
             {
-                if(ib_TrNode.find(it->second)!=ib_TrNode.end())
+                if(ib_TrNode[it->second]==0)
                 {
                     list.push_back(it->first);
                 }
@@ -205,12 +207,14 @@ int main()
         {
             it->w = 0;
         }
+        cout << it->u << "->" << it->v <<" "<< it->w << "\n";
     }
-    //cout <<"size="<< tree.in_Map.size() << "\n";
+    cout <<"size="<< tree.in_Map.size() << "\n";
     //tree.bfs_TrNode();
     int totle = 0;
     for (auto it = vec.begin(); it != vec.end();++it)
     {
+        cout << it->u << "->" << it->v <<" "<< it->w << "\n";
         totle += it->w;
     }
     cout << totle << "\n";

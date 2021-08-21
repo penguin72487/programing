@@ -178,7 +178,7 @@ class min_Tree{
             ib_TrNode[now->data] = 1;
             for (auto it = now->ni_Vec.begin(); it != now->ni_Vec.end();++it)
             {
-                if(ib_TrNode[it->second]==0)
+                if(ib_TrNode.find(it->second)==ib_TrNode.end())
                 {
                     list.push_back(it->first);
                 }

@@ -91,7 +91,7 @@ class min_Tree{
             v_Node->ni_Vec[u_Node] = w;
             u_Node->ni_Vec[v_Node] = w;
 
-            if(!b_Circle())
+            if(b_Circle()==0)
             {
                 return 1;
             }
@@ -126,17 +126,14 @@ class min_Tree{
         {
             it->second->ni_Backup = it->second->ni_Vec;
         }
+       // cout << op->data << " ";
         ib_TrNode[op->data] = 1;
         bool bt_Circle=0;
         for (auto it = op->ni_Vec.begin(); it != op->ni_Vec.end();++it)
         {
-            if(ib_TrNode.find(it->second)==ib_TrNode.end())
-            {
                 bt_Circle=max(bt_Circle, b_Circle(op,it->first));
-            }
-            
         }
-        cout << "\n";
+        //cout << "\n";
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
             it->second->ni_Vec = it->second->ni_Backup;
@@ -146,7 +143,7 @@ class min_Tree{
 	bool b_Circle(node* op,node* ed)
 	{
         bool bt_Circle=0;
-        cout<<ed->data<<" ";
+        //cout<<ed->data<<" ";
         if(ib_TrNode.find(ed->data)!=ib_TrNode.end())
         {
             ib_TrNode[ed->data]=1;   
@@ -167,23 +164,23 @@ class min_Tree{
     void bfs_TrNode()
     {
         ib_TrNode.clear();
-        deque<node *> list;
+        deque<node*> list;
         list.push_back(op);
         while(!list.empty())
         {
             node *now = list.front();
-
-            cout << now->data << "\n";
+            list.pop_front();
+            //cout << now->data << "\n";
             
             ib_TrNode[now->data] = 1;
             for (auto it = now->ni_Vec.begin(); it != now->ni_Vec.end();++it)
             {
-                if(ib_TrNode.find(it->second)==ib_TrNode.end())
-                {
+                if(ib_TrNode[it->second]==0)
+                {  
                     list.push_back(it->first);
                 }
             }
-            list.pop_front();
+            
         }
     }
 };
@@ -203,18 +200,23 @@ int main()
 
     for (auto it = vec.begin(); it != vec.end();++it)
     {
-        if(!tree.insert(it->u, it->v, it->w))
+        
+        bool b_Tmp = tree.insert(it->u, it->v, it->w);
+        //cout << it->u << "->" << it->v <<" "<< it->w <<" ok?"<<b_Tmp<< "\n";
+        //tree.bfs_TrNode();
+        if(!b_Tmp)
         {
             it->w = 0;
         }
-        cout << it->u << "->" << it->v <<" "<< it->w << "\n";
+        
     }
-    cout <<"size="<< tree.in_Map.size() << "\n";
-    //tree.bfs_TrNode();
+    
+    //cout <<"size="<< tree.in_Map.size() << "\n";
+    
     int totle = 0;
     for (auto it = vec.begin(); it != vec.end();++it)
     {
-        cout << it->u << "->" << it->v <<" "<< it->w << "\n";
+        //cout << it->u << "->" << it->v <<" "<< it->w << "\n";
         totle += it->w;
     }
     cout << totle << "\n";

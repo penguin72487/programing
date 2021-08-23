@@ -26,17 +26,17 @@ class Graph{
 	{
 		for(auto it=in_Map.begin();it!=in_Map.end();++it)
 		{
-			delete it->second;	
+			delete it->second;
 		}
         if(dis_List)
         {
             for (int i = 0; i < in_Map.size();++i)
             {
-                delete [] dis_List[i];
+                delete dis_List[i];
             }
-            delete [] dis_List;
+            delete[] dis_List;
         }
-        
+
     }
     void insert(int u,int v,int w)
     {
@@ -66,7 +66,7 @@ class Graph{
 			}
             v_Node->ni_Vec[u_Node] = w;
             u_Node->ni_Vec[v_Node] = w;
-            
+
         }
         else
         {
@@ -74,7 +74,7 @@ class Graph{
 			op=u_Node;
 			u_Node->data=u;
 			node* v_Node=new node;
-			v_Node->data=v; 
+			v_Node->data=v;
 			op->ni_Vec[v_Node]=w;
 			v_Node->ni_Vec[op]=w;
             in_Map[v_Node->data] = v_Node;
@@ -83,24 +83,24 @@ class Graph{
     }
     int short_Distance()
     {
-        
+
         dis_List = new int*[in_Map.size()];
         for (int i = 0; i < in_Map.size();++i)
         {
             dis_List[i] = new int[in_Map.size()];
             fill(dis_List[i], dis_List[i] + in_Map.size(),2147483647);
         }
-        
+
         for (auto it = in_Map.begin();it!=in_Map.end();++it)
         {
-            
+
             for (auto jt = it->second->ni_Vec.begin();jt!=it->second->ni_Vec.end();++it)
             {
-                
+                cout << "hi\n";
                 dis_List[it->first][jt->first->data] = jt->second;
             }
         }
-        cout << "hi\n";
+
         for (int i = 0; i < in_Map.size();++i)
         {
             dis_List[i][i] = 0;
@@ -119,7 +119,7 @@ class Graph{
 int main()
 {
     Graph tmp;
-    
+
     tmp.insert(0, 1, 2);
     tmp.insert(0, 2, 5);
     tmp.insert(1, 3, 6);

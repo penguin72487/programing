@@ -101,9 +101,12 @@ public:
 int main()
 {
 	graph tmp;
-	tmp.insert(1,2);
-	tmp.insert(2,3);
-	tmp.insert(3,4);
+	tmp.insert(1,4);
+	tmp.insert(1,5);
+	tmp.insert(6,7);
+	tmp.insert(2, 6);
+	tmp.insert(4, 5);
+
 	//tmp.insert(3,1);
     cout<<tmp.b_Circle()<<"\n";
     return 0;

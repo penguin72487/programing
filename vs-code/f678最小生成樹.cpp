@@ -9,8 +9,8 @@ using namespace std;
 class node{
 public:
 	int data;
-	map<node*, int> ni_Vec;
-    map<node *, int> ni_Backup;
+	unordered_map<node*, int> ni_Vec;
+    unordered_map<node *, int> ni_Backup;
 };
 class node_Vec{
 public:
@@ -49,8 +49,8 @@ public:
 class min_Tree{
 	public:
 	node* op=nullptr;
-	map<int,node*> in_Map;
-	map<int,bool> ib_TrNode;
+	unordered_map<int,node*> in_Map;
+	unordered_map<int,bool> ib_TrNode;
 	
 	min_Tree()
 	{
@@ -119,19 +119,29 @@ class min_Tree{
             return 1;
         }	
 	}
-	bool b_Circle()
+    bool b_Circle()
+    {
+        bool bt_Circle=0;
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        {
+            bt_Circle = max(bt_Circle, b_Circle(it->second));
+        }
+        return bt_Circle;
+    }
+    bool b_Circle(node* op)
 	{
         ib_TrNode.clear();
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
             it->second->ni_Backup = it->second->ni_Vec;
         }
-       // cout << op->data << " ";
+        //cout << op->data << " ";
         ib_TrNode[op->data] = 1;
         bool bt_Circle=0;
-        for (auto it = op->ni_Vec.begin(); it != op->ni_Vec.end();++it)
+
+        for (auto jt = op->ni_Vec.begin(); jt != op->ni_Vec.end(); ++jt)
         {
-                bt_Circle=max(bt_Circle, b_Circle(op,it->first));
+            bt_Circle=max(bt_Circle, b_Circle(op,jt->first));
         }
         //cout << "\n";
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
@@ -161,6 +171,7 @@ class min_Tree{
         }
         return bt_Circle;
     }
+    /*
     void bfs_TrNode()
     {
         ib_TrNode.clear();
@@ -183,10 +194,13 @@ class min_Tree{
             
         }
     }
+    */
 };
 int main()
 {
-	int n,m;
+    //ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    int n,m;
 	cin>>n>>m;
 	min_Tree tree;
     vector<node_Vec> vec;
@@ -194,6 +208,10 @@ int main()
 	{
 		int a,b,c;
 		cin>>a>>b>>c;
+        if(a==b)
+        {
+            continue;
+        }
         vec.push_back(node_Vec(a, b, c));
 	}
 	sort(vec.begin(),vec.end(),node_Vec());

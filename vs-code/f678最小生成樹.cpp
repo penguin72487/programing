@@ -49,10 +49,11 @@ public:
 class min_Tree{
 	public:
 	node* op=nullptr;
-	unordered_map<int,node*> in_Map;
-	unordered_map<int,bool> ib_TrNode;
-	
-	min_Tree()
+    unordered_map<int, node *> in_Map;
+    unordered_map<int, node *> in_TrGrup;
+    unordered_map<int, bool> ib_TrNode;
+
+    min_Tree()
 	{
 	}
 	~min_Tree()
@@ -121,11 +122,17 @@ class min_Tree{
 	}
     bool b_Circle()
     {
+        in_TrGrup.clear();
+        in_TrGrup = in_Map;
         bool bt_Circle=0;
-        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        while(!in_TrGrup.empty())
         {
+            auto it = in_TrGrup.begin();
             bt_Circle = max(bt_Circle, b_Circle(it->second));
         }
+
+        
+
         return bt_Circle;
     }
     bool b_Circle(node* op)
@@ -148,7 +155,11 @@ class min_Tree{
         {
             it->second->ni_Vec = it->second->ni_Backup;
         }
-        return bt_Circle;
+        for (auto it = ib_TrNode.begin(); it != ib_TrNode.end();++it)
+        {
+            in_TrGrup.erase(it->first);
+        }
+            return bt_Circle;
     }
 	bool b_Circle(node* op,node* ed)
 	{
@@ -198,8 +209,8 @@ class min_Tree{
 };
 int main()
 {
-    //ios_base::sync_with_stdio(0);
-    //cin.tie(0);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
     int n,m;
 	cin>>n>>m;
 	min_Tree tree;

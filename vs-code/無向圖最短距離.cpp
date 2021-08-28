@@ -78,7 +78,7 @@ class Graph{
         int op = 1;
         int ed = 6;
         //in_Map[ed]->ni_Backup = in_Map[ed]->ni_Vec;
-        in_Map[ed]->ni_Vec.clear();
+        //in_Map[ed]->ni_Vec.clear();
         int ans = 0;
         ib_TrNode[op] = 1;
         if(in_Map[op]->ni_Vec.find(in_Map[ed])!=in_Map[op]->ni_Vec.end())
@@ -89,6 +89,7 @@ class Graph{
         {
             //if(ib_TrNode.find(it->second)==ib_TrNode.end())
             {
+                cout <<op<<"->"<< it->first->data << "dis" << it->second << " ";
                 ans = min(ans, short_Distance(it->first->data, ed) + it->second);
             }
         }
@@ -97,7 +98,7 @@ class Graph{
     }
     int short_Distance(int op,int ed)
     {
-        cout << op <<"->"<<ed<< " ";
+        //cout << op <<"->"<<ed<< " ";
         if(op==ed)
         {
             cout << "pop ";
@@ -105,17 +106,22 @@ class Graph{
         }
         int ans = 0;
         ib_TrNode[op] = 1;
+        cout << op << "push ";
         if(in_Map[op]->ni_Vec.find(in_Map[ed])!=in_Map[op]->ni_Vec.end())
         {
             ans = in_Map[op]->ni_Vec[in_Map[ed]];
         }
         for (auto it = in_Map[op]->ni_Vec.begin();it!=in_Map[op]->ni_Vec.end();++it)
         {
-            //if(ib_TrNode.find(it->second)==ib_TrNode.end())
+            if(ib_TrNode.find(it->second)!=ib_TrNode.end())
             {
-                ans = min(ans, short_Distance(it->first->data, ed) + it->second);
+                
             }
-            
+            else
+            {
+                cout <<op<<"->"<< it->first->data << "dis" << it->second << " ";
+                ans = min(ans, short_Distance(it->first->data, ed) + it->second);
+            }            
         }
         return ans;
     }
@@ -124,14 +130,14 @@ int main()
 {
     Graph tmp;
     
-    tmp.insert(0, 1, 2);
-    tmp.insert(0, 2, 5);
-    tmp.insert(1, 3, 6);
-    tmp.insert(1, 4, 10);
-    tmp.insert(2, 4, 8);
-    tmp.insert(2, 3, 9);
-    tmp.insert(4, 5, 3);
-    tmp.insert(3, 5, 4);
+    tmp.insert(1, 2, 2);
+    tmp.insert(1, 3, 5);
+    tmp.insert(2, 4, 6);
+    tmp.insert(2, 4, 10);
+    tmp.insert(3, 5, 8);
+    tmp.insert(3, 4, 9);
+    tmp.insert(5, 6, 3);
+    tmp.insert(4, 6, 4);
     cout << tmp.in_Map.size() << "\n";
     cout<<tmp.short_Distance()<<"\n";
 

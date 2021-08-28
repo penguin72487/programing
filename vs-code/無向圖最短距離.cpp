@@ -79,7 +79,7 @@ class Graph{
         int ed = 6;
         //in_Map[ed]->ni_Backup = in_Map[ed]->ni_Vec;
         //in_Map[ed]->ni_Vec.clear();
-        int ans = 0;
+        int ans = 2147483647;
         ib_TrNode[op] = 1;
         if(in_Map[op]->ni_Vec.find(in_Map[ed])!=in_Map[op]->ni_Vec.end())
         {
@@ -90,40 +90,38 @@ class Graph{
             //if(ib_TrNode.find(it->second)==ib_TrNode.end())
             {
                 cout <<op<<"->"<< it->first->data << "dis" << it->second << " ";
-                ans = min(ans, short_Distance(it->first->data, ed) + it->second);
+               ans = min(ans, short_Distance(it->first->data, ed, it->second));
+               cout << "\n";
             }
         }
         //in_Map[ed]->ni_Vec = in_Map[ed]->ni_Backup;
         return ans;
     }
-    int short_Distance(int op,int ed)
+    int short_Distance(int op,int ed,int totle)
     {
         //cout << op <<"->"<<ed<< " ";
+        cout << "totle=" << totle << " ";
         if(op==ed)
         {
-            cout << "pop ";
-            return 0;
+            //cout << "pop ";
+            return totle;
         }
-        int ans = 0;
         ib_TrNode[op] = 1;
-        cout << op << "push ";
+        //cout << op << "push ";
         if(in_Map[op]->ni_Vec.find(in_Map[ed])!=in_Map[op]->ni_Vec.end())
         {
-            ans = in_Map[op]->ni_Vec[in_Map[ed]];
+            totle += in_Map[op]->ni_Vec[in_Map[ed]];
         }
         for (auto it = in_Map[op]->ni_Vec.begin();it!=in_Map[op]->ni_Vec.end();++it)
         {
-            if(ib_TrNode.find(it->second)!=ib_TrNode.end())
+            if(ib_TrNode.find(it->first->data)==ib_TrNode.end())
             {
-                
-            }
-            else
-            {
+                //cout <<"size="<<ib_TrNode.size()<< "";
                 cout <<op<<"->"<< it->first->data << "dis" << it->second << " ";
-                ans = min(ans, short_Distance(it->first->data, ed) + it->second);
+                totle = min(totle, short_Distance(it->first->data, ed,totle+it->second));
             }            
         }
-        return ans;
+        return totle;
     }
 };
 int main()
@@ -133,7 +131,7 @@ int main()
     tmp.insert(1, 2, 2);
     tmp.insert(1, 3, 5);
     tmp.insert(2, 4, 6);
-    tmp.insert(2, 4, 10);
+    tmp.insert(2, 5, 10);
     tmp.insert(3, 5, 8);
     tmp.insert(3, 4, 9);
     tmp.insert(5, 6, 3);

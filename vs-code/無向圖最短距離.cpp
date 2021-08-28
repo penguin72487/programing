@@ -9,15 +9,14 @@ using namespace std;
 class node{
 public:
 	int data;
-	map<node*, int> ni_Vec;
-    map<node *, int> ni_Backup;
+	unordered_map<node*, int> ni_Vec;
+    unordered_map<node *, int> ni_Backup;
 };
 class Graph{
 	public:
 	node* op=nullptr;
 	unordered_map<int,node*> in_Map;
 	unordered_map<int,bool> ib_TrNode;
-    int **dis_List=nullptr;
 
     Graph()
 	{
@@ -28,14 +27,6 @@ class Graph{
 		{
 			delete it->second;	
 		}
-        if(dis_List)
-        {
-            for (int i = 0; i < in_Map.size();++i)
-            {
-                delete [] dis_List[i];
-            }
-            delete [] dis_List;
-        }
         
     }
     void insert(int u,int v,int w)
@@ -83,37 +74,50 @@ class Graph{
     }
     int short_Distance()
     {
-        
-        dis_List = new int*[in_Map.size()];
-        for (int i = 0; i < in_Map.size();++i)
+        ib_TrNode.clear();
+        int op = 1;
+        int ed = 6;
+        //in_Map[ed]->ni_Backup = in_Map[ed]->ni_Vec;
+        in_Map[ed]->ni_Vec.clear();
+        int ans = 0;
+        ib_TrNode[op] = 1;
+        if(in_Map[op]->ni_Vec.find(in_Map[ed])!=in_Map[op]->ni_Vec.end())
         {
-            dis_List[i] = new int[in_Map.size()];
-            fill(dis_List[i], dis_List[i] + in_Map.size(),2147483647);
+            ans = in_Map[op]->ni_Vec[in_Map[ed]];   
         }
-        
-        for (auto it = in_Map.begin();it!=in_Map.end();++it)
+        for (auto it = in_Map[op]->ni_Vec.begin();it!=in_Map[op]->ni_Vec.end();++it)
         {
-            
-            for (auto jt = it->second->ni_Vec.begin();jt!=it->second->ni_Vec.end();++it)
+            //if(ib_TrNode.find(it->second)==ib_TrNode.end())
             {
-                
-                dis_List[it->first][jt->first->data] = jt->second;
+                ans = min(ans, short_Distance(it->first->data, ed) + it->second);
             }
         }
-        cout << "hi\n";
-        for (int i = 0; i < in_Map.size();++i)
+        //in_Map[ed]->ni_Vec = in_Map[ed]->ni_Backup;
+        return ans;
+    }
+    int short_Distance(int op,int ed)
+    {
+        cout << op <<"->"<<ed<< " ";
+        if(op==ed)
         {
-            dis_List[i][i] = 0;
-        }
-        for (int i = 0; i < in_Map.size();++i)
-        {
-            for (int j = 0; j < in_Map.size();++j)
-            {
-                cout<<dis_List[i][j]<<" ";
-            }
-            cout << "\n";
-        }
+            cout << "pop ";
             return 0;
+        }
+        int ans = 0;
+        ib_TrNode[op] = 1;
+        if(in_Map[op]->ni_Vec.find(in_Map[ed])!=in_Map[op]->ni_Vec.end())
+        {
+            ans = in_Map[op]->ni_Vec[in_Map[ed]];
+        }
+        for (auto it = in_Map[op]->ni_Vec.begin();it!=in_Map[op]->ni_Vec.end();++it)
+        {
+            //if(ib_TrNode.find(it->second)==ib_TrNode.end())
+            {
+                ans = min(ans, short_Distance(it->first->data, ed) + it->second);
+            }
+            
+        }
+        return ans;
     }
 };
 int main()

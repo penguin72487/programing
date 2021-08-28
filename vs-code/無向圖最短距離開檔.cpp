@@ -16,7 +16,7 @@ public:
 class Graph{
 	public:
 	node* op=nullptr;
-	unordered_map<int,node*> in_Map;
+	map<int,node*> in_Map;
 	unordered_map<int,bool> ib_TrNode;
 
     Graph()
@@ -76,12 +76,13 @@ class Graph{
     int short_Distance()
     {
         deque<node *> list;
-        in_Map[1]->i_opVec = 0;
-        ib_TrNode[1] = 1;
-        list.push_back(in_Map[1]);
+        in_Map.begin()->second->i_opVec = 0;
+        ib_TrNode[in_Map.begin()->second->data] = 1;
+        list.push_back(in_Map.begin()->second);
         while(!list.empty())
         {
             node *now = list.front();
+            cout << now->data << " ";
             list.pop_front();
             ib_TrNode[now->data] = 1;
             for (auto it = now->ni_Vec.begin(); it != now->ni_Vec.end();++it)
@@ -93,22 +94,21 @@ class Graph{
                 }
             }
         }
-        return in_Map[6]->i_opVec;
+        cout << "\n";
+        return (--in_Map.end())->second->i_opVec;
     }
 };
 int main()
 {
     Graph tmp;
-    
-    tmp.insert(1, 2, 2);
-    tmp.insert(1, 3, 5);
-    tmp.insert(2, 4, 6);
-    tmp.insert(2, 5, 10);
-    tmp.insert(3, 5, 8);
-    tmp.insert(3, 4, 9);
-    tmp.insert(5, 6, 3);
-    tmp.insert(4, 6, 4);
-    //cout << tmp.in_Map.size() << "\n";
+    int n, m;
+    cin >> n >> m;
+    for (int i = 0; i < m;++i)
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        tmp.insert(a, b, c);
+    }
     cout<<tmp.short_Distance()<<"\n";
 
     return 0;

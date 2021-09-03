@@ -51,32 +51,37 @@ int main()
         cout << "\n";
     }
     deque<pair<int, int> *> list;
-    int dx[3] = {-1, 0, 1};
-    int dy[3] = {0, 1, 0};
+    int dx[3] =  {0, 1, 0};
+    int dy[3] = {-1, 0, 1};
     for (int i = 1; i < m - 1;++i)
     {
         cout << i << " ";
         pair<int, int> tmp(1,i);
+        cout <<"for"<< tmp.first << " " << tmp.second << "\n";
         list.push_back(&tmp);
-
     }
-        while (!list.empty())
+    cout << "\n";
+    for (auto it = list.begin(); it != list.end();++it)
+    {
+        cout <<"list"<< (*it)->first << " " << (*it)->second << "\n";
+    }
+    while (!list.empty())
+    {
+        pair<int, int> *now = list.front();
+        int x = now->first;
+        int y = now->second;
+        cout << x << " " << y << "\n";
+        for (int i = 0; i < 3; ++i)
         {
-            pair<int, int> *now = list.front();
-            int x = now->first;
-            int y = now->second;
-            cout << x << " " << y << "\n";
-            for (int i = 0; i < n; ++i)
+            if (matrix[x + dx[i]][y + dy[i]].i_Data > 0)
             {
-                if (matrix[x + dx[i]][y + dy[i]].i_Data > 0)
-                {
-                    pair<int, int> tmp(x + dx[i], y + dy[i]);
-                    list.push_back(&tmp);
-                    matrix[x + dx[i]][y + dy[i]].i_BFSMax = max(matrix[x + dx[i]][y + dy[i]].i_BFSMax, matrix[x][y].i_BFSMax + matrix[x + dx[i]][y + dy[i]].i_Data);
-                }
+                pair<int, int> tmp(x + dx[i], y + dy[i]);
+                list.push_back(&tmp);
+                matrix[x + dx[i]][y + dy[i]].i_BFSMax = max(matrix[x + dx[i]][y + dy[i]].i_BFSMax, matrix[x][y].i_BFSMax + matrix[x + dx[i]][y + dy[i]].i_Data);
             }
-            list.pop_front();
         }
+        list.pop_front();
+    }
     int i_Max=-2147483648;
     for (int i = 1; i < m-1;++i)
     {

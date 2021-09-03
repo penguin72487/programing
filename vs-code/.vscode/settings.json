@@ -27,6 +27,7 @@
     "clang.completion.enable": true,
     "files.associations": {
       "iostream": "cpp",
-      "unordered_map": "cpp"
+      "unordered_map": "cpp",
+      "new": "cpp"
     }
   }

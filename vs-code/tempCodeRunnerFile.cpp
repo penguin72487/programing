@@ -82,7 +82,7 @@ int main()
         int x = now->first;
         int y = now->second;
         iib_TrNode[x][y] = 1;
-        //cout << x << " " << y << " " << matrix[x][y].i_BFSMax << " ||";
+        //cout << x << " " << y << " " << matrix[x][y].i_BFSMax << "\n";
         for (int i = 0; i < 3; ++i)
         {
             if (matrix[x + dx[i]][y + dy[i]].i_Data > -2147483647&&iib_TrNode[x+dx[i]][y+dy[i]]==0)

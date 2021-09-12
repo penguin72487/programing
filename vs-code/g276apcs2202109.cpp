@@ -64,11 +64,11 @@ int main()
         {
                 mo[i].x0 += mo[i].dx;
                 mo[i].y0 += mo[i].dy;
-                //cout << "do2" << &mo[i].x0 << " " << &mo[i].y0 << " ";
+                //cout << "do2" << mo[i].x0 << " " << mo[i].y0 << " ";
         }
         for (int i = 0; i < t;++i)
         {
-            //cout << "do1" << &mo[i].x0 << " " << &mo[i].y0 << "\n";
+            //cout << "do1" << mo[i].x0 << " " << mo[i].y0 << "\n";
         }
         for (int i = 0; i < t;++i)
         {

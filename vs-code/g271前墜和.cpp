@@ -21,17 +21,19 @@ int* min_Ptr(int *val,int *ed)
 }
 int i_Liky(int *val,int *ed)
 {
+    /*
     for (auto it = val; it != ed;++it)
     {
         cout << *it << " ";
     }
     cout << "\n";
+    */
     int *p_Min = min_Ptr(val, ed);
     if(val+1==ed)
     {
         return *val;
     }
-    cout <<"prior" << pi_Map[p_Min - 1] << " "<< pi_Map[ed - 1] - pi_Map[p_Min] << "\n";
+    //cout <<"prior" << pi_Map[p_Min - 1] << " "<< pi_Map[ed - 1] - pi_Map[p_Min] << "\n";
     if(pi_Map[p_Min-1]>pi_Map[ed-1]-pi_Map[p_Min])
     {
         return i_Liky(val, p_Min);
@@ -46,9 +48,9 @@ int main()
     cin.tie(0)->sync_with_stdio (0);
     int n;
     cin >> n;
-    int list[n];
+    int list[n+1];
     int i_Sum = 0;
-    for(int i = 0; i < n;i_Sum+=list[i],++i)
+    for(int i = 0; i < n;++i)
     {
         cin >> list[i];
         i_Sum += list[i];

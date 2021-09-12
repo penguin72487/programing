@@ -5,8 +5,8 @@ int main()
 {
     int n;
     cin >> n;
-    
-    
+
+
     int w = 100;
     int A[n];//Åé¿n
     int B[n];//¹¡¨¬·P
@@ -14,21 +14,21 @@ int main()
     {
         cin >> A[i] >> B[i];
     }
-    int* dp=new int[w + 1];
-    fill(dp, dp+w+1, 0);
-
-    for (int i = 0; i < n; ++i)
+    int* dp=new int[n + 1];
+    fill(dp, dp+n+1, 0);
+    cout <<"n="<< &n << "\n";
+    for (int i = 1; i < n; ++i)
     {
         for (int j = w; j >= A[i]; --j)
         {
+            cout<<dp[j] <<" "<< dp[j - A[i]]<<" "<<B[i]<<"\n";
             dp[j] = max(dp[j], dp[j - A[i]] + B[i]);
         }
-        for (int j = 0; j < w+1;++j)
-        {
-            cout << dp[j] <<" ";
-        }
-        cout << "end\n";
     }
-    cout << dp[w] << "\n";
+    for (int i = 0; i < n + 1;++i)
+    {
+        cout << dp[i] << " ";
+    }
+        cout << dp[n] << "\n";
     delete []dp;
 }

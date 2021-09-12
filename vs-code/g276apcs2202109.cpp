@@ -10,7 +10,7 @@ public:
     //bool flag = 1;
     bool b_in()
     {
-        if(x0<0||x0>n||y0<0||y0>m)
+        if(x0<0||x0>n-1||y0<0||y0>m-1)
         {
             dx = 0;
             dy = 0;
@@ -25,12 +25,15 @@ public:
 
 bool yee_in(yee *mo)
 {
-    bool flag=0;
+   // bool flag=0;
     for (int i = 0; i < t;++i)
     {
-        flag = max(flag, mo[i].b_in());
+        if(mo[i].b_in())
+        {
+            return 1;
+        }
     }
-    return flag;
+    return 0;
 }
 int main()
 {
@@ -61,11 +64,18 @@ int main()
         {
                 mo[i].x0 += mo[i].dx;
                 mo[i].y0 += mo[i].dy;
+                //cout << "do2" << &mo[i].x0 << " " << &mo[i].y0 << " ";
         }
         for (int i = 0; i < t;++i)
         {
-            if(maze[mo[i].x0][mo[i].y0]>0)
+            //cout << "do1" << &mo[i].x0 << " " << &mo[i].y0 << "\n";
+        }
+        for (int i = 0; i < t;++i)
+        {
+            
+            if(maze[mo[i].x0][mo[i].y0]>0&&mo[i].b_in())
             {
+                cout << "do" << mo[i].x0 << " " << mo[i].y0 << "\n";
                 mo[i].x0 = -1;
                 mo[i].y0 = -1;
                 mo[i].dx = 0;
@@ -73,6 +83,10 @@ int main()
                 ++maze[mo[i].x0][mo[i].y0];
             }
             
+        }
+        for (int i = 0; i < t;++i)
+        {
+            //cout << "do" << mo[i].x0 << " " << mo[i].y0 << "\n";
         }
         for (int i = 0; i < n;++i)
         {
@@ -86,6 +100,7 @@ int main()
         }
         for (int i = 0; i < t;++i)
         {
+            cout <<mo[i].x0<<" "<<mo[i].y0<<" "<< mo[i].b_in() << "\n";
             if(mo[i].b_in())
             {
                 maze[mo[i].x0][mo[i].y0] = 1;
@@ -95,13 +110,13 @@ int main()
         
     }
     for (int i = 0; i < n;++i)
+    {
+        for (int j = 0; j < m;++j)
         {
-            for (int j = 0; j < m;++j)
-            {
-                cout<<maze[i][j]<<" ";
-            }
-            cout << "\n";
+            cout<<maze[i][j]<<" ";
         }
+        cout << "\n";
+    }
     int totle = 0;
     for (int i = 0; i < n;++i)
     {

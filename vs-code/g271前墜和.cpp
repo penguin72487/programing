@@ -4,7 +4,7 @@
 #include<iterator>
 #include<limits>
 using namespace std;
-unordered_map<int *, int> pi_Map;
+unordered_map<int *, long long> pi_Map;
 int* min_Ptr(int *val,int *ed)
 {
     int i_Min=numeric_limits<int>::max();
@@ -33,8 +33,8 @@ int i_Liky(int *val,int *ed)
     {
         return *val;
     }
-    //cout <<"prior" << pi_Map[p_Min - 1] << " "<< pi_Map[ed - 1] - pi_Map[p_Min] << "\n";
-    if(pi_Map[p_Min-1]>pi_Map[ed-1]-pi_Map[p_Min])
+    //cout <<"prior " << pi_Map[p_Min-1]-pi_Map[val-1]<< " "<< pi_Map[ed - 1] - pi_Map[p_Min] << " ";
+    if(pi_Map[p_Min-1]-pi_Map[val-1]>pi_Map[ed-1]-pi_Map[p_Min])
     {
         return i_Liky(val, p_Min);
     }
@@ -48,11 +48,13 @@ int main()
     cin.tie(0)->sync_with_stdio (0);
     int n;
     cin >> n;
-    int list[n+1];
-    int i_Sum = 0;
+    int tmp[n + 2];
+    int *list = tmp + 1;
+    pi_Map[tmp] = 0;
+    long long i_Sum = 0;
     for(int i = 0; i < n;++i)
     {
-        cin >> list[i];
+        cin>>list[i];
         i_Sum += list[i];
         pi_Map[&list[i]] = i_Sum;
     }

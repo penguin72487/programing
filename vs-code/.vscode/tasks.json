@@ -1,32 +1,50 @@
 {
     "version": "2.0.0",
     "tasks": [
-      {
-        "label": "Compile", 
-        "command": "clang++", 
-        "args": [
-          "${file}",
-          "-o",
-          "${fileDirname}/${fileBasenameNoExtension}.exe",
-          "-g", 
-          "-Wall",
-          "-static-libgcc",
-          "-fcolor-diagnostics",
-          "--target=x86_64-w64-mingw", 
-          "-std=c++17" 
-        ], 
-        "type": "shell", 
-        "group": {
-          "kind": "build",
-          "isDefault": true 
+        {
+            "label": "Compile",
+            "command": "clang++",
+            "args": [
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "-g",
+                "-Wall",
+                "-static-libgcc",
+                "-fcolor-diagnostics",
+                "--target=x86_64-w64-mingw",
+                "-std=c++17"
+            ],
+            "type": "shell",
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
         },
-        "presentation": {
-          "echo": true,
-          "reveal": "always", 
-          "focus": false, 
-          "panel": "shared" 
+        {
+            "type": "cppbuild",
+            "label": "C/C++: gcc.exe 建置使用中檔案",
+            "command": "C:/Program Files/LLVM/bin/gcc.exe",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "C:/Program Files/LLVM/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "偵錯工具產生的工作。"
         }
-        // "problemMatcher":"$gcc" 
-      }
     ]
-  }
+}

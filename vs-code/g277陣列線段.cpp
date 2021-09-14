@@ -56,7 +56,7 @@ public:
     {
         delete [] t_Node;
     }
-    node *build(node *op, node *ed);
+    //node *build(node *op, node *ed);
     long long prior_Sum(node* op,node* ed)
     {
         /*
@@ -68,16 +68,17 @@ public:
         cout << "\n";
         */
         long long t_Sum=0;
-        int i_op = size;
-        int i_ed = ed - op;
+        int i_op = t_Node-op;
+        int i_ed = t_Node-ed;
         while(i_op<i_ed)
         {
+            cout << "index " << i_op << " " << i_ed << "\n";
             if(i_op&1)
             {
                 t_Sum += t_Node[i_op].i_Sum;
                 ++i_op;
             }
-            if(!(i_ed&1))
+            if(i_ed&1)
             {
                 --i_ed;
                 t_Sum += t_Node[i_ed].i_Sum;
@@ -85,13 +86,13 @@ public:
             i_op >>= 1;
             i_ed >>= 1;
         }
-        
+        cout << "Sum" << t_Sum << "\n";
         return t_Sum;
     }
     node* rn_Min(node* op,node* ed)
     {
-        int i_op = size;
-        int i_ed = ed - op;
+        int i_op = t_Node-op;
+        int i_ed = t_Node-ed;
         node *min_Node=op;
         while(i_op<i_ed)
         {
@@ -132,8 +133,8 @@ public:
             return op->i_Sum;
             }
         node* min_Node=rn_Min(op,ed);
-        cout<<"prior"<<prior_Sum(op,min_Node)<<" "<<prior_Sum(min_Node,t_Node+size*2)<<"\n";
-        if(prior_Sum(op,min_Node)>prior_Sum(min_Node,t_Node+size*2))
+        //cout<<"prior"<<prior_Sum(op,min_Node)<<" "<<prior_Sum(min_Node,t_Node+size*2)<<"\n";
+        if(prior_Sum(op,min_Node)>prior_Sum(min_Node+1,t_Node+size*2))
         {
             return i_Licky(op, min_Node);
         }

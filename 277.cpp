@@ -19,9 +19,9 @@ public:
     node* top=nullptr;
     node *t_Node;
     int size;
-    Segment_Tree(int* tmp)
+    Segment_Tree(int* tmp,int n)
     {
-        int n = sizeof(tmp);
+        
         size = n;
         t_Node = new node[2*n];
         top = t_Node+1;
@@ -51,6 +51,7 @@ public:
         
         cout << "\n";
         */
+        
     }
     ~Segment_Tree()
     {
@@ -59,14 +60,14 @@ public:
     //node *build(node *op, node *ed);
     long long prior_Sum(node* op,node* ed)
     {
-        /*
+        
         cout << "sum";
         for (auto it = t_Node ; it != t_Node + size ;++it)
         {
             cout << it->i_Sum << " ";
         }
         cout << "\n";
-        */
+        
         long long t_Sum=0;
         int i_op = op-t_Node;
         int i_ed = ed-t_Node;
@@ -156,6 +157,6 @@ int main()
     {
         cin >> list[i];
     }
-    Segment_Tree Licky(list);
+    Segment_Tree Licky(list,n);
     cout << Licky.i_Licky();
 }

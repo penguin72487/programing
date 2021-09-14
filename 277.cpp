@@ -72,7 +72,7 @@ public:
         int i_ed = ed-t_Node;
         while(i_op<i_ed)
         {
-            //cout << "index " << i_op << " " << i_ed << "\n";
+            cout << "index " << i_op << " " << i_ed << "\n";
             if(i_op&1)
             {
                 t_Sum += t_Node[i_op].i_Sum;
@@ -86,7 +86,7 @@ public:
             i_op >>= 1;
             i_ed >>= 1;
         }
-        //cout << "Sum" << t_Sum << "\n";
+        cout << "Sum" << t_Sum << "\n";
         return t_Sum;
     }
     node* rn_Min(node* op,node* ed)
@@ -135,7 +135,7 @@ public:
             return op->i_Sum;
             }
         node* min_Node=rn_Min(op,ed);
-        //cout<<"min: "<<min_Node->i_Sum<<"\n";
+        cout<<"min: "<<min_Node->i_Sum<<"\n";
         //cout<<"prior"<<prior_Sum(op,min_Node)<<" "<<prior_Sum(min_Node,t_Node+size*2)<<"\n";
         if(prior_Sum(op,min_Node)>prior_Sum(min_Node+1,ed))
         {

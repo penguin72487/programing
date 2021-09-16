@@ -58,8 +58,8 @@ public:
                     {
                             cout <<"insert_Node "<<insert_Ptr->i_Sum<<" t_Node "<<t_Node->i_Sum<<" hi top\n";
 
-                            insert_Ptr->pa_Node = t_Node;
-                            t_Node->l_Node = insert_Ptr;
+                            insert_Pa->pa_Node = t_Node;
+                            t_Node->l_Node = insert_Pa;
                             insert_Ptr = t_Node;
                             //insert_Ptr->l_Node = top;
                             top = t_Node;

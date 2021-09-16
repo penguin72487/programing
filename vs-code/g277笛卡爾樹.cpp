@@ -17,9 +17,9 @@ public:
     }
     //node* min_Node = this;
     //int i_Max = -2147483648;
-    node *pa_Node=nullptr;
-    node *l_Node=nullptr;
-    node *r_Node=nullptr;
+    node *pa_Node = nullptr;
+    node *l_Node = nullptr;
+    node *r_Node = nullptr;
 };
 class DC_Tree
 {
@@ -34,9 +34,11 @@ public:
             if(top)
             {
                 node *t_Node = new node(tmp[i]);
+
                 if(t_Node->i_Sum>insert_Ptr->i_Sum)
                 {
                     cout <<"insert_Node "<<insert_Ptr->i_Sum<<" t_Node "<<t_Node->i_Sum<<" hi\n";
+
                     t_Node->pa_Node=insert_Ptr;
                     insert_Ptr->r_Node = t_Node;
                     insert_Ptr = t_Node;
@@ -46,6 +48,7 @@ public:
                 else
                 {
                     node *insert_Pa = insert_Ptr;
+
                     while(t_Node->i_Sum<insert_Pa->i_Sum&&insert_Pa!=top)
                     {
                         insert_Pa = insert_Pa->pa_Node;
@@ -54,23 +57,28 @@ public:
                     if(insert_Pa==top)
                     {
                             cout <<"insert_Node "<<insert_Ptr->i_Sum<<" t_Node "<<t_Node->i_Sum<<" hi top\n";
+
                             insert_Ptr->pa_Node = t_Node;
                             t_Node->l_Node = insert_Ptr;
                             insert_Ptr = t_Node;
                             //insert_Ptr->l_Node = top;
                             top = t_Node;
                             t_Node->pa_Node = t_Node;
+                            insert_Ptr = t_Node;
                             dfs_Mid(top);
                             continue;
                     }
+
                     cout <<"insert_Node "<<insert_Pa->i_Sum<<" t_Node "<<t_Node->i_Sum<<" hi re\n";
+                    
                     insert_Ptr->pa_Node = t_Node;
                     insert_Pa->r_Node = t_Node;
                     t_Node->pa_Node = insert_Pa;
                     t_Node->l_Node = insert_Ptr;
                     insert_Ptr = t_Node;
                     //top = t_Node;
-                    dfs_Mid(top);
+                   // dfs_Mid(top);
+                    
                     
                 }
             }
@@ -80,6 +88,7 @@ public:
                 top = op;
                 insert_Ptr=top;
                 insert_Ptr->pa_Node = top;
+                //dfs_Mid(top);
             }
         }
         dfs_Mid(top);
@@ -92,14 +101,20 @@ public:
     {
         if(now)
         {
-            dfs_Mid(now->l_Node);
-            dfs_Mid(now->r_Node);
+            dis_Node(now->l_Node);
+            dis_Node(now->r_Node);
             delete now;
         }
     }
     void dfs_Mid(node* now)
     {
-        
+        if(now)
+        {
+            dfs_Mid(now->l_Node);
+            cout << now->i_Sum << " ";
+            dfs_Mid(now->r_Node);
+            
+        }
         
     }
     int i_Licky()

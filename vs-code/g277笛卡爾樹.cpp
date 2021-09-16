@@ -148,7 +148,7 @@ public:
     {
         dfs_Sum();
         node *now = top;
-        while(now->l_Node||now->r_Node)
+        while(now->l_Node!=nullptr||now->r_Node!=nullptr)
         {
             cout <<"op "<< now->data << " ";
 

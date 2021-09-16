@@ -40,12 +40,13 @@ public:
                     t_Node->pa_Node=insert_Ptr;
                     insert_Ptr->r_Node = t_Node;
                     insert_Ptr = t_Node;
+                    dfs_Mid(top);
                     
                 }
                 else
                 {
                     node *insert_Pa = insert_Ptr;
-                    while(t_Node->i_Sum>insert_Pa->i_Sum&&insert_Pa!=top)
+                    while(t_Node->i_Sum<insert_Pa->i_Sum&&insert_Pa!=top)
                     {
                         insert_Pa = insert_Pa->pa_Node;
                     }
@@ -59,7 +60,7 @@ public:
                             //insert_Ptr->l_Node = top;
                             top = t_Node;
                             t_Node->pa_Node = t_Node;
-                            
+                            dfs_Mid(top);
                             continue;
                     }
                     cout <<"insert_Node "<<insert_Pa->i_Sum<<" t_Node "<<t_Node->i_Sum<<" hi re\n";
@@ -69,7 +70,7 @@ public:
                     t_Node->l_Node = insert_Ptr;
                     insert_Ptr = t_Node;
                     //top = t_Node;
-
+                    dfs_Mid(top);
                     
                 }
             }

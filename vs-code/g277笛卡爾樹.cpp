@@ -32,11 +32,14 @@ public:
     node *top=nullptr;
     DC_Tree(int* tmp,int n)
     {
-        node *insert_Ptr=nullptr;
+        top = new node;
+        top->data = -2147483648;
+        top->l_Node = new node;
+        node *insert_Ptr=nullptr; //=top->l_Node;
         for (int i = 0; i < n;++i)
         {
             //cout <<"index val "<<i<<" "<<tmp[i]<< "insert " << insert_Ptr->data<<"\n";
-            if(top)
+            if(i)
             {
                 node *t_Node = new node(tmp[i]);
 
@@ -47,7 +50,7 @@ public:
                     t_Node->pa_Node=insert_Ptr;
                     insert_Ptr->r_Node = t_Node;
                     insert_Ptr = t_Node;
-                    //dfs_Mid(top);
+                    //dfs_Mid();
                     
                 }
                 else
@@ -57,47 +60,49 @@ public:
                     while(t_Node->data<insert_Pa->data&&insert_Pa!=top)
                     {
                         insert_Pa = insert_Pa->pa_Node;
-                        cout << "while " << insert_Pa->data << " ";
+                        //cout << "while " << insert_Pa->data << " ";
                     }
                     
                     if(insert_Pa==top)
                     {
-                            cout <<"insert_Node "<<insert_Ptr->data<<" t_Node "<<t_Node->data<<" hi top\n";
+                            //cout <<"insert_Node "<<insert_Ptr->data<<" t_Node "<<t_Node->data<<" hi top\n";
 
-                            insert_Pa->pa_Node = t_Node;
-                            t_Node->l_Node = insert_Pa;
+                            t_Node->l_Node=top->l_Node;
+                            top->l_Node = t_Node;
+                            t_Node->pa_Node = top;
                             insert_Ptr = t_Node;
-                            //insert_Ptr->l_Node = top;
-                            top = t_Node;
-                            t_Node->pa_Node = t_Node;
-                            insert_Ptr = t_Node;
-                            //dfs_Mid(top);
+                            //dfs_Mid();
                             continue;
                     }
 
                     //cout <<"insert_Node "<<insert_Pa->data<<" t_Node "<<t_Node->data<<" hi re\n";
-                    
-                    insert_Ptr->pa_Node = t_Node;
+                   
+                    //insert_Ptr->pa_Node = t_Node;
+                    t_Node->l_Node = insert_Pa->r_Node;
                     insert_Pa->r_Node = t_Node;
+                    
+                    t_Node->l_Node->pa_Node = t_Node;
+                   // cout << "ho";
                     t_Node->pa_Node = insert_Pa;
-                    t_Node->l_Node = insert_Ptr;
                     insert_Ptr = t_Node;
+                    
                     //top = t_Node;
-                   // dfs_Mid(top);
+                    //dfs_Mid();
+                    
                     
                     
                 }
             }
             else
             {
-                node *op = new node(tmp[i]);
-                top = op;
-                insert_Ptr=top;
+                insert_Ptr = new node(tmp[i]);
+                top->l_Node= insert_Ptr;
+                //insert_Ptr=top;
                 insert_Ptr->pa_Node = top;
-                //dfs_Mid(top);
+                //dfs_Mid();
             }
         }
-        dfs_Mid();
+        //dfs_Mid();
     }
     ~DC_Tree()
     {
@@ -105,7 +110,7 @@ public:
     }    
     void dfs_Mid()
     {
-        dfs_Mid(top);
+        dfs_Mid(top->l_Node);
         cout << "\n";
     }
     void dis_Node(node* now)
@@ -130,7 +135,7 @@ public:
     }
     void dfs_Sum()
     {
-        dfs_Sum(top);
+        dfs_Sum(top->l_Node);
     }
     void dfs_Sum(node* now)
     {
@@ -147,11 +152,19 @@ public:
     int i_Licky()
     {
         dfs_Sum();
-        node *now = top;
-        while(now->l_Node!=nullptr||now->r_Node!=nullptr)
+        
+        node *now = top->l_Node;
+        while(now->l_Node||now->r_Node)
         {
-            cout <<"op "<< now->data << " ";
-
+            //cout << "op " << now->data; //<<" "<< now->l_Node->i_Sum<<" "<<now->r_Node->i_Sum<<"\n";
+            if(!now->l_Node)
+            {
+                now = now->r_Node;
+            }
+            if(!now->r_Node)
+            {
+                now = now->l_Node;
+            }
             if(!now->r_Node&&now->l_Node->i_Sum>now->r_Node->i_Sum)
             {
                 now = now->l_Node;
@@ -161,13 +174,13 @@ public:
                 now = now->r_Node;
             }
         }
-        cout << "hi\n";
+        //cout << "hi\n";
         return now->data;
     }
 };
 int main()
 {
-    //cin.tie(0)->sync_with_stdio(0);
+    cin.tie(0)->sync_with_stdio(0);
     int n;
     cin >> n;
     int list[n];
@@ -177,5 +190,5 @@ int main()
     }
     DC_Tree Licky(list,n);
     
-    cout <<"ans = "<< Licky.i_Licky();
+    cout << Licky.i_Licky()<<"\n";
 }

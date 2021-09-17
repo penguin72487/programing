@@ -108,11 +108,7 @@ public:
     {
         dis_Node(top);
     }    
-    void dfs_Mid()
-    {
-        dfs_Mid(top->l_Node);
-        cout << "\n";
-    }
+    
     void dis_Node(node* now)
     {
         if(now)
@@ -121,6 +117,11 @@ public:
             dis_Node(now->r_Node);
             delete now;
         }
+    }
+    void dfs_Mid()
+    {
+        dfs_Mid(top->l_Node);
+        cout << "\n";
     }
     void dfs_Mid(node* now)
     {
@@ -133,26 +134,46 @@ public:
         }
         
     }
+    void dfs_printSum()
+    {
+        dfs_printSum(top->l_Node);
+        cout << "\n";
+    }
+    void dfs_printSum(node* now)
+    {
+        if(now)
+        {
+            dfs_printSum(now->l_Node);
+            cout << now->i_Sum << " ";
+            dfs_printSum(now->r_Node);
+            
+        }
+        
+    }
     void dfs_Sum()
     {
         dfs_Sum(top->l_Node);
     }
-    void dfs_Sum(node* now)
+    int dfs_Sum(node* now)
     {
         if(now)
         {
-            dfs_Sum(now->l_Node);
-            //cout << now->i_Sum << " ";
-            dfs_Sum(now->r_Node);
-            now->pa_Node->i_Sum += now->i_Sum;
-        }
-        
+            if(now->r_Node||now->l_Node)
+            {
+                now->i_Sum += dfs_Sum(now->l_Node) + dfs_Sum(now->r_Node);
+                return now->i_Sum;
 
+            }
+            
+
+            return now->data;
+        }
+        return 0;
     }
     int i_Licky()
     {
         dfs_Sum();
-        
+       // dfs_printSum();
         node *now = top->l_Node;
         while(now->l_Node||now->r_Node)
         {
@@ -160,12 +181,14 @@ public:
             if(!now->l_Node)
             {
                 now = now->r_Node;
+                continue;
             }
             if(!now->r_Node)
             {
                 now = now->l_Node;
+                continue;
             }
-            if(!now->r_Node&&now->l_Node->i_Sum>now->r_Node->i_Sum)
+            if(now->l_Node->i_Sum>now->r_Node->i_Sum)
             {
                 now = now->l_Node;
             }

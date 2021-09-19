@@ -14,7 +14,7 @@ int main()
     int matrix[n][m];
     fill(*matrix, matrix[n - 1] + m, -101);
 
-    
+    /*
     for (int i = 0; i < n;++i)
     {
         for (int j = 0; j < m;++j)
@@ -23,9 +23,10 @@ int main()
         }
         cout << "\n";
     }
+    */
     int main_DP[n][m];
 
-    fill(*main_DP, main_DP[n - 1] + m, -101);
+    fill(*main_DP, main_DP[n - 1] + m, 0);
 
     for (int i = 1; i < n-1;++i)
     {
@@ -39,6 +40,7 @@ int main()
             
         }
     }
+    /*
     for (int i = 1; i < n-1;++i)
     {
         for (int j = 1; j < m-1;++j)
@@ -47,24 +49,35 @@ int main()
         }
         cout << "\n";
     }
-    for (int i = 0; i < n;++i)
+    */
+    for (int i = 1; i < n-1;++i)
     {
         int r_Dp[m];
-        fill(r_Dp, r_Dp + m,-101);
+        fill(r_Dp, r_Dp + m,0);
         int l_Dp[m];
-        fill(l_Dp, l_Dp + m,-101);
-        for (int j = 0; j < m;++j)
+        fill(l_Dp, l_Dp + m,0);
+        for (int j = 1; j < m-1;++j)
         {
-           l_Dp[j] = max(l_Dp[j],matrix[i][j-1]+matrix[i][j]);
+            if(j!=1)
+            {
+                l_Dp[j] = max(main_DP[i-1][j],l_Dp[j-1])+matrix[i][j];
+            }
+            else
+            {
+                l_Dp[j] = main_DP[i - 1][j] + matrix[i][j];
+            }
         }
         for (int j = m-1; j >0;--j)
         {
-            
-            r_Dp[j] = max(r_Dp[j],matrix[i][j+1]+matrix[i][j]);
-        }
-        for (int j = 0; j < m;++j)
-        {
-            main_DP[i][j] = max(r_Dp[j], l_Dp[j]);
+            if(j!=m-1)
+            {
+                r_Dp[j] = max(r_Dp[j],matrix[i][j+1]+matrix[i][j]);
+            }   
+            else
+            {
+                r_Dp[j] = main_DP[i - 1][j] + matrix[i][j];
+            }
+            main_DP[i][j] = max(l_Dp[j], r_Dp[j]);
         }
     }
 
@@ -79,12 +92,22 @@ int main()
         cout << "\n";
     }
     */
-    for (int i = 1; i < n-1;++i)
-    {
-        for (int j = 1; j < m-1;++j)
+    int ans = -2147483648;
+    int i = n-2 ;
+         for (int j = 1; j < m - 1; ++j)
         {
-            cout <<"dp"<< main_DP[i][j] << " ";
+            ans=max(ans, main_DP[i][j]);
         }
-    }
+        cout << ans << "\n";
+        /*
+        for (int i = 1; i < n - 1; ++i)
+        {
+            for (int j = 1; j < m - 1; ++j)
+            {
+                cout << "dp" << main_DP[i][j] << " ";
+            }
+        }
+        */
+        
         
 }

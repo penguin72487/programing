@@ -154,7 +154,7 @@ public:
     {
         dfs_Sum(top->l_Node);
     }
-    int dfs_Sum(node* now)
+    long long dfs_Sum(node* now)
     {
         if(now)
         {

@@ -33,23 +33,23 @@ int Lis_step(step* dr_Fly,int n)
     int ans = 1;
     vector<int> v;
     v.push_back(dr_Fly[0].i_Y);
-    int dp[n + 1];
-    dp[0] = 1;
+    //int dp[n + 1];
+    //dp[0] = 1;
 
     for (int i = 1; i < n;++i)
     {
-        if(dr_Fly[i].i_Y>v.back())
+        if(dr_Fly[i].i_Y>=v.back())
         {
             v.push_back(dr_Fly[i].i_Y);
             ++ans;
-            dp[i] = ans;
+            //dp[i] = ans;
         }
         
         else
         {
-            auto it = lower_bound(v.begin(), v.end(), dr_Fly[i].i_Y);
+            auto it = upper_bound(v.begin(), v.end(), dr_Fly[i].i_Y);
             *it = dr_Fly[i].i_Y;
-            dp[i] = it - v.begin()+1;
+            //dp[i] = it - v.begin()+1;
         }
         
     }
@@ -57,6 +57,7 @@ int Lis_step(step* dr_Fly,int n)
 }
 int main()
 {
+    cin.tie(0)->sync_with_stdio(0);
     int n;
     cin >> n;
     step dg_Fly[n];

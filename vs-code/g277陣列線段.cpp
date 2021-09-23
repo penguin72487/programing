@@ -79,7 +79,7 @@ public:
                 t_Sum += t_Node[i_op].i_Sum;
                 ++i_op;
             }
-            if((i_ed&1))
+            if(i_ed&1)
             {
                 --i_ed;
                 t_Sum += t_Node[i_ed].i_Sum;
@@ -114,7 +114,7 @@ public:
                 }
                 ++i_op;
             }
-            if((i_ed&1))
+            if(i_ed&1)
             {
                 --i_ed;
                 if(min_Node->i_Sum>t_Node[i_ed].min_Node->i_Sum)
@@ -160,6 +160,9 @@ public:
 };
 int main()
 {
+    //cin.tie(0)->sync_with_stdio(0);
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(0);
     int n;
     cin >> n;
     int list[n];

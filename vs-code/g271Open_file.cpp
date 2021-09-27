@@ -51,7 +51,7 @@ int main()
     fstream file;
 	file.open("g271"); 
     file >> n;
-    int *tmp = new int[10000000 + 1];
+    int *tmp = new int[n + 1];
     //int tmp[n + 2];
     int *list = tmp + 1;
     pi_Map[tmp] = 0;

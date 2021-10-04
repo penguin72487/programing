@@ -64,15 +64,15 @@ int main()
         {
                 mo[i].x0 += mo[i].dx;
                 mo[i].y0 += mo[i].dy;
-                cout << "do2 " << mo[i].x0 << " " << mo[i].y0 << "\n";
+                //cout << "do2 " << mo[i].x0 << " " << mo[i].y0 << "\n";
         }
         for (int i = 0; i < t;++i)
         {
-            cout << "do1 " << mo[i].x0 << " " << mo[i].y0 << "\n";
+            //cout << "do1 " << mo[i].x0 << " " << mo[i].y0 << "\n";
         }
         for (int i = 0; i < t;++i)
         {
-            cout << "do " << mo[i].x0 << " " << mo[i].y0 << "\n";
+            //cout << "do " << mo[i].x0 << " " << mo[i].y0 << "\n";
             if(maze[mo[i].x0][mo[i].y0]>0&&mo[i].b_in())
             {
                 
@@ -100,7 +100,7 @@ int main()
         }
         for (int i = 0; i < t;++i)
         {
-            cout <<mo[i].x0<<" "<<mo[i].y0<<" "<< mo[i].b_in() << "\n";
+            //cout <<mo[i].x0<<" "<<mo[i].y0<<" "<< mo[i].b_in() << "\n";
             if(mo[i].b_in())
             {
                 maze[mo[i].x0][mo[i].y0] = 1;

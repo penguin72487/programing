@@ -13,22 +13,16 @@ int main()
         int coin[m];
         int totle=0;
         int sum;
-        /*
         for (int j = 0; j < m;++j)
         {
             cin >> coin[j];
             totle += coin[j];
         }
-        */
-        for (int *it = coin; it != coin + m;++it)
-        {
-            cin >> *it;
-            totle += *it;
-        }
-            sum = totle;
+        sum = totle;
         totle/=2;
         totle+=2;
         int dp[totle + 1];
+        //dp[0] = 0;
         fill(dp, dp + totle + 1, 0);
         for (int j = 0; j < m; ++j)
         {

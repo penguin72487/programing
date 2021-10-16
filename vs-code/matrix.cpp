@@ -11,7 +11,8 @@ public:
 	{
 		r=i_r;
 		c=i_c;
-		data = new int*[r];
+        //int t_Arr[r][c];
+        data = new int*[r];
 		for(int i = 0; i < r; i++)
 		{
 			data[i] = new int[c];

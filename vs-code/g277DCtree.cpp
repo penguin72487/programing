@@ -1,6 +1,6 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
+#include<deque>
 #include <iterator>
 #include<algorithm>
 using namespace std;
@@ -43,7 +43,7 @@ class DC_Tree
 {
 public:
     node *top;
-    vector<node *> r_List;
+    deque<node *> r_List;
 
     DC_Tree()
     {
@@ -81,12 +81,14 @@ public:
             }
             else
             {
-                node *in_Node = new node(tmp);
-                auto it = upper_bound(r_List.begin(),r_List.end(), in_Node,node());
-                (*it)->l_Node = (*it)->r_Node;
-                (*it)->r_Node = in_Node;
-                r_List.erase(it+1, r_List.end());
-                r_List.push_back((*it)->r_Node);
+                while(r_List.back()->data>tmp)
+                {
+                    r_List.pop_back();
+                }
+                node *in_Node=new node(tmp);
+                in_Node->l_Node = r_List.back()->r_Node;
+                r_List.back()->r_Node = in_Node;
+                r_List.push_back(in_Node);
             }
         }
         else
@@ -95,47 +97,96 @@ public:
             r_List.push_back(top->r_Node);
         }
     }
-    void mid_Trace()
+    void inorder_Traversal()
     {
-        mid_Trace(top);
+        inorder_Traversal(top->r_Node);
+        cout << "\n";
     }
-    void mid_Trace(node *now)
+    void inorder_Traversal(node *now)
     {
         if(!now)
         {
             return;
         }
-        mid_Trace(now->l_Node);
-        cout << now->data << "\n";
-        mid_Trace(now->r_Node);
+        inorder_Traversal(now->l_Node);
+        cout << now->data << " ";
+        inorder_Traversal(now->r_Node);
     }
-    int i_Licky();
-    /*
-    vector<node *>::iterator nptr_lower_bound(vector<node*> &tmp,node* val)
+    void preorder_Trace()
     {
-        int n=tmp.size();
-        int low=0;
-        int high=n;
-        int mid;
-        while(low<high)
+        preorder_Traversal(top->r_Node);
+        cout << "\n";
+    }
+    void preorder_Traversal(node *now)
+    {
+        if(!now)
         {
-            mid=high>>1;
-            if(val->data<=tmp[mid]->data)
+            return;
+        }
+        cout << now->data << " ";
+        preorder_Traversal(now->l_Node);
+        
+        preorder_Traversal(now->r_Node);
+    }
+    void BFS_Trace()
+    {
+        deque<node *> list;
+        list.push_back(top->r_Node);
+        while(!list.empty())
+        {
+            node *now = list.front();
+            cout << now->data << " ";
+            if(now->r_Node)
             {
-                high=mid;
+                list.push_back(now->r_Node);
+            }
+            if(now->l_Node)
+            {
+                list.push_back(now->l_Node);
+            }
+            list.pop_front();
+        }
+        cout << "\n";
+    }
+
+    int i_Licky()
+    {
+        i_Sum();
+        node *now = top->r_Node;
+        while(now->i_Sum!=now->data)
+        {
+            if(!now->l_Node)
+            {
+                now = now->r_Node;
+            }
+            else if(!now->r_Node)
+            {
+                now = now->l_Node;
+            }
+            else if(now->l_Node->i_Sum>now->r_Node->i_Sum)
+            {
+                now = now->l_Node;
             }
             else
             {
-                low=mid+1;
+                now = now->r_Node;
             }
         }
-        if(tmp[low]->data<val->data)
-        {
-            return  advance(tmp.begin(),low+1);
-        }
-        return tmp.begin()+low;
+        return now->data;
     }
-    */
+    void i_Sum()
+    {
+        i_Sum(top->r_Node);
+    }
+    long long i_Sum(node* now)
+    {
+        if(!now)
+        {
+            return 0;
+        }
+        now->i_Sum = i_Sum(now->l_Node) + i_Sum(now->r_Node)+now->data;
+        return now->i_Sum;
+    }
 };
 int main()
 {
@@ -147,6 +198,11 @@ int main()
         int tmp;
         cin >> tmp;
         Licky.insert(tmp);
+        //cout <<"mid"<< i<<" ";
+        //Licky.inorder_Traversal();
+        //cout << "bfs" << i << " ";
+        //Licky.preorder_Traversal();
     }
-    Licky.mid_Trace();
+    Licky.inorder_Traversal();
+    cout << Licky.i_Licky() << "\n";
 }

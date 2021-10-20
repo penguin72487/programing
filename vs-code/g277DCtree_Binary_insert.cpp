@@ -43,7 +43,7 @@ class DC_Tree
 {
 public:
     node *top;
-    deque<node *> r_List;
+    vector<node *> r_List;
 
     DC_Tree()
     {
@@ -81,13 +81,12 @@ public:
             }
             else
             {
-                while(r_List.back()->data>tmp)
-                {
-                    r_List.pop_back();
-                }
                 node *in_Node=new node(tmp);
-                in_Node->l_Node = r_List.back()->r_Node;
-                r_List.back()->r_Node = in_Node;
+                node *pa_Node = under_bound(r_List, in_Node);
+                
+                
+                in_Node->l_Node = pa_Node->r_Node;
+                pa_Node->r_Node = in_Node;
                 r_List.push_back(in_Node);
             }
         }
@@ -117,8 +116,8 @@ public:
         return first;
     }
     */
-   /*
-    node * lower_bound(vector<node*> array, node* key)
+   
+    node * under_bound(vector<node*> array, node* key)
     {
         int first=0, middle;
         int half, len;
@@ -134,8 +133,8 @@ public:
             else
                 len = half;            //在左?子序列（包含middle）中查找
         }
-        return array[first-1];
-    }*/
+        return array[first-2];
+    }
     void inorder_Traversal()
     {
         inorder_Traversal(top->r_Node);
@@ -166,6 +165,26 @@ public:
         preorder_Traversal(now->l_Node);
         
         preorder_Traversal(now->r_Node);
+    }
+    void BFS_Trace()
+    {
+        deque<node *> list;
+        list.push_back(top->r_Node);
+        while(!list.empty())
+        {
+            node *now = list.front();
+            cout << now->data << " ";
+            if(now->r_Node)
+            {
+                list.push_back(now->r_Node);
+            }
+            if(now->l_Node)
+            {
+                list.push_back(now->l_Node);
+            }
+            list.pop_front();
+        }
+        cout << "\n";
     }
 
     int i_Licky()
@@ -218,6 +237,10 @@ int main()
         int tmp;
         cin >> tmp;
         Licky.insert(tmp);
+        //cout <<"mid"<< i<<" ";
+        //Licky.inorder_Traversal();
+        //cout << "bfs" << i << " ";
+        //Licky.preorder_Traversal();
     }
     //Licky.inorder_Traversal();
     cout << Licky.i_Licky() << "\n";

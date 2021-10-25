@@ -2,11 +2,12 @@
 #include<algorithm>
 using namespace std;
 int main() {
+    cin.tie(0)->sync_with_stdio(0);
     int m, n;
     cin >> n >> m;
     ++m;
     ++n;
-    int a[n+1][m+1], l[m+1], r[m+1],dp[n+1][m+1];
+    int a[n][m], l[m], r[m],dp[n][m];
     fill(l, l + m + 1, 0);
     fill(r, r + m + 1, 0);
 
@@ -48,7 +49,7 @@ int main() {
         }
     }
     int ans = -2147483647;
-    for (int i = 1; i <=n;++i)
+    for (int i = 1; i <=m;++i)
     {
         ans = max(ans, dp[n - 1][i]);
     }

@@ -6,8 +6,10 @@
 using namespace std;
 class node{
 public:
-    int level;
+    //int level;
     int data;
+    int r_High=0;
+    int l_High = 0;
     node ()
     {
 
@@ -40,18 +42,21 @@ class DC_Tree
 {
 public:
     node *top;
+    int n;
+    unordered_map<int,node*> in;
     deque<node *> r_List;
     unordered_map<int,node*> in_Map;
     long long int ans = 0;
-    DC_Tree()
+    DC_Tree(int tmp)
     {
         top = new node(0);
-        top->level = -1;
         r_List.push_back(top);
+        n = tmp;
     }
     ~DC_Tree()
     {
         dis_Node();
+        
     }
     void dis_Node()
     {
@@ -73,29 +78,47 @@ public:
     {
         if(r_List.size()!=1)
         {
-            if(tmp>=r_List.back()->data)
+            if(tmp<r_List.back()->data)
             {
                 r_List.back()->r_Node = new node(tmp);
-                r_List.back()->r_Node->level = r_List.back()->level+1;
+                ++r_List.back()->r_High;
+
                 r_List.push_back(r_List.back()->r_Node);
+                if(in.find(tmp)==in.end())
+                {
+                    in[tmp] = r_List.back();
+                }
+                else
+                {
+                    ans += in[tmp]->r_High;
+                }
             }
             else
             {
-                while(r_List.back()->data>tmp)
+                while(r_List.back()->data<tmp)
                 {
+                    (--r_List.back())->r_High = r_List.back()->r_High + r_List.back()->l_High+1;
                     r_List.pop_back();
                 }
                 node *in_Node=new node(tmp);
                 in_Node->l_Node = r_List.back()->r_Node;
                 r_List.back()->r_Node = in_Node;
-                in_Node->l_Node->level = r_List.back()->level+1;
+                in_Node->l_High = in_Node->l_Node->r_High+1+in_Node->l_Node->l_High;
                 r_List.push_back(in_Node);
+                if(in.find(tmp)==in.end())
+                {
+                    in[tmp] = r_List.back();
+                }
+                else
+                {
+                    ans += in[tmp]->r_High;
+                }
             }
         }
         else
         {
             top->r_Node = new node(tmp);
-            top->r_Node->level = top->level+1;
+            in[tmp] = top->r_Node;
             r_List.push_back(top->r_Node);
         }
     }
@@ -150,7 +173,7 @@ public:
             return;
         }
         inorder_Traversal(now->l_Node);
-        cout << now->data << " " << now->level << "\n";
+        cout << now->data << " ";
 
         inorder_Traversal(now->r_Node);
     }
@@ -191,24 +214,35 @@ public:
         }
         else
         {
-            ans += now->level-it->second->level+1;
+            if(in_Map[now->data]->r_Node==now)
+            {
+                
+            }
+            else
+            {
+                
+                in_Map.erase(it);
+            }
+            
         }
+        
         i_Distance(now->r_Node);
     }
 };
 int main()
 {
+    cin.tie(0)->sync_with_stdio(0);
     int n;
     cin >> n;
     n <<= 1;
-    DC_Tree low_Distance;
+    DC_Tree low_Distance(n);
     int tmp;
     for (int i = 0; i < n;++i)
     {
         cin >> tmp;
         low_Distance.insert(tmp);
     }
-    low_Distance.inorder_Traversal();
-    cout << low_Distance.i_Distance() << "\n";
+    //low_Distance.inorder_Traversal();
+    cout << low_Distance.ans << "\n";
     //cout << ans;
 }

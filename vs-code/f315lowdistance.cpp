@@ -43,13 +43,13 @@ class DC_Tree
 public:
     node *top;
     int n;
-    unordered_map<int,node*> in;
+    unordered_map<int,node*> in_Tr;
     deque<node *> r_List;
     unordered_map<int,node*> in_Map;
     long long int ans = 0;
     DC_Tree(int tmp)
     {
-        top = new node(0);
+        top = new node(2147483647);
         r_List.push_back(top);
         n = tmp;
     }
@@ -78,47 +78,28 @@ public:
     {
         if(r_List.size()!=1)
         {
-            if(tmp<r_List.back()->data)
+            if(tmp<=r_List.back()->data)
             {
                 r_List.back()->r_Node = new node(tmp);
                 ++r_List.back()->r_High;
-
                 r_List.push_back(r_List.back()->r_Node);
-                if(in.find(tmp)==in.end())
-                {
-                    in[tmp] = r_List.back();
-                }
-                else
-                {
-                    ans += in[tmp]->r_High;
-                }
             }
             else
             {
                 while(r_List.back()->data<tmp)
                 {
-                    (--r_List.back())->r_High = r_List.back()->r_High + r_List.back()->l_High+1;
                     r_List.pop_back();
                 }
                 node *in_Node=new node(tmp);
                 in_Node->l_Node = r_List.back()->r_Node;
                 r_List.back()->r_Node = in_Node;
-                in_Node->l_High = in_Node->l_Node->r_High+1+in_Node->l_Node->l_High;
                 r_List.push_back(in_Node);
-                if(in.find(tmp)==in.end())
-                {
-                    in[tmp] = r_List.back();
-                }
-                else
-                {
-                    ans += in[tmp]->r_High;
-                }
+                
             }
         }
         else
         {
             top->r_Node = new node(tmp);
-            in[tmp] = top->r_Node;
             r_List.push_back(top->r_Node);
         }
     }
@@ -134,10 +115,10 @@ public:
             middle = first + half;
             if(array[middle] < key) {     
                 first = middle + 1;          
-                len = len-half-1;       //¦b¥k?¤l§Ç¦C¤¤¬d§ä
+                len = len-half-1;       //ï¿½bï¿½k?ï¿½lï¿½Ç¦Cï¿½ï¿½ï¿½dï¿½ï¿½
             }
             else
-                len = half;            //¦b¥ª?¤l§Ç¦C¡]¥]§tmiddle¡^¤¤¬d§ä
+                len = half;            //ï¿½bï¿½ï¿½?ï¿½lï¿½Ç¦Cï¿½]ï¿½]ï¿½tmiddleï¿½^ï¿½ï¿½ï¿½dï¿½ï¿½
         }
         return first;
     }
@@ -154,10 +135,10 @@ public:
             middle = first + half;
             if(array[middle] < key) {     
                 first = middle + 1;          
-                len = len-half-1;       //¦b¥k?¤l§Ç¦C¤¤¬d§ä
+                len = len-half-1;       //ï¿½bï¿½k?ï¿½lï¿½Ç¦Cï¿½ï¿½ï¿½dï¿½ï¿½
             }
             else
-                len = half;            //¦b¥ª?¤l§Ç¦C¡]¥]§tmiddle¡^¤¤¬d§ä
+                len = half;            //ï¿½bï¿½ï¿½?ï¿½lï¿½Ç¦Cï¿½]ï¿½]ï¿½tmiddleï¿½^ï¿½ï¿½ï¿½dï¿½ï¿½
         }
         return array[first-1];
     }*/
@@ -193,40 +174,46 @@ public:
         
         preorder_Traversal(now->r_Node);
     }
-
-    long long int i_Distance()
-    {
-
-        i_Distance(top->r_Node);
-        return ans;
-    }
-    void i_Distance(node* now)
+    void ans_Traversal(node* now)
     {
         if(!now)
         {
             return;
         }
-        i_Distance(now->l_Node);
-        auto it = in_Map.find(now->data);
-        if(it==in_Map.end())
+        ans_Traversal(now->l_Node);
+        if(in_Tr.find(now->data)==in_Tr.end())
         {
-            in_Map[now->data] = now;
+            in_Tr[now->data] = now;
         }
         else
         {
-            if(in_Map[now->data]->r_Node==now)
+            if(in_Tr[now->data]->r_Node==now)
             {
-                
+                ans += now->l_High;
             }
             else
             {
-                
-                in_Map.erase(it);
+                ans += in_Tr[now->data]->r_High+now->l_High;
             }
-            
         }
-        
-        i_Distance(now->r_Node);
+        ans_Traversal(now->r_Node);
+    }
+    long long int i_Distance()
+    {
+
+        i_Distance(top->r_Node);
+        ans_Traversal(top->r_Node);
+        return ans;
+    }
+    int i_Distance(node* now)
+    {
+        if(!now)
+        {
+            return 0;
+        }
+        now->l_High = i_Distance(now->l_Node);
+        now->r_High = i_Distance(now->r_Node);
+        return now->r_High+now->l_High + 1;
     }
 };
 int main()
@@ -242,7 +229,7 @@ int main()
         cin >> tmp;
         low_Distance.insert(tmp);
     }
-    low_Distance.inorder_Traversal();
-    cout << low_Distance.ans << "\n";
+    //low_Distance.inorder_Traversal();
+    cout << low_Distance.i_Distance() << "\n";
     //cout << ans;
 }

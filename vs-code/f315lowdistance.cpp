@@ -242,7 +242,7 @@ int main()
         cin >> tmp;
         low_Distance.insert(tmp);
     }
-    //low_Distance.inorder_Traversal();
+    low_Distance.inorder_Traversal();
     cout << low_Distance.ans << "\n";
     //cout << ans;
 }

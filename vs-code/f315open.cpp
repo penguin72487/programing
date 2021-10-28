@@ -2,6 +2,7 @@
 #include<vector>
 #include<unordered_map>
 #include<deque>
+#include<fstream>
 #include<algorithm>
 using namespace std;
 class node{
@@ -216,17 +217,19 @@ public:
         return now->r_High+now->l_High + 1;
     }
 };
-int main()
+int main() 
 {
     cin.tie(0)->sync_with_stdio(0);
     int n;
-    cin >> n;
+    fstream file;
+    file.open("f315.txt");
+    file >> n;
     n <<= 1;
     DC_Tree low_Distance(n);
     int tmp;
     for (int i = 0; i < n;++i)
     {
-        cin >> tmp;
+        file >> tmp;
         low_Distance.insert(tmp);
     }
     //low_Distance.inorder_Traversal();

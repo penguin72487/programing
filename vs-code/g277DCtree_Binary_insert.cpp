@@ -87,6 +87,7 @@ public:
                 
                 in_Node->l_Node = pa_Node->r_Node;
                 pa_Node->r_Node = in_Node;
+                //r_List.erase();
                 r_List.push_back(in_Node);
             }
         }

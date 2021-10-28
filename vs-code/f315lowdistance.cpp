@@ -115,10 +115,10 @@ public:
             middle = first + half;
             if(array[middle] < key) {     
                 first = middle + 1;          
-                len = len-half-1;       //¦b¥k?¤l§Ç¦C¤¤¬d§ä
+                len = len-half-1;       //ï¿½bï¿½k?ï¿½lï¿½Ç¦Cï¿½ï¿½ï¿½dï¿½ï¿½
             }
             else
-                len = half;            //¦b¥ª?¤l§Ç¦C¡]¥]§tmiddle¡^¤¤¬d§ä
+                len = half;            //ï¿½bï¿½ï¿½?ï¿½lï¿½Ç¦Cï¿½]ï¿½]ï¿½tmiddleï¿½^ï¿½ï¿½ï¿½dï¿½ï¿½
         }
         return first;
     }
@@ -135,10 +135,10 @@ public:
             middle = first + half;
             if(array[middle] < key) {     
                 first = middle + 1;          
-                len = len-half-1;       //¦b¥k?¤l§Ç¦C¤¤¬d§ä
+                len = len-half-1;       //ï¿½bï¿½k?ï¿½lï¿½Ç¦Cï¿½ï¿½ï¿½dï¿½ï¿½
             }
             else
-                len = half;            //¦b¥ª?¤l§Ç¦C¡]¥]§tmiddle¡^¤¤¬d§ä
+                len = half;            //ï¿½bï¿½ï¿½?ï¿½lï¿½Ç¦Cï¿½]ï¿½]ï¿½tmiddleï¿½^ï¿½ï¿½ï¿½dï¿½ï¿½
         }
         return array[first-1];
     }*/

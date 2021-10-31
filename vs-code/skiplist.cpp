@@ -38,21 +38,22 @@ public:
         {
             
             node *n_Pa = op;
+            node *in_Node;
             while(n_Pa&&tmp>n_Pa->data)
             {
                 n_Pa = n_Pa->n_next;
             }
-            if(n_Pa->n_next==nullptr)
+            if(!n_Pa->n_next)
             {
 
             }
             else
             {
-                node *in_Node = new node(tmp);
+                in_Node = new node(tmp);
                 in_Node->n_next = n_Pa->n_next;
             }
             
-            n_Pa->n_next = in_Node;
+            //n_Pa->n_next = in_Node;
             n_Pa->level.push_back(n_Pa->n_next);
             ++i_size;
         }

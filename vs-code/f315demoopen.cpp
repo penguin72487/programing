@@ -1,5 +1,6 @@
 #include <iostream>
 #include<algorithm>
+#include<fstream>
 #define ll long long
 using namespace std;
 
@@ -9,11 +10,14 @@ void update(int idx, int L, int R, int root,int seg[]);
 
 int main(){
     int n;
-    cin>>n;
+    fstream file;
+    //file.open("f315.txt");
+    file.open("f315p409_10.txt");
+    file>>n;
     int tmp;
     int N = n<<1;
     int seg[(N<<2)+1];
-    pair<int, int> idx_hash[n+1];
+    pair<int, int> idx_hash[n+3];
     //initialize
     for(int i = 0; i<n; ++i){
         idx_hash[i].first = -1;
@@ -21,7 +25,7 @@ int main(){
     fill(seg,seg+N*4+1,0);
     //fill hash
     for(int i = 0; i<N; ++i){
-        cin>>tmp;
+        file>>tmp;
         if(idx_hash[tmp].first==-1){
             idx_hash[tmp].first = i;
         }
@@ -34,9 +38,9 @@ int main(){
         int l = idx_hash[i].first;
         int r = idx_hash[i].second;
         //cout<< l<<" "<<r<<" "<<endl;
-        ans+=range(l, r, 0, N-1, 1,seg);
-        update(l, 0, N-1, 1,seg);
-        update(r, 0, N-1, 1,seg);
+        ans+=range(l, r, 0, N, 1,seg);
+        update(l, 0, N, 1,seg);
+        update(r, 0, N, 1,seg);
     }
     cout<< ans<<endl;
 }

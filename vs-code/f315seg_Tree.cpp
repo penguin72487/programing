@@ -1,8 +1,8 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
-#include<iterator>
-#include<limits>
+#include<algorithm>
+#include<cmath>
+#include<fstream>
 using namespace std;
 class node{
 public:
@@ -19,16 +19,21 @@ public:
     node *t_Node;
     long long int ans = 0;
     int size;
+    int max_size;
+    int index_Op;
     Segment_Tree(vector<pair<int,int>> &a)
     {
         size = a.size();
-        t_Node = new node[size << 1];
+        int tmp = log2((size - 2) << 1) + 1;
+        max_size = i_Pow(2,tmp+1);
+        index_Op = i_Pow(2,tmp);
+        t_Node = new node[max_size];
         for (auto it = ++a.begin(); it != a.end();++it)
         {
-            t_Node[size - 1 + it->first].i_Sum = 1;
-            t_Node[size - 1 + it->second].i_Sum = 1;
-            ans += rang_Sum(it->first, it->second);
-            update(it->first, it->second);
+           // t_Node[index_Op + it->first].i_Sum = 1;
+            //t_Node[index_Op + it->second].i_Sum = 1;
+            ans += rang_Sum(index_Op + it->first,index_Op + it->second);
+            update(index_Op + it->first,index_Op + it->second);
         }
     }
     ~Segment_Tree()
@@ -43,16 +48,22 @@ public:
             
             if(op&1)
             {
+                ans += t_Node[op].i_Sum;
                 ++op;
+                
             }
             if(ed&1)
             {
-                
+               
             }
             else
             {
-                --ed;
+                 ans += t_Node[ed].i_Sum;
+                 --ed;
+                
+
             }
+            
             op >>= 1;
             ed >>= 1;
         }
@@ -73,28 +84,56 @@ public:
             ++t_Node[ed].i_Sum;
         }
     }
+    int i_Pow(int a,int n)
+    {
+        int ans = 1;
+        while(n)
+        {
+            if(n&1)
+            {
+                ans *= a;
+            }
+            a *= a;
+            n >>= 1;
+        }
+        return ans;
+    }
 };
 
 int main()
 {
+    
     int n;
-    cin >> n;
+    fstream file;
+    file.open("f315p409_10.txt");
+    file>>n;
     int N = (n << 1)+1;
     vector<pair<int, int>> a(n+1);
+    for (auto it = a.begin(); it != a.end();++it)
+    {
+        it->first = -1;
+        it->second = -1;
+    }
     int tmp;
-    for (int i = 1; i < N;++i)
+    for (int i = 1; i <N;++i)
     {
         
-        cin >> tmp;
-        if(a[tmp].first)
+        file >> tmp;
+        if(a[tmp].first!=-1)
         {
-            a[tmp].second = i;
+            a[tmp].second = i-1;
         }    
         else
         {
-            a[tmp].first = i;
+            a[tmp].first = i-1;
         }
     }
-    Segment_Tree low_Dis(a);
+    /*
+    for (auto it = a.begin(); it != a.end();++it)
+    {
+        cout << it->first << " " << it->second << "\n";
+    }
+    */
+        Segment_Tree low_Dis(a);
     cout << low_Dis.ans << "\n";
 }

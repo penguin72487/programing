@@ -1,239 +1,139 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
-#include<deque>
-#include<fstream>
 #include<algorithm>
+#include<cmath>
+#include<fstream>
 using namespace std;
 class node{
 public:
-    //int level;
-    int data;
-    int r_High=0;
-    int l_High = 0;
-    node ()
-    {
-
-    }
-
-    node(int tmp)
-    {
-        data = tmp;
-    }
-    //node* min_Node = this;
+    long long i_Sum=0;
+    
     //int i_Max = -2147483648;
-    node *l_Node = nullptr;
-    node *r_Node = nullptr;
-    bool operator <(node* val2)
-    {
-        return (data < val2->data);
-    }
-    
-    bool operator()(node* val,node* val2)
-    {
-        return (val->data < val2->data);
-    }
-    bool operator()(node &val,node &val2)
-    {
-        return (val.data < val2.data);
-    }
-    
+    //node *pa_Node;
+    //node *l_Node;
+    //node *r_Node;
 };
-class DC_Tree
-{
+class Segment_Tree{
 public:
-    node *top;
-    int n;
-    unordered_map<int,node*> in_Tr;
-    deque<node *> r_List;
-    unordered_map<int,node*> in_Map;
+    //node* top=nullptr;
+    node *t_Node;
     long long int ans = 0;
-    DC_Tree(int tmp)
+    int size;
+    int max_size;
+    int index_Op;
+    Segment_Tree(vector<pair<int,int>> &a)
     {
-        top = new node(2147483647);
-        r_List.push_back(top);
-        n = tmp;
-    }
-    ~DC_Tree()
-    {
-        dis_Node();
-        
-    }
-    void dis_Node()
-    {
-        dis_Node(top);
-    }
-    void dis_Node(node* now)
-    {
-        if(!now)
+        size = a.size();
+        int tmp = log2((size - 2) << 1) + 1;
+        max_size = i_Pow(2,tmp+1);
+        index_Op = i_Pow(2,tmp);
+        t_Node = new node[max_size];
+        for (auto it = ++a.begin(); it != a.end();++it)
         {
-            return;
-            
-            
+           // t_Node[index_Op + it->first].i_Sum = 1;
+            //t_Node[index_Op + it->second].i_Sum = 1;
+            ans += rang_Sum(index_Op + it->first,index_Op + it->second);
+            update(index_Op + it->first,index_Op + it->second);
         }
-        dis_Node(now->l_Node);
-        dis_Node(now->r_Node);
-        delete now;
     }
-    void insert(int tmp)
+    ~Segment_Tree()
     {
-        if(r_List.size()!=1)
+        delete [] t_Node;
+    }
+    long long int rang_Sum(int op,int ed)//(op,ed)
+    {
+        //long long int ans=0;
+        while(op<ed)
         {
-            if(tmp<=r_List.back()->data)
+            
+            if(op&1)
             {
-                r_List.back()->r_Node = new node(tmp);
+                ans += t_Node[op].i_Sum;
+                ++op;
                 
-                r_List.push_back(r_List.back()->r_Node);
+            }
+            if(ed&1)
+            {
+               
             }
             else
             {
-                while(r_List.back()->data<tmp)
-                {
-                    r_List.pop_back();
-                }
-                node *in_Node=new node(tmp);
-                in_Node->l_Node = r_List.back()->r_Node;
-                r_List.back()->r_Node = in_Node;
-                r_List.push_back(in_Node);
+                 ans += t_Node[ed].i_Sum;
+                 --ed;
                 
+
             }
+            
+            op >>= 1;
+            ed >>= 1;
         }
+        
+        return t_Node[op].i_Sum;
+    }
+    void update(int op,int ed)
+    {
+        while(op>1)
+        {
+            op >>=1;
+            ++t_Node[op].i_Sum;
+            
+        }
+        while(ed>1)
+        {
+            ed >>= 1;
+            ++t_Node[ed].i_Sum;
+        }
+    }
+    int i_Pow(int a,int n)
+    {
+        int ans = 1;
+        while(n)
+        {
+            if(n&1)
+            {
+                ans *= a;
+            }
+            a *= a;
+            n >>= 1;
+        }
+        return ans;
+    }
+};
+
+int main()
+{
+    
+    int n;
+    fstream file;
+    file.open("f315p409_in.txt");
+    file>>n;
+    int N = (n << 1)+1;
+    vector<pair<int, int>> a(n+1);
+    for (auto it = a.begin(); it != a.end();++it)
+    {
+        it->first = -1;
+        it->second = -1;
+    }
+    int tmp;
+    for (int i = 1; i <N;++i)
+    {
+        
+        file >> tmp;
+        if(a[tmp].first!=-1)
+        {
+            a[tmp].second = i-1;
+        }    
         else
         {
-            top->r_Node = new node(tmp);
-            r_List.push_back(top->r_Node);
+            a[tmp].first = i-1;
         }
     }
     /*
-    int lower_bound(int *array, int size, int key)
+    for (auto it = a.begin(); it != a.end();++it)
     {
-        int first = 0, middle;
-        int half, len;
-        len = size;
-
-        while(len > 0) {
-            half = len >> 1;
-            middle = first + half;
-            if(array[middle] < key) {     
-                first = middle + 1;          
-                len = len-half-1;       //在右?子序列中查找
-            }
-            else
-                len = half;            //在左?子序列（包含middle）中查找
-        }
-        return first;
+        cout << it->first << " " << it->second << "\n";
     }
     */
-   /*
-    node * lower_bound(vector<node*> array, node* key)
-    {
-        int first=0, middle;
-        int half, len;
-        len = array.size();
-
-        while(len > 0) {
-            half = len >> 1;
-            middle = first + half;
-            if(array[middle] < key) {     
-                first = middle + 1;          
-                len = len-half-1;       //在右?子序列中查找
-            }
-            else
-                len = half;            //在左?子序列（包含middle）中查找
-        }
-        return array[first-1];
-    }*/
-    void inorder_Traversal()
-    {
-        inorder_Traversal(top->r_Node);
-        cout << "\n";
-    }
-    void inorder_Traversal(node *now)
-    {
-        if(!now)
-        {
-            return;
-        }
-        inorder_Traversal(now->l_Node);
-        cout << now->data << " ";
-
-        inorder_Traversal(now->r_Node);
-    }
-    void preorder_Trace()
-    {
-        preorder_Traversal(top->r_Node);
-        cout << "\n";
-    }
-    void preorder_Traversal(node *now)
-    {
-        if(!now)
-        {
-            return;
-        }
-        cout << now->data << " ";
-        preorder_Traversal(now->l_Node);
-        
-        preorder_Traversal(now->r_Node);
-    }
-    void ans_Traversal(node* now)
-    {
-        if(!now)
-        {
-            return;
-        }
-        ans_Traversal(now->l_Node);
-        if(in_Tr.find(now->data)==in_Tr.end())
-        {
-            in_Tr[now->data] = now;
-        }
-        else
-        {
-            if(in_Tr[now->data]->r_Node==now)
-            {
-                ans += now->l_High;
-            }
-            else
-            {
-                ans += in_Tr[now->data]->r_High+now->l_High;
-            }
-        }
-        ans_Traversal(now->r_Node);
-    }
-    long long int i_Distance()
-    {
-
-        i_Distance(top->r_Node);
-        ans_Traversal(top->r_Node);
-        return ans;
-    }
-    int i_Distance(node* now)
-    {
-        if(!now)
-        {
-            return 0;
-        }
-        now->l_High = i_Distance(now->l_Node);
-        now->r_High = i_Distance(now->r_Node);
-        return now->r_High+now->l_High + 1;
-    }
-};
-int main() 
-{
-    cin.tie(0)->sync_with_stdio(0);
-    //cout.sync_with_stdio(0);
-    int n;
-    fstream file;
-    file.open("f315.txt");
-    file >> n;
-    n <<= 1;
-    DC_Tree low_Distance(n);
-    int tmp;
-    for (int i = 0; i < n;++i)
-    {
-        file >> tmp;
-        low_Distance.insert(tmp);
-    }
-    //low_Distance.inorder_Traversal();
-    cout << low_Distance.i_Distance() << "\n";
-    //cout << ans;
+        Segment_Tree low_Dis(a);
+    cout << low_Dis.ans << "\n";
 }

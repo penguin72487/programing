@@ -58,7 +58,7 @@ public:
             }
             else
             {
-                 ans += t_Node[ed].i_Sum;
+                //ans += t_Node[ed].i_Sum;
                  --ed;
                 
 
@@ -104,9 +104,9 @@ int main()
 {
     
     int n;
-    fstream file;
-    file.open("f315p409_10.txt");
-    file>>n;
+    //fstream file;
+    //file.open("f315p409_in.txt");
+    cin>>n;
     int N = (n << 1)+1;
     vector<pair<int, int>> a(n+1);
     for (auto it = a.begin(); it != a.end();++it)
@@ -118,7 +118,7 @@ int main()
     for (int i = 1; i <N;++i)
     {
         
-        file >> tmp;
+        cin >> tmp;
         if(a[tmp].first!=-1)
         {
             a[tmp].second = i-1;

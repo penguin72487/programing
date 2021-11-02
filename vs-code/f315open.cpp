@@ -58,7 +58,7 @@ public:
             }
             else
             {
-                 ans += t_Node[ed].i_Sum;
+                //ans += t_Node[ed].i_Sum;
                  --ed;
                 
 

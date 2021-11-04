@@ -4,6 +4,7 @@ using namespace std;
 int b_Big(long long a, long long b);
 int main()
 {
+    cin.tie(0)->sync_with_stdio(0);
     int n;
     cin >> n;
     int ans = 0;

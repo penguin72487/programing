@@ -24,7 +24,7 @@ int main()
     {
         if(w[i-1]==w[i])
         {
-            type_Max=max(s[i-1],s[i]);
+            type_Max=max(type_Max,s[i]);
         }
         else
         {

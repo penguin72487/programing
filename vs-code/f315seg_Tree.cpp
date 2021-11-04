@@ -34,6 +34,13 @@ public:
             //t_Node[index_Op + it->second].i_Sum = 1;
             ans += rang_Sum(index_Op + it->first,index_Op + it->second);
             update(index_Op + it->first,index_Op + it->second);
+            /*
+            for (int i = 0; i < (size-1)*2;++i)
+            {
+                cout << t_Node[index_Op+i].i_Sum << " ";
+            }
+            cout << "\n";
+            */
         }
     }
     ~Segment_Tree()
@@ -42,6 +49,7 @@ public:
     }
     long long int rang_Sum(int op,int ed)//(op,ed)
     {
+        ++op;
         //long long int ans=0;
         while(op<ed)
         {
@@ -63,25 +71,27 @@ public:
                 
 
             }
-            
+
             op >>= 1;
             ed >>= 1;
         }
-        
+        //return 0;
         return t_Node[op].i_Sum;
     }
     void update(int op,int ed)
     {
         while(op>1)
         {
-            op >>=1;
             ++t_Node[op].i_Sum;
+            op >>=1;
+           
             
         }
         while(ed>1)
         {
-            ed >>= 1;
             ++t_Node[ed].i_Sum;
+            ed >>= 1;
+            
         }
     }
     int i_Pow(int a,int n)

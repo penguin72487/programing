@@ -11,7 +11,7 @@ void pl(string val,string val2)
 {
 	
 	for(i=0;i<max(val.length(),val2.length());i++)
-		ans.push_back(val+val2-2*'0'));
+		ans.push_back(val+val2-2*'0');
 	
 	
 };

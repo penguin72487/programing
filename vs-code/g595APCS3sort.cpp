@@ -23,10 +23,16 @@ int main()
     }
     sort(cost,cost+n,cmp);
     int list[n];
+    
     long long ans = 0;
     for (int i = 0; i < n;++i)
     {
         cin >> list[i];
+       
+    }
+    sort(list, list + n);
+    for (int i = 0; i < n;++i)
+    {
         ans+=list[i]*cost[i];
     }
     cout << ans << "\n";

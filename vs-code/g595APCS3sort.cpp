@@ -1,5 +1,6 @@
 #include<iostream>
 #include<algorithm>
+#include<queue>
 using namespace std;
 bool cmp(int a,int b)
 {
@@ -21,19 +22,23 @@ int main()
             cost[i] += h;
         }
     }
-    sort(cost,cost+n,cmp);
-    int list[n];
-    
+    sort(cost,cost+n);
+
+    priority_queue<int> list;
+
     long long ans = 0;
+    int tmp;
     for (int i = 0; i < n;++i)
     {
-        cin >> list[i];
+        cin >> tmp;
+        list.push(tmp);
        
     }
-    sort(list, list + n);
+    //sort(list, list + n);
     for (int i = 0; i < n;++i)
     {
-        ans+=list[i]*cost[i];
+        ans+=list.top()*cost[i];
+        list.pop();
     }
     cout << ans << "\n";
 }

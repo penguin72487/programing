@@ -81,7 +81,7 @@ class Graph{
         while (!stl.empty())
         {
             node* now=stl.front();
-            //cout << now->data << "\n";
+            cout <<"dd "<< now->data << "\n";
             stl.pop_front();
             for(auto it=now->n_Vec.begin();it!=now->n_Vec.end();++it)
             {
@@ -109,10 +109,10 @@ class Graph{
     }
     void operator=(Graph &tmp)
     {
-        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
         {
-            tmp.in_Map[it->first] = new node(it->second->data);
-            tmp.in_Map[it->first]->n_Vec = it->second->n_Vec;
+            in_Map[it->first] = new node(it->second->data);
+            in_Map[it->first]->n_Vec = it->second->n_Vec;
         }
     }
 };
@@ -120,18 +120,18 @@ int main()
 {
     Graph tmp;
     
-    //tmp.insert(1, 2);
-    //tmp.insert(1, 4);
-    //tmp.insert(3, 2);
-    //tmp.insert(3, 4);
-    //tmp.insert(4, 2);//2
-    //tmp.insert(4, 3);//2
-    //tmp.insert(5, 4);//3
-    //tmp.insert(5, 3);//3
-    //.insert(5, 4);
-    //tmp.insert(5, 6);
-    //tmp.insert(6, 3);
-    //cout << tmp.in_Map.size() << "\n";
+    //tmp.insert(1, 0);
+    //tmp.insert(0, 2);
+    //tmp.insert(1, 3);
+    //tmp.insert(2, 3);
+    //tmp.insert(4, 5);
+
+    //tmp.insert(0, 6);
+    //tmp.insert(0, 3);
+    //tmp.insert(3, 5);
+    
+    //cout << tmp.b_BG() << "\n";
+    
     int n, m,p,k;
     cin >> n>>m;
     for (int i = 0; i < m;++i)
@@ -144,17 +144,13 @@ int main()
     for (int i = 0; i < p;++i)
     {
         Graph grup = tmp;
-        for (int j = 0; j < m;++j)
+        for (int j = 0; j < k;++j)
         {
             int a, b;
             cin >> a >> b;
             grup.insert(a, b);
         }
-        if(!grup.b_BG())
-        {
-            cout << i + 1 << "\n";
-        }
-
+        cout << grup.b_BG() << "\n";
     }
 
         return 0;

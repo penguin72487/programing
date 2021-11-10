@@ -19,13 +19,14 @@ int main()
 int b_Big(long long a, long long b)
 {
     int ans = 0;
+    a &= b;
+    b ^= a;
     while(b)
     {
-        if((b&1)&&!(a&1))
+        if(b&1)
         {
             ++ans;
         }
-        a >>= 1;
         b >>= 1;
     }
     return ans;

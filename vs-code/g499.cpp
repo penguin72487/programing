@@ -19,8 +19,7 @@ int main()
 int b_Big(long long a, long long b)
 {
     int ans = 0;
-    a &= b;
-    b ^= a;
+    b ^=(a&b);
     while(b)
     {
         if(b&1)

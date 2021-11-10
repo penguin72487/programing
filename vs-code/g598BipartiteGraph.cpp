@@ -75,9 +75,9 @@ class Graph{
     bool b_BG()
     {
         deque<node*> stl;
-        stl.push_back(in_Map[1]);
+        stl.push_back(in_Map[0]);
         stl.back()->colour = 1;
-        ib_TrNode[1] = 1;
+        ib_TrNode[0] = 1;
         while (!stl.empty())
         {
             node* now=stl.front();
@@ -115,6 +115,18 @@ class Graph{
             in_Map[it->first]->n_Vec = it->second->n_Vec;
         }
     }
+    void print_AdjList()
+    {
+        for (auto it = in_Map.begin(); it != in_Map.end(); ++it)
+        {
+            cout << it->first << ": ";
+            for(auto jt=it->second->n_Vec.begin();jt!=it->second->n_Vec.end();++jt)
+            {
+                cout << (*jt)->data<<" ";
+            }
+            cout << "\n";
+        }
+    }
 };
 int main()
 {
@@ -140,10 +152,12 @@ int main()
         cin >> a >> b;
         tmp.insert(a,b);
     }
+    tmp.print_AdjList();
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
         Graph grup = tmp;
+        grup.print_AdjList();
         for (int j = 0; j < k;++j)
         {
             int a, b;

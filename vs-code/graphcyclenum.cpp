@@ -113,7 +113,7 @@ int main()
     tmp.insert(4, 3);//2
     //tmp.insert(5, 4);//3
     //tmp.insert(5, 3);//3
-    tmp.insert(5, 4);
+    tmp.insert(5, 4);//
     tmp.insert(5, 6);
     tmp.insert(6, 3);
     //cout << tmp.in_Map.size() << "\n";

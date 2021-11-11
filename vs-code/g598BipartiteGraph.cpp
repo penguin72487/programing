@@ -74,10 +74,11 @@ class Graph{
     }
     bool b_BG()
     {
+        ib_TrNode.clear();
         deque<node*> stl;
-        stl.push_back(in_Map[0]);
+        stl.push_back(in_Map.begin()->second);
         stl.back()->colour = 1;
-        ib_TrNode[0] = 1;
+        ib_TrNode[in_Map.begin()->first] = 1;
         while (!stl.empty())
         {
             node* now=stl.front();

@@ -1,6 +1,6 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
+#include<map>
 #include<map>
 #include<algorithm>
 #include<deque>
@@ -19,8 +19,8 @@ public:
 class Graph{
 	public:
 	node* op=nullptr;
-	unordered_map<int,node*> in_Map;
-	unordered_map<int,bool> ib_TrNode;
+	map<int,node*> in_Map;
+	map<int,bool> ib_TrNode;
 
     Graph()
 	{
@@ -82,7 +82,7 @@ class Graph{
         while (!stl.empty())
         {
             node* now=stl.front();
-            //cout <<"dd "<< now->data << "\n";
+            cout <<"dd "<< now->data << "\n";
             stl.pop_front();
             for(auto it=now->n_Vec.begin();it!=now->n_Vec.end();++it)
             {
@@ -153,20 +153,23 @@ int main()
         cin >> a >> b;
         tmp.insert(a,b);
     }
-    //tmp.print_AdjList();
+    tmp.print_AdjList();
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
         Graph *grt = new Graph;
         Graph& grup = *grt;
         grup = tmp;
-        //grup.print_AdjList();
+        
         for (int j = 0; j < k;++j)
         {
             int a, b;
             cin >> a >> b;
             grup.insert(a, b);
         }
+        cout << "copy\n";
+        grup.print_AdjList();
+        cout << "copyend\n";
         bool flag = grup.b_BG();
         if(!flag)
         {

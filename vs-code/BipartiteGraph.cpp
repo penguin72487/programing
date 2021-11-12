@@ -74,14 +74,15 @@ class Graph{
     }
     bool b_BG()
     {
+        ib_TrNode.clear();
         deque<node*> stl;
-        stl.push_back(in_Map[1]);
+        stl.push_back(in_Map.begin()->second);
         stl.back()->colour = 1;
-        ib_TrNode[1] = 1;
+        ib_TrNode[in_Map.begin()->first] = 1;
         while (!stl.empty())
         {
             node* now=stl.front();
-            cout << now->data << "\n";
+            //cout <<"dd "<< now->data << "\n";
             stl.pop_front();
             for(auto it=now->n_Vec.begin();it!=now->n_Vec.end();++it)
             {
@@ -120,10 +121,10 @@ int main()
 {
     Graph tmp;
     
+    tmp.insert(0, 3);
+    tmp.insert(2, 3);
+    tmp.insert(0, 1);
     tmp.insert(1, 2);
-    tmp.insert(1, 4);
-    tmp.insert(3, 2);
-    tmp.insert(3, 4);
     //tmp.insert(4, 2);//2
     //tmp.insert(4, 3);//2
     //tmp.insert(5, 4);//3

@@ -1,6 +1,6 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
+#include<map>
 #include<map>
 #include<algorithm>
 #include<deque>
@@ -19,8 +19,8 @@ public:
 class Graph{
 	public:
 	node* op=nullptr;
-	unordered_map<int,node*> in_Map;
-	unordered_map<int,bool> ib_TrNode;
+	map<int,node*> in_Map;
+	map<int,bool> ib_TrNode;
 
     Graph()
 	{
@@ -158,7 +158,7 @@ int main()
     for (int i = 0; i < p;++i)
     {
         Graph grup = tmp;
-        grup.print_AdjList();
+        //grup.print_AdjList();
         for (int j = 0; j < k;++j)
         {
             int a, b;

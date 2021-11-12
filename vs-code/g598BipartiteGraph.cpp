@@ -82,7 +82,7 @@ class Graph{
         while (!stl.empty())
         {
             node* now=stl.front();
-            cout <<"dd "<< now->data << "\n";
+            //cout <<"dd "<< now->data << "\n";
             stl.pop_front();
             for(auto it=now->n_Vec.begin();it!=now->n_Vec.end();++it)
             {
@@ -153,19 +153,27 @@ int main()
         cin >> a >> b;
         tmp.insert(a,b);
     }
-    tmp.print_AdjList();
+    //tmp.print_AdjList();
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
-        Graph grup = tmp;
-        grup.print_AdjList();
+        Graph *grt = new Graph;
+        Graph& grup = *grt;
+        grup = tmp;
+        //grup.print_AdjList();
         for (int j = 0; j < k;++j)
         {
             int a, b;
             cin >> a >> b;
             grup.insert(a, b);
         }
-        cout << grup.b_BG() << "\n";
+        bool flag = grup.b_BG();
+        if(!flag)
+        {
+            cout << i+1 << " ";
+        }
+        cout <<"re flag "<< flag << "\n";
+        delete grt;
     }
 
         return 0;

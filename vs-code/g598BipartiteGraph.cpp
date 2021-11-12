@@ -157,15 +157,26 @@ int main()
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
-        Graph grup = tmp;
-        //grup.print_AdjList();
+        Graph *grt = new Graph;
+        Graph& grup = *grt;
+        grup = tmp;
+        
         for (int j = 0; j < k;++j)
         {
             int a, b;
             cin >> a >> b;
             grup.insert(a, b);
         }
-        cout << grup.b_BG() << "\n";
+        cout << "copy\n";
+        grup.print_AdjList();
+        cout << "copyend\n";
+        bool flag = grup.b_BG();
+        if(!flag)
+        {
+            cout << i+1 << " ";
+        }
+        cout <<"re flag "<< flag << "\n";
+        delete grt;
     }
 
         return 0;

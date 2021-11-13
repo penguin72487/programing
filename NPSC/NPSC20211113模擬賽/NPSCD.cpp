@@ -2,8 +2,8 @@
 using namespace std;
 int main()
 {
-    int a, b;
+    long double a, b;
     cin >> a >> b;
-    long long ans = a + b;
+    long double ans = a + b;
     cout << ans<< "\n";
 }

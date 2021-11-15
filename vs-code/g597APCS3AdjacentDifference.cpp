@@ -1,6 +1,7 @@
 #include<iostream>
 #include<algorithm>
 #include<queue>
+#include<numeric>
 using namespace std;
 bool cmp(int a,int b)
 {
@@ -21,12 +22,8 @@ int main()
         Cost[b] -= h;
     }
     //int cost[n];
-    for (int i_Sum=0,i = 0; i < n;++i)
-    {
-        i_Sum += Cost[i];
-        Cost[i] = i_Sum;
-        
-    }
+    partial_sum (Cost, Cost+n, Cost);
+    
     sort(Cost, Cost + n, cmp);
     int list[n];
     

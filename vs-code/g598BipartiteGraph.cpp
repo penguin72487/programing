@@ -11,6 +11,7 @@ public:
 	int data;
     int colour=-1;
     vector<node*> n_Vec;
+    vector<node *> n_Backup;
     node (int tmp)
     {
         data = tmp;
@@ -19,8 +20,10 @@ public:
 class Graph{
 	public:
 	node* op=nullptr;
-	map<int,node*> in_Map;
-	map<int,bool> ib_TrNode;
+    set<int> i_Node;
+    map<int,node*> in_Map;
+    map<int, node *> in_Map_Backup;
+    map<int,bool> ib_TrNode;
 
     Graph()
 	{
@@ -35,6 +38,8 @@ class Graph{
     }
     void insert(int u,int v)
     {
+        i_Node.insert(u);
+        i_Node.insert(v);
         if(op)
         {
             node* u_Node;
@@ -72,6 +77,63 @@ class Graph{
             in_Map[u_Node->data] = u_Node;
         }
     }
+    void t_Insert_init_()
+    {
+        for (auto it = i_Node.begin(); it != i_Node.end();++it)
+        {
+            in_Map[*it]->n_Backup = in_Map[*it]->n_Vec;
+        }
+        in_Map_Backup = in_Map;
+    }
+    void t_Insert_dis_()
+    {
+        /*
+        for (auto it = i_Node.begin(); it != i_Node.end();++it)
+        {
+            
+            in_Map[*it]->n_Vec = in_Map[*it]->n_Backup;
+            in_Map[*it]->colour = -1;
+        }
+        */
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        {
+            if(i_Node.find(it->first)==i_Node.end())
+            {
+                delete it->second;
+                i_Node.erase(i_Node.find(it->first));
+            }
+            it->second->n_Vec = it->second->n_Backup;
+            it->second->colour = -1;
+        }
+        in_Map = in_Map_Backup;
+    }
+    void t_Insert(int u,int v)
+    {
+        node* u_Node;
+        if(in_Map.find(u)==in_Map.end())
+        {
+            u_Node = new node(u);
+            in_Map[u] = u_Node;
+        }
+        else
+        {
+            u_Node=in_Map[u];
+        }
+        node* v_Node;
+        if(in_Map.find(v)==in_Map.end())
+        {
+            v_Node=new node(v);
+            in_Map[v] = v_Node;
+        }
+        else
+        {
+            v_Node=in_Map[v];
+        }
+        v_Node->n_Vec.push_back(u_Node);
+        u_Node->n_Vec.push_back(v_Node);
+
+
+    }
     bool b_BG()
     {
         ib_TrNode.clear();
@@ -108,13 +170,20 @@ class Graph{
         return 1;
 
     }
-    void operator=(Graph &tmp)
+    void operator=(Graph tmp)
     {
         for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
         {
-            in_Map[it->first] = new node(it->second->data);
-            in_Map[it->first]->n_Vec = it->second->n_Vec;
+            in_Map[it->first] = new node(it->second->data);               
         }
+        for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
+        {
+            for (auto jt = it->second->n_Vec.begin(); jt != it->second->n_Vec.end();++jt)
+            {
+                    in_Map[it->first]->n_Vec.push_back(in_Map[(*jt)->data]);
+            }             
+        }
+        op = in_Map[tmp.op->data];
     }
     void print_AdjList()
     {
@@ -131,6 +200,7 @@ class Graph{
 };
 int main()
 {
+    cin.tie(0)->sync_with_stdio(0);
     Graph tmp;
     
     //tmp.insert(1, 0);
@@ -157,26 +227,29 @@ int main()
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
-        Graph *grt = new Graph;
-        Graph& grup = *grt;
-        grup = tmp;
-        
+        tmp.t_Insert_init_();
+        //Graph grup = tmp;
+        cout << "pre\n";
+        tmp.print_AdjList();
         for (int j = 0; j < k;++j)
         {
             int a, b;
             cin >> a >> b;
-            grup.insert(a, b);
+            tmp.t_Insert(a, b);
         }
+        
         cout << "copy\n";
-        grup.print_AdjList();
+        tmp.print_AdjList();
         cout << "copyend\n";
-        bool flag = grup.b_BG();
+        bool flag = tmp.b_BG();
         if(!flag)
         {
-            cout << i+1 << " ";
+            cout << i+1 << "\n";
         }
         cout <<"re flag "<< flag << "\n";
-        delete grt;
+        //tmp.t_Insert_dis_();
+        //cout << "dis\n";
+        //tmp.print_AdjList();
     }
 
         return 0;

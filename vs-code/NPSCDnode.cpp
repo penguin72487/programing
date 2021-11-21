@@ -1,22 +1,43 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include<vector>
+#include<queue>
+#include<algorithm>
 using namespace std;
-int vi_Kadane(vector<int> &v_Arr)
-{
-    int pre_Sum = 0;
-    int ans = -2147483648;
-    for(auto it=v_Arr.begin();it!=v_Arr.end();++it)
+class node{
+public:
+    int data;
+    int index;
+    node(int a,int b)
     {
-        pre_Sum = max(*it, (*it) + pre_Sum);
-        if(pre_Sum>ans)
+        data = a;
+        index = b;
+    }
+    bool operator()(node &val,node &val2)
+    {
+        if(val.data==val2.data)
         {
-            ans = pre_Sum;
+            return val.index < val2.index;
+        }
+        else
+        {
+            return val.index < val2.index;
         }
     }
-    return ans;
+};
+bool cmp(node &val,node &val2)
+{
+    if(val.data==val2.data)
+    {
+        return val.index < val2.index;
+    }
+    else
+    {
+        return val.index < val2.index;
+    }
+
 }
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
     int ca;
     cin>>ca;
     while(ca--)
@@ -26,11 +47,11 @@ int main()
         vector<int> sa(n);
         vector<int> ch(k);
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> n_Tmp;
-        //int i_tmp;
+        int i_tmp;
         for(int i=0;i<n;++i)
         {
             cin >> sa[i];
-            n_Tmp.push(make_pair(sa[i], i));
+            n_Tmp.push(make_pair(i_tmp, i));
         }
         for(int i=0;i<k;++i)
         {
@@ -41,18 +62,14 @@ int main()
         {
             int min = n_Tmp.top().first;
             int pos =  n_Tmp.top().second;
-            
+            n_Tmp.pop();
             if(ch[i] > min)
             {
-                n_Tmp.pop();
                 sa[pos] = ch[i];
-                n_Tmp.push(make_pair(ch[i], pos));
             }
         }
-        /*
         int st = 0 , ed = sa.size();
         int ans = INT_MIN;
-        
         while(st<sa.size())
         {
             int sum = 0;
@@ -68,8 +85,7 @@ int main()
                 ed = sa.size();
             }
         }
-        */
-        cout<<vi_Kadane(sa)<<"\n";
+        cout<<ans<<"\n";
     }
     return 0;
 }

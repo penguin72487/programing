@@ -6,8 +6,8 @@
 
 ## 涉略議題
 * 大數四則運算
-* 1!*2!\* ...*1000!以及優化
-* karatsuba algorithm
+* [1!*2!\* ...*1000!](https://github.com/penguin72487/zero-judge-practice/blob/master/%E5%A4%A7%E6%95%B8%E9%81%8B%E7%AE%97/1%E9%9A%8E%E4%B9%98%E5%88%B0a%E9%9A%8E.cpp)以及[優化](https://github.com/penguin72487/zero-judge-practice/blob/master/%E5%A4%A7%E6%95%B8%E9%81%8B%E7%AE%97/1%E9%9A%8E%E4%B9%98%E5%88%B0100%E9%9A%8E%E5%84%AA%E5%8C%96.cpp)
+* [karatsuba algorithm](https://github.com/penguin72487/zero-judge-practice/blob/master/%E5%A4%A7%E6%95%B8%E9%81%8B%E7%AE%97/karatsuba%20algorithm.cpp)
   
 ## 企鵝說
 現在是2021/11/5，看過去的程式碼，總感覺一大堆地方要改進還有優化，尤其是可不可以寫成一個物件阿?

@@ -16,103 +16,78 @@ public:
 class Segment_Tree{
 public:
     //node* top=nullptr;
-    node *t_Node;
+    vector<node> t_Node;
     long long int ans = 0;
     int size;
     int max_size;
     int index_Op;
     Segment_Tree(vector<pair<int,int>> &a)
     {
-        size = a.size();
-        int tmp = log2((size - 2) << 1) + 1;
-        max_size = i_Pow(2,tmp+1);
-        index_Op = i_Pow(2,tmp);
-        t_Node = new node[max_size];
+        size = (a.size()-1)*2;
+        index_Op = size;
+        t_Node.resize(2*size);
         for (auto it = ++a.begin(); it != a.end();++it)
         {
-           // t_Node[index_Op + it->first].i_Sum = 1;
-            //t_Node[index_Op + it->second].i_Sum = 1;
-            ans += rang_Sum(index_Op + it->first,index_Op + it->second);
+            rang_Sum(index_Op + it->first,index_Op + it->second);
             update(index_Op + it->first,index_Op + it->second);
-            /*
-            for (int i = 0; i < (size-1)*2;++i)
-            {
-                cout << t_Node[index_Op+i].i_Sum << " ";
-            }
-            cout << "\n";
-            */
+            
         }
     }
     ~Segment_Tree()
     {
-        delete [] t_Node;
+        //delete [] t_Node;
     }
-    long long int rang_Sum(int op,int ed)//(op,ed)
+    void rang_Sum(int op,int ed)//(op,ed)
     {
-        ++op;
         //long long int ans=0;
-        while(op<ed)
+        int i_op = op+1;
+        int i_ed = ed;
+        while(i_op<i_ed)
         {
             
-            if(op&1)
+            if(i_op&1)
             {
-                ans += t_Node[op].i_Sum;
-                ++op;
+                ans += t_Node[i_op].i_Sum;
+                ++i_op;
                 
             }
-            if(ed&1)
+            if(i_ed&1)
             {
-               
-            }
-            else
-            {
-                //ans += t_Node[ed].i_Sum;
-                 --ed;
+                
+                 --i_ed;
+                 ans += t_Node[i_ed].i_Sum;
                 
 
             }
 
-            op >>= 1;
-            ed >>= 1;
+            i_op >>= 1;
+            i_ed >>= 1;
         }
         //return 0;
-        return t_Node[op].i_Sum;
+        return;
     }
     void update(int op,int ed)
     {
-        while(op>1)
+        while(op>0)
         {
             ++t_Node[op].i_Sum;
             op >>=1;
            
             
         }
-        while(ed>1)
+        while(ed>0)
         {
             ++t_Node[ed].i_Sum;
             ed >>= 1;
             
         }
     }
-    int i_Pow(int a,int n)
-    {
-        int ans = 1;
-        while(n)
-        {
-            if(n&1)
-            {
-                ans *= a;
-            }
-            a *= a;
-            n >>= 1;
-        }
-        return ans;
-    }
+
 };
 
 int main()
 {
-    
+    cin.tie(0)->sync_with_stdio(0);
     int n;
     //fstream file;
     //file.open("f315p409_in.txt");

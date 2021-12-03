@@ -14,7 +14,7 @@ public:
 
     }
 
-    node(int tmp)
+    node(int &tmp)
     {
         data = tmp;
         i_Sum = data;
@@ -24,19 +24,6 @@ public:
     //int i_Max = -2147483648;
     node *l_Node = nullptr;
     node *r_Node = nullptr;
-    bool operator <(node* val2)
-    {
-        return (data < val2->data);
-    }
-    
-    bool operator()(node* val,node* val2)
-    {
-        return (val->data < val2->data);
-    }
-    bool operator()(node &val,node &val2)
-    {
-        return (val.data < val2.data);
-    }
     
 };
 class DC_Tree
@@ -47,7 +34,8 @@ public:
 
     DC_Tree()
     {
-        top = new node(0);
+        int zero = 0;
+        top = new node(zero);
         r_List.push_back(top);
     }
     ~DC_Tree()
@@ -58,7 +46,7 @@ public:
     {
         dis_Node(top);
     }
-    void dis_Node(node* now)
+    void dis_Node(node*& now)
     {
         if(!now)
         {
@@ -70,7 +58,7 @@ public:
         dis_Node(now->r_Node);
         delete now;
     }
-    void insert(int tmp)
+    void insert(int &tmp)
     {
         if(r_List.size()!=1)
         {
@@ -197,7 +185,7 @@ public:
     {
         i_Sum(top->r_Node);
     }
-    long long i_Sum(node* now)
+    long long i_Sum(node*& now)
     {
         if(!now)
         {

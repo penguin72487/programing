@@ -65,8 +65,8 @@ public:
         cout << "\n";
         */
         unordered_map<int,bool> t_Sum;
-        int i_op = op-1;
-        int i_ed = ed;
+        int i_op = op;
+        int i_ed = ed+1;
         while(i_op<i_ed)
         {
             //cout << "index " << i_op << " " << i_ed << "\n";

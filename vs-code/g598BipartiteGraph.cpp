@@ -79,55 +79,51 @@ class Graph{
     }
     void t_Insert_init_()
     {
+        //in_Map_Backup.clear();
+        
         for (auto it = i_Node.begin(); it != i_Node.end();++it)
         {
-            in_Map[*it]->n_Backup = in_Map[*it]->n_Vec;
+            in_Map_Backup[*it] = new node(*it);
         }
-        in_Map_Backup = in_Map;
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        {
+            for (auto jt = it->second->n_Vec.begin(); jt != it->second->n_Vec.end();++jt)
+            {
+                in_Map_Backup[it->first]->n_Backup.push_back(in_Map_Backup[(*jt)->data]);
+            }
+        }
+        
     }
     void t_Insert_dis_()
     {
-        /*
-        for (auto it = i_Node.begin(); it != i_Node.end();++it)
+
+        for (auto it = in_Map_Backup.begin(); it != in_Map_Backup.end();++it)
         {
-            
-            in_Map[*it]->n_Vec = in_Map[*it]->n_Backup;
-            in_Map[*it]->colour = -1;
+            delete it->second;
         }
-        */
-        for (auto it = in_Map.begin(); it != in_Map.end();++it)
-        {
-            if(i_Node.find(it->first)==i_Node.end())
-            {
-                delete it->second;
-                i_Node.erase(i_Node.find(it->first));
-            }
-            it->second->n_Vec = it->second->n_Backup;
-            it->second->colour = -1;
-        }
-        in_Map = in_Map_Backup;
+            in_Map_Backup.clear();
     }
     void t_Insert(int u,int v)
     {
         node* u_Node;
-        if(in_Map.find(u)==in_Map.end())
+        if(in_Map_Backup.find(u)==in_Map_Backup.end())
         {
             u_Node = new node(u);
-            in_Map[u] = u_Node;
+            in_Map_Backup[u] = u_Node;
         }
         else
         {
-            u_Node=in_Map[u];
+            u_Node=in_Map_Backup[u];
         }
         node* v_Node;
-        if(in_Map.find(v)==in_Map.end())
+        if(in_Map_Backup.find(v)==in_Map_Backup.end())
         {
             v_Node=new node(v);
-            in_Map[v] = v_Node;
+            in_Map_Backup[v] = v_Node;
         }
         else
         {
-            v_Node=in_Map[v];
+            v_Node=in_Map_Backup[v];
         }
         v_Node->n_Vec.push_back(u_Node);
         u_Node->n_Vec.push_back(v_Node);
@@ -138,9 +134,9 @@ class Graph{
     {
         ib_TrNode.clear();
         deque<node*> stl;
-        stl.push_back(in_Map.begin()->second);
+        stl.push_back(in_Map_Backup.begin()->second);
         stl.back()->colour = 1;
-        ib_TrNode[in_Map.begin()->first] = 1;
+        ib_TrNode[in_Map_Backup.begin()->first] = 1;
         while (!stl.empty())
         {
             node* now=stl.front();
@@ -150,7 +146,7 @@ class Graph{
             {
                 if(ib_TrNode.find((*it)->data)==ib_TrNode.end())
                 {
-                    stl.push_back(in_Map[(*it)->data]);
+                    stl.push_back(in_Map_Backup[(*it)->data]);
                     ib_TrNode[(*it)->data] = 1;
 
                 }
@@ -197,6 +193,18 @@ class Graph{
             cout << "\n";
         }
     }
+    void print_Backup_AdjList()
+    {
+        for (auto it = in_Map_Backup.begin(); it != in_Map_Backup.end(); ++it)
+        {
+            cout << it->first << ": ";
+            for(auto jt=it->second->n_Vec.begin();jt!=it->second->n_Vec.end();++jt)
+            {
+                cout << (*jt)->data<<" ";
+            }
+            cout << "\n";
+        }
+    }
 };
 int main()
 {
@@ -230,7 +238,7 @@ int main()
         tmp.t_Insert_init_();
         //Graph grup = tmp;
         cout << "pre\n";
-        tmp.print_AdjList();
+        tmp.print_Backup_AdjList();
         for (int j = 0; j < k;++j)
         {
             int a, b;
@@ -239,7 +247,7 @@ int main()
         }
         
         cout << "copy\n";
-        tmp.print_AdjList();
+        tmp.print_Backup_AdjList();
         cout << "copyend\n";
         bool flag = tmp.b_BG();
         if(!flag)
@@ -247,7 +255,7 @@ int main()
             cout << i+1 << "\n";
         }
         cout <<"re flag "<< flag << "\n";
-        //tmp.t_Insert_dis_();
+        tmp.t_Insert_dis_();
         //cout << "dis\n";
         //tmp.print_AdjList();
     }

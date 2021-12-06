@@ -29,7 +29,8 @@ class DSU{
 	public:
 	node* op=nullptr;
 	unordered_map<int,node*> in_Map;
-	unordered_map<int,bool> ib_TrNode;
+    unordered_map<int, node *> in_Back;
+    unordered_map<int,bool> ib_TrNode;
 
     DSU()
 	{
@@ -56,21 +57,31 @@ class DSU{
             in_Map[v] = v_Node;
             u_Node->oppo = v_Node;
             v_Node->oppo = u_Node;
+
         }
         else if(!u_init&&!v_init)
         {
             u_Node = in_Map[u];
             v_Node = in_Map[v];
-            
+            v_Node->Gpa()->pa = u_Node->oppo->Gpa();
+            v_Node->oppo->Gpa()->pa = u_Node->Gpa();
+
         }
         else
         {
             if(u_init)
             {
-
+                u_Node = in_Map[u];
+                v_Node = new node(v);
+                v_Node->pa = u_Node->oppo->Gpa();
+                v_Node->oppo = u_Node->Gpa();
             }
             else
             {
+                v_Node = in_Map[v];
+                u_Node = new node(u);
+                u_Node->pa = v_Node->oppo->Gpa();
+                u_Node->oppo = v_Node->Gpa();
 
             }
         }
@@ -81,7 +92,15 @@ class DSU{
 int main()
 {
     DSU tmp;
-    
+    int n,m;
+    cin >> n >> m;
+    int a, b;
 
-    return 0;
+    for (int i = 0; i < m;++i)
+    {
+        cin >> a >> b;
+        tmp.insert(a,b);
+    }
+
+        return 0;
 }

@@ -11,18 +11,18 @@ public:
 	int data;
     int colour=-1;
     vector<node*> n_Vec;
-    vector<node *> n_Backup;
     node (int tmp)
     {
         data = tmp;
     }
+    
 };
 class Graph{
 	public:
 	node* op=nullptr;
     set<int> i_Node;
     map<int,node*> in_Map;
-    map<int, node *> in_Map_Backup;
+    map<int, node *> in_Backup;
     map<int,bool> ib_TrNode;
 
     Graph()
@@ -36,10 +36,14 @@ class Graph{
 		}
         
     }
-    void insert(int u,int v)
+    void insert(int &u,int &v,bool flag)
     {
-        i_Node.insert(u);
-        i_Node.insert(v);
+        if(flag)
+        {
+            i_Node.insert(u);
+            i_Node.insert(v);
+        }
+        
         if(op)
         {
             node* u_Node;
@@ -77,82 +81,58 @@ class Graph{
             in_Map[u_Node->data] = u_Node;
         }
     }
-    void t_Insert_init_()
+    void backup_Init_()
     {
-        //in_Map_Backup.clear();
-        
         for (auto it = i_Node.begin(); it != i_Node.end();++it)
         {
-            in_Map_Backup[*it] = new node(*it);
+            in_Backup[*it] = new node(*it);
         }
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
             for (auto jt = it->second->n_Vec.begin(); jt != it->second->n_Vec.end();++jt)
             {
-                in_Map_Backup[it->first]->n_Backup.push_back(in_Map_Backup[(*jt)->data]);
+                in_Backup[it->first]->n_Vec.push_back(in_Backup[(*jt)->data]);
             }
+               
         }
-        
     }
-    void t_Insert_dis_()
+    void backup()
     {
-
-        for (auto it = in_Map_Backup.begin(); it != in_Map_Backup.end();++it)
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
             delete it->second;
         }
-            in_Map_Backup.clear();
+        in_Map.clear();
+        for (auto it = in_Backup.begin(); it != in_Backup.end();++it)
+        {
+            in_Map[it->first] = it->second;
+        }
+        in_Backup.clear();
     }
-    void t_Insert(int u,int v)
-    {
-        node* u_Node;
-        if(in_Map_Backup.find(u)==in_Map_Backup.end())
-        {
-            u_Node = new node(u);
-            in_Map_Backup[u] = u_Node;
-        }
-        else
-        {
-            u_Node=in_Map_Backup[u];
-        }
-        node* v_Node;
-        if(in_Map_Backup.find(v)==in_Map_Backup.end())
-        {
-            v_Node=new node(v);
-            in_Map_Backup[v] = v_Node;
-        }
-        else
-        {
-            v_Node=in_Map_Backup[v];
-        }
-        v_Node->n_Vec.push_back(u_Node);
-        u_Node->n_Vec.push_back(v_Node);
-
-
-    }
+    
     bool b_BG()
     {
         ib_TrNode.clear();
         deque<node*> stl;
-        stl.push_back(in_Map_Backup.begin()->second);
+        stl.push_back(in_Map.begin()->second);
         stl.back()->colour = 1;
-        ib_TrNode[in_Map_Backup.begin()->first] = 1;
+        ib_TrNode[in_Map.begin()->first] = 1;
         while (!stl.empty())
         {
             node* now=stl.front();
-            cout <<"dd "<< now->data << "\n";
+            //cout <<"dd "<< now->data << "\n";
             stl.pop_front();
             for(auto it=now->n_Vec.begin();it!=now->n_Vec.end();++it)
             {
                 if(ib_TrNode.find((*it)->data)==ib_TrNode.end())
                 {
-                    stl.push_back(in_Map_Backup[(*it)->data]);
+                    stl.push_back(in_Map[(*it)->data]);
                     ib_TrNode[(*it)->data] = 1;
 
                 }
                 if((*it)->colour==-1)
                 {
-                    (*it)->colour = bool(0==now->colour);
+                    (*it)->colour = !now->colour;
                 }
                 else if((*it)->colour==now->colour)
                 {
@@ -166,21 +146,7 @@ class Graph{
         return 1;
 
     }
-    void operator=(Graph tmp)
-    {
-        for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
-        {
-            in_Map[it->first] = new node(it->second->data);               
-        }
-        for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
-        {
-            for (auto jt = it->second->n_Vec.begin(); jt != it->second->n_Vec.end();++jt)
-            {
-                    in_Map[it->first]->n_Vec.push_back(in_Map[(*jt)->data]);
-            }             
-        }
-        op = in_Map[tmp.op->data];
-    }
+    
     void print_AdjList()
     {
         for (auto it = in_Map.begin(); it != in_Map.end(); ++it)
@@ -193,22 +159,12 @@ class Graph{
             cout << "\n";
         }
     }
-    void print_Backup_AdjList()
-    {
-        for (auto it = in_Map_Backup.begin(); it != in_Map_Backup.end(); ++it)
-        {
-            cout << it->first << ": ";
-            for(auto jt=it->second->n_Vec.begin();jt!=it->second->n_Vec.end();++jt)
-            {
-                cout << (*jt)->data<<" ";
-            }
-            cout << "\n";
-        }
-    }
+    
 };
 int main()
 {
     cin.tie(0)->sync_with_stdio(0);
+    cout.tie(0);
     Graph tmp;
     
     //tmp.insert(1, 0);
@@ -229,35 +185,24 @@ int main()
     {
         int a, b;
         cin >> a >> b;
-        tmp.insert(a,b);
+        tmp.insert(a,b,1);
     }
-    tmp.print_AdjList();
+    //tmp.print_AdjList();
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
-        tmp.t_Insert_init_();
-        //Graph grup = tmp;
-        cout << "pre\n";
-        tmp.print_Backup_AdjList();
+        tmp.backup_Init_();
+        int a, b;
         for (int j = 0; j < k;++j)
         {
-            int a, b;
             cin >> a >> b;
-            tmp.t_Insert(a, b);
+            tmp.insert(a, b,0);
         }
-        
-        cout << "copy\n";
-        tmp.print_Backup_AdjList();
-        cout << "copyend\n";
-        bool flag = tmp.b_BG();
-        if(!flag)
+        if(!tmp.b_BG())
         {
             cout << i+1 << "\n";
         }
-        cout <<"re flag "<< flag << "\n";
-        tmp.t_Insert_dis_();
-        //cout << "dis\n";
-        //tmp.print_AdjList();
+        tmp.backup();
     }
 
         return 0;

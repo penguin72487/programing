@@ -2,13 +2,12 @@
 using namespace std;
 int dx[4] = {0, -1, 0, 1};
 int dy[4] = {1, 0, -1, 0};
-const int ascii=97;
-int asciiv=-1;
+int n, m;
 void maze_DFS(int x, int y, int v_Type);
 char maze[12][12];
 int main()
 {
-    int n, m;
+    
     cin >> n >> m;
     
     for (int i = 0; i < n;++i)
@@ -20,7 +19,7 @@ int main()
     }
     for (int i = 0; i < n;++i)
     {
-        if(maze[i][0]=='S')
+        if(maze[i][0]=='X')
         {
             maze_DFS(i,1,0);
             break;
@@ -37,16 +36,30 @@ int main()
 }
 void maze_DFS(int x,int y,int v_Type)
 {
-    ++asciiv;
-    asciiv %= 26;
-    maze[x][y] = ascii+(asciiv);
-    for (int i = 0; i < 4;++i)
+    if (y==11)
     {
-        if (maze[x+dx[i]][y+dy[i]] == 'E')
+        maze[x][y] = 'X';
+        for (int i = 0; i < n;++i)
         {
-            return;
+            for (int j = 0; j < m;++j)
+            {
+                cout << maze[i][j];
+            }
+            cout << "\n";
         }
+        exit(1);
     }
+    maze[x][y] = 'X';
+   
+    for (int i = 0; i < n;++i)
+    {
+        for (int j = 0; j < m;++j)
+        {
+            cout << maze[i][j];
+        }
+        cout << "\n";
+    }
+    cout << "\n";
     for (int i = -1; i < 2;++i)
     {
         if (maze[x + dx[(v_Type + i+4) % 4]][y + dy[(v_Type + i+4) % 4]] == '.')

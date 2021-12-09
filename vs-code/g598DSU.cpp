@@ -18,11 +18,7 @@ public:
     node* Gpa()
     {
         node *now = pa;
-        if(!now)
-        {
-            return this;
-        }
-        while(now->pa)
+        while(now->pa!=now)
         {
             now = now->pa;
         }
@@ -60,8 +56,9 @@ class DSU{
             v_Node = new node(v);
             in_Map[v] = v_Node;
             u_Node->oppo = v_Node;
+            u_Node->pa = u_Node;
             v_Node->oppo = u_Node;
-
+            v_Node->pa = v_Node;
         }
         else if(!u_init&&!v_init)
         {

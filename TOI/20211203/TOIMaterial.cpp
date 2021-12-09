@@ -13,14 +13,16 @@ public:
 };
 class Segment_Tree{
 public:
-    node *t_Node;
+    //node *t_Node;
+    vector<node> t_Node;
     int size;
     Segment_Tree(vector<int> &a)
     {
         
         size = a.size();
         int n = size;
-        t_Node = new node[size<<1];
+        t_Node.resize(size<<1);
+        //t_Node = new node[size<<1];
 
         for (int i = 0; i < n;++i)
         {
@@ -47,7 +49,7 @@ public:
     }
     ~Segment_Tree()
     {
-        delete [] t_Node;
+        //delete [] t_Node;
     }
     //node *build(node *op, node *ed);
     long long differ_Sum(int &op,int &ed)
@@ -69,15 +71,24 @@ public:
             //cout << "index " << i_op << " " << i_ed << "\n";
             if(i_op&1)
             {
+                if(i_op+1==i_ed)
+                {
+                    goto equ;
+                }
                 for (auto it=t_Node[i_op].differ.begin();it!=t_Node[i_op].differ.end();++it)
                 {
                     t_Sum[it->first]=1;
                 }
                 ++i_op;
+
             }
             if(i_ed&1)
             {
                 --i_ed;
+                if(i_op==i_ed)
+                {
+                    goto equ;
+                }
                 for (auto it=t_Node[i_ed].differ.begin();it!=t_Node[i_ed].differ.end();++it)
                 {
                     t_Sum[it->first]=1;
@@ -87,6 +98,7 @@ public:
             i_ed >>= 1;
             if(i_op==i_ed)
             {
+                equ:
                 if(t_Sum.empty())
                 {
                     return t_Node[i_op].differ.size();

@@ -28,21 +28,6 @@ public:
         }
         return now;
     }
-    /*
-    node* oppo_Gpa()
-    {
-        node *now = oppo;
-        if(!now)
-        {
-            return this;
-        }
-        while(now->oppo)
-        {
-            now = now->oppo;
-        }
-        return now;
-    }
-    */
 };
 class DSU{
 	public:
@@ -82,15 +67,8 @@ class DSU{
         {
             u_Node = in_Map[u];
             v_Node = in_Map[v];
-            if(v_Node->Gpa()->pa != u_Node->oppo->Gpa())
-            {
-                v_Node->Gpa()->pa = u_Node->oppo->Gpa();
-            }
-            if(v_Node->oppo->Gpa()->pa != u_Node->Gpa())
-            {
-                v_Node->oppo->Gpa()->pa = u_Node->Gpa();
-            }
-            
+            v_Node->Gpa()->pa = u_Node->oppo->Gpa();
+            v_Node->oppo->Gpa()->pa = u_Node->Gpa();
 
         }
         else
@@ -100,28 +78,16 @@ class DSU{
                 u_Node = in_Map[u];
                 v_Node = new node(v);
                 in_Map[v] = v_Node;
-                if(v_Node->pa != u_Node->oppo->Gpa())
-                {
-                    v_Node->pa = u_Node->oppo->Gpa();
-                }
-                if(v_Node->oppo != u_Node->Gpa())
-                {
-                    v_Node->oppo = u_Node->Gpa();
-                }
+                v_Node->pa = u_Node->oppo->Gpa();
+                v_Node->oppo = u_Node->Gpa();
             }
             else
             {
                 v_Node = in_Map[v];
                 u_Node = new node(u);
                 in_Map[u] = u_Node;
-                if(u_Node->pa != v_Node->oppo->Gpa())
-                {
-                    u_Node->pa = v_Node->oppo->Gpa();
-                }
-                if(u_Node->oppo != v_Node->Gpa())
-                {
-                    u_Node->oppo = v_Node->Gpa();
-                }
+                u_Node->pa = v_Node->oppo->Gpa();
+                u_Node->oppo = v_Node->Gpa();
 
             }
         }

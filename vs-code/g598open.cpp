@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<map>
-#include<map>
+#include<fstream>
 #include<algorithm>
 #include<deque>
 #include<set>
@@ -11,18 +11,18 @@ public:
 	int data;
     int colour=-1;
     vector<node*> n_Vec;
-    vector<node *> n_Backup;
     node (int tmp)
     {
         data = tmp;
     }
+    
 };
 class Graph{
 	public:
 	node* op=nullptr;
     set<int> i_Node;
     map<int,node*> in_Map;
-    map<int, node *> in_Map_Backup;
+    map<int, node *> in_Backup;
     map<int,bool> ib_TrNode;
 
     Graph()
@@ -36,10 +36,14 @@ class Graph{
 		}
         
     }
-    void insert(int u,int v)
+    void insert(int &u,int &v,bool flag)
     {
-        i_Node.insert(u);
-        i_Node.insert(v);
+        if(flag)
+        {
+            i_Node.insert(u);
+            i_Node.insert(v);
+        }
+        
         if(op)
         {
             node* u_Node;
@@ -77,6 +81,34 @@ class Graph{
             in_Map[u_Node->data] = u_Node;
         }
     }
+    void backup_Init_()
+    {
+        for (auto it = i_Node.begin(); it != i_Node.end();++it)
+        {
+            in_Backup[*it] = new node(*it);
+        }
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        {
+            for (auto jt = it->second->n_Vec.begin(); jt != it->second->n_Vec.end();++jt)
+            {
+                in_Backup[it->first]->n_Vec.push_back(in_Backup[(*jt)->data]);
+            }
+               
+        }
+    }
+    void backup()
+    {
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        {
+            delete it->second;
+        }
+        in_Map.clear();
+        for (auto it = in_Backup.begin(); it != in_Backup.end();++it)
+        {
+            in_Map[it->first] = it->second;
+        }
+        in_Backup.clear();
+    }
     
     bool b_BG()
     {
@@ -88,7 +120,7 @@ class Graph{
         while (!stl.empty())
         {
             node* now=stl.front();
-            cout <<"dd "<< now->data << "\n";
+            //cout <<"dd "<< now->data << "\n";
             stl.pop_front();
             for(auto it=now->n_Vec.begin();it!=now->n_Vec.end();++it)
             {
@@ -100,7 +132,7 @@ class Graph{
                 }
                 if((*it)->colour==-1)
                 {
-                    (*it)->colour = bool(0==now->colour);
+                    (*it)->colour = !now->colour;
                 }
                 else if((*it)->colour==now->colour)
                 {
@@ -114,21 +146,7 @@ class Graph{
         return 1;
 
     }
-    void operator=(Graph tmp)
-    {
-        for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
-        {
-            in_Map[it->first] = new node(it->second->data);               
-        }
-        for (auto it = tmp.in_Map.begin(); it != tmp.in_Map.end();++it)
-        {
-            for (auto jt = it->second->n_Vec.begin(); jt != it->second->n_Vec.end();++jt)
-            {
-                    in_Map[it->first]->n_Vec.push_back(in_Map[(*jt)->data]);
-            }             
-        }
-        op = in_Map[tmp.op->data];
-    }
+    
     void print_AdjList()
     {
         for (auto it = in_Map.begin(); it != in_Map.end(); ++it)
@@ -141,12 +159,15 @@ class Graph{
             cout << "\n";
         }
     }
+    
 };
 int main()
 {
     cin.tie(0)->sync_with_stdio(0);
+    cout.tie(0);
     Graph tmp;
-    
+    fstream file;
+    file.open("g598.txt");
     //tmp.insert(1, 0);
     //tmp.insert(0, 2);
     //tmp.insert(1, 3);
@@ -160,40 +181,36 @@ int main()
     //cout << tmp.b_BG() << "\n";
     
     int n, m,p,k;
-    cin >> n>>m;
+    file >> n>>m;
     for (int i = 0; i < m;++i)
     {
         int a, b;
-        cin >> a >> b;
-        tmp.insert(a,b);
+        file >> a >> b;
+        tmp.insert(a,b,1);
     }
-    tmp.print_AdjList();
-    cin >> p >> k;
+    //tmp.print_AdjList();
+    file >> p >> k;
+    int NUM = 0;
     for (int i = 0; i < p;++i)
     {
-        //Graph grup = tmp;
-        cout << "pre\n";
-        tmp.print_AdjList();
+        tmp.backup_Init_();
+        int a, b;
         for (int j = 0; j < k;++j)
         {
-            int a, b;
-            cin >> a >> b;
-            tmp.insert(a, b);
+            file >> a >> b;
+            tmp.insert(a, b,0);
         }
-        
-        cout << "copy\n";
-        tmp.print_AdjList();
-        cout << "copyend\n";
-        bool flag = tmp.b_BG();
-        if(!flag)
+        if(!tmp.b_BG())
         {
+            ++NUM;
             cout << i+1 << "\n";
+            if(NUM==3)
+            {
+                break;
+            }
         }
-        cout <<"re flag "<< flag << "\n";
-        //tmp.t_Insert_dis_();
-        //cout << "dis\n";
-        //tmp.print_AdjList();
+        tmp.backup();
     }
-
-        return 0;
+    file.close();
+    return 0;
 }

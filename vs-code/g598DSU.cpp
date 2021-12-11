@@ -105,13 +105,18 @@ class DSU{
     }
     void backup()
     {
-        for (auto it = in_Map.begin(); it !=in_Map.end();++it)
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
             if(in_Back.find(it->first)==in_Back.end())
             {
                 delete it->second;
-                --it;
+                it=prev(it);
                 in_Map.erase(next(it));
+            }
+            else
+            {
+                it->second->pa = in_Map[it->first]->pa;
+                it->second->oppo = in_Map[it->first]->oppo;
             }
         }
     }
@@ -128,6 +133,7 @@ int main()
         cin >> a >> b;
         tmp.insert(a,b);
     }
-
-        return 0;
+    tmp.backup_Init_();
+    tmp.backup();
+    return 0;
 }

@@ -90,7 +90,31 @@ class DSU{
         }
 
     }
-    
+    void backup_Init_()
+    {
+        for (auto it = in_Map.begin(); it != in_Map.end();++it)
+        {
+            in_Back[it->first] = new node(it->first);
+        }
+        for (auto it = in_Back.begin(); it != in_Back.end();++it)
+        {
+            it->second->oppo = in_Map[it->first]->oppo;
+            it->second->pa = in_Map[it->first]->pa;
+
+        }
+    }
+    void backup()
+    {
+        for (auto it = in_Map.begin(); it !=in_Map.end();++it)
+        {
+            if(in_Back.find(it->first)==in_Back.end())
+            {
+                delete it->second;
+                --it;
+                in_Map.erase(next(it));
+            }
+        }
+    }
 };
 int main()
 {

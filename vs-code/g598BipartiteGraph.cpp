@@ -100,14 +100,22 @@ class Graph{
     {
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
         {
-            delete it->second;
+            if(in_Backup.find(it->first)==in_Backup.end())
+            {
+                delete it->second;
+                --it;
+                in_Map.erase(next(it));
+            }
+            else
+            {
+                it->second->n_Vec.clear();
+                it->second->colour = -1;
+                for (auto jt = in_Backup[it->first]->n_Vec.begin(); jt != in_Backup[it->first]->n_Vec.end();++jt)
+                {
+                    it->second->n_Vec.push_back(in_Map[(*jt)->data]);
+                }
+            }
         }
-        in_Map.clear();
-        for (auto it = in_Backup.begin(); it != in_Backup.end();++it)
-        {
-            in_Map[it->first] = it->second;
-        }
-        in_Backup.clear();
     }
     
     bool b_BG()
@@ -188,10 +196,11 @@ int main()
         tmp.insert(a,b,1);
     }
     //tmp.print_AdjList();
+    tmp.backup_Init_();
     cin >> p >> k;
     for (int i = 0; i < p;++i)
     {
-        tmp.backup_Init_();
+        
         int a, b;
         for (int j = 0; j < k;++j)
         {

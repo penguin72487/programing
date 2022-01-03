@@ -90,6 +90,11 @@ class DSU{
         }
 
     }
+    bool re_Ward(int u,int v)
+    {
+        
+        return 0;
+    }
     void backup_Init_()
     {
         for (auto it = in_Map.begin(); it != in_Map.end();++it)
@@ -124,7 +129,7 @@ class DSU{
 int main()
 {
     DSU tmp;
-    int n,m;
+    int n,m,p,k;
     cin >> n >> m;
     int a, b;
 
@@ -134,6 +139,17 @@ int main()
         tmp.insert(a,b);
     }
     tmp.backup_Init_();
-    tmp.backup();
+    cin >> p >> k;
+    for (int i = 0; i < p;++i)
+    {
+        
+        int a, b;
+        for (int j = 0; j < k;++j)
+        {
+            cin >> a >> b;
+            tmp.insert(a, b);
+        }
+        tmp.backup();
+    }
     return 0;
 }

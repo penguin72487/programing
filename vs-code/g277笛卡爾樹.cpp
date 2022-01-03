@@ -1,8 +1,5 @@
 #include<iostream>
 #include<vector>
-#include<unordered_map>
-#include<iterator>
-#include<limits>
 using namespace std;
 class node{
 public:

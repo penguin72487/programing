@@ -2,9 +2,10 @@
 #include<cmath>
 #include<algorithm>
 using namespace std;
-int qury(int n, int *f, int init);
+long long int qury(int n, int *f, int init);
 int main()
 {
+    cin.tie(0)->sync_with_stdio(0);
     int n;
     cin >> n;
     int f[n];
@@ -37,10 +38,10 @@ int main()
     }
 }
 
-int qury(int n, int *f, int init)
+long long int qury(int n, int *f, int init)
 {
-    int ans = init;
-    int tmp = init;
+    long long ans = init;
+    long long  tmp = init;
     for (int i = 0; i < n;++i)
     {
         tmp = tmp * ( min(log2(f[i] + 1), 30.0) / 30);

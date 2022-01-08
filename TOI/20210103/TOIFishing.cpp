@@ -25,7 +25,7 @@ int main()
         {
             mid = (op + ed) / 2;
             //cout << mid << " ";
-            if(qury(n,f,mid)<k)
+            if(qury(n,f,mid)<=k)
             {
                 op = mid+1;
             }
@@ -34,7 +34,7 @@ int main()
                 ed = mid-1;
             }
         }
-        cout << op <<"\n";
+        cout << (op+ed)/2 <<"\n";
     }
 }
 
@@ -44,7 +44,7 @@ long long int qury(int n, int *f, int init)
     long long  tmp = init;
     for (int i = 0; i < n;++i)
     {
-        tmp = tmp * ( min(log2(f[i] + 1), 30.0) / 30);
+        tmp = tmp * (float)( min(log2(f[i] + 1), 30.0) / 30);
         ans += tmp;
     }
 

@@ -23,6 +23,7 @@ int main()
     {
         seg.push_back(fk_tree_Loc[i+1]-fk_tree_Loc[i]);
     }
+    seg.push_back(ed-fk_tree_Loc[n]);
     for (auto it = seg.begin(); it != seg.end();++it)
     {
         cout << *it << " ";

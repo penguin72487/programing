@@ -1,6 +1,7 @@
-#include<iostream>
-#include<list>
-#include<algorithm>
+#include <algorithm>
+#include <iostream>
+#include <list>
+#include <queue>
 using namespace std;
 int main()
 {
@@ -29,4 +30,15 @@ int main()
         cout << *it << " ";
     }
     cout << "\n";
+    int ans = 0;
+    queue<list<int>::iterator> STL;
+    auto it = seg.begin();
+    for (int i=0; i < n;++i)
+    {
+        if(tree_H[i]<*it||tree_H[i]<*next(it))
+        {
+            STL.push();
+            break;
+        }
+    }
 }

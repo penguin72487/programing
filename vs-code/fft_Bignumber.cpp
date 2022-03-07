@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cmath>
 #include<list>
+#include<vector>
 #include<algorithm>
 using namespace std;
 const long double PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628;
@@ -44,6 +45,10 @@ public :
     {
         return c_Num(a*tmp);
     }
+    c_Num operator /(int tmp)
+    {
+        return c_Num(a/tmp,b/tmp);
+    }
     c_Num operator +(c_Num tmp)
     {
         return c_Num(a+tmp.a,b+tmp.b);
@@ -68,6 +73,12 @@ public :
         a = t_o.a * tmp.a - t_o.b * tmp.b;
         b = t_o.a * tmp.b + t_o.b * tmp.a;
     }
+    void operator /= (int tmp)
+    {
+        c_Num t_o(a,b);
+        a /=tmp;
+        b /= tmp;
+    }
 
     friend ostream &operator<<(ostream &s, c_Num ob);
 };
@@ -79,7 +90,9 @@ long double i_Rad(long double w);
 
 int main()
 {
-    string s_Val="1234",s_Val2="5678";
+    //string s_Val="54",s_Val2="87";
+    //string s_Val="1234",s_Val2="5678";
+    string s_Val = "8937426582736578926", s_Val2 = "78387925687346587269786";
     //cin >> s_Val >> s_Val2;
     int t_N=s_Val.length()+s_Val2.length();
     int n = f_Pow(2,log2(t_N - 1) + 1);
@@ -129,18 +142,43 @@ int main()
     delete[] val;
     delete[] val2;
     ans = iFFT(ans,n);
-    int i_Ans=0;
+    vector<long long> i_Ans;
     for (int i = 0; i < n;++i)
     {
         cout << ans[i] <<" ";
     }
     cout << "\n";
-    for (int i = 0; i < n;++i)
+    for (auto it = ans; it != ans + n;++it)
     {
-        i_Ans += ans[i].a*f_Pow(10,i);
+        it->a += 0.49;
+        it->a = static_cast<long long> (it->a)/n;
+        i_Ans.push_back(it->a);
     }
-    cout << i_Ans/n<< "\n";
-
+     //   int mod10_16 = f_Pow(10, 16);
+    for(auto it=i_Ans.begin();it!=i_Ans.end();it++) 	//統一進位 
+	{
+		if(*it>9)
+		{
+            auto itpl = ++it;
+            --it;
+            if(itpl==i_Ans.end())
+		 		i_Ans.push_back((*it/10));
+		 	else
+    			*(it+1)+=*it/10;
+    	*it%=10;
+   		}
+	}
+    reverse(i_Ans.begin(), i_Ans.end());
+    auto it = i_Ans.begin();
+    while(*it==0)
+    {
+        ++it;
+    }
+    for (; it !=i_Ans.end();++it)
+    {
+        cout << *it;
+    }
+    cout << "\n";
     delete[] ans;
     return 0;
 }
@@ -254,7 +292,9 @@ c_Num *iFFT(c_Num* &val,int n)
     for (int i = 0; i < m;++i)
     {
         val[i] = Ye[i] + c_Num(cos(i_Rad(theta * i)), sin(i_Rad(theta * i)))*Yo[i];
+        //val[i] /= f_Pow(n,i);
         val[i+m] = Ye[i] - c_Num(cos(i_Rad(theta * i)), sin(i_Rad(theta * i)))*Yo[i];
+        //val[i + m] /= f_Pow(n,i);
     }
     delete[] Ye;
     delete[] Yo;

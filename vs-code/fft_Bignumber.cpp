@@ -81,7 +81,7 @@ int main()
 {
     string s_Val="1234",s_Val2="5678";
     //cin >> s_Val >> s_Val2;
-    int t_N=s_Val.length()*s_Val2.length();
+    int t_N=s_Val.length()+s_Val2.length();
     int n = f_Pow(2,log2(t_N - 1) + 1);
     c_Num* val=new c_Num[n];
     c_Num *val2 = new c_Num[n];

@@ -37,52 +37,64 @@ public :
         b = tmp.b;
         //return *this;
     }
-    c_Num operator *(c_Num tmp)
+    c_Num operator *(c_Num&& tmp)
     {
         return c_Num(a*tmp.a-b*tmp.b,a*tmp.b+b*tmp.a);
     }
-    c_Num operator *(int tmp)
+    c_Num operator *(c_Num& tmp)
+    {
+        return c_Num(a*tmp.a-b*tmp.b,a*tmp.b+b*tmp.a);
+    }
+    c_Num operator *(int &tmp)
     {
         return c_Num(a*tmp);
     }
-    c_Num operator /(int tmp)
+    c_Num operator /(int &tmp)
     {
         return c_Num(a/tmp,b/tmp);
     }
-    c_Num operator +(c_Num tmp)
+    c_Num operator +(c_Num &tmp)
     {
         return c_Num(a+tmp.a,b+tmp.b);
     }
-    c_Num operator -(c_Num tmp)
+    c_Num operator +(c_Num&& tmp)
+    {
+        return c_Num(a+tmp.a,b+tmp.b);
+    }
+    c_Num operator -(c_Num& tmp)
     {
        return c_Num(a-tmp.a,b-tmp.b);
     }
-    void operator += (c_Num tmp)
+    c_Num operator -(c_Num&& tmp)
+    {
+       return c_Num(a-tmp.a,b-tmp.b);
+    }
+    void operator += (c_Num& tmp)
     {
         a += tmp.a;
         b += tmp.b;
     }
-    void operator -= (c_Num tmp)
+    void operator -= (c_Num& tmp)
     {
         a -= tmp.a;
         b -= tmp.b;
     }
-    void operator *= (c_Num tmp)
+    void operator *= (c_Num& tmp)
     {
         c_Num t_o(a,b);
         a = t_o.a * tmp.a - t_o.b * tmp.b;
         b = t_o.a * tmp.b + t_o.b * tmp.a;
     }
-    void operator /= (int tmp)
+    void operator /= (int&& tmp)
     {
-        c_Num t_o(a,b);
+        
         a /=tmp;
         b /= tmp;
     }
 
-    friend ostream &operator<<(ostream &s, c_Num ob);
+    friend ostream &operator<<(ostream &s, c_Num& ob);
 };
-ostream &operator<<(ostream &s, c_Num ob);
+ostream &operator<<(ostream &s, c_Num& ob);
 long long f_Pow(long long a, long long n);
 c_Num *FFT(c_Num *&val,int n);
 c_Num *iFFT(c_Num *&val,int n);
@@ -91,8 +103,8 @@ long double i_Rad(long double w);
 int main()
 {
     //string s_Val="54",s_Val2="87";
-    //string s_Val="1234",s_Val2="5678";
-    string s_Val = "8937426582736578926", s_Val2 = "78387925687346587269786";
+    string s_Val="1234",s_Val2="5678";
+    //string s_Val = "8937426582736578926", s_Val2 = "78387925687346587269786";
     //cin >> s_Val >> s_Val2;
     int t_N=s_Val.length()+s_Val2.length();
     int n = f_Pow(2,log2(t_N - 1) + 1);
@@ -182,7 +194,7 @@ int main()
     delete[] ans;
     return 0;
 }
-ostream &operator<<(ostream &s, c_Num ob)
+ostream &operator<<(ostream &s, c_Num& ob)
 {
     s << ob.a << "+" << ob.b << "i";
     return s;

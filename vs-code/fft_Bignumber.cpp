@@ -103,8 +103,9 @@ long double i_Rad(long double w);
 int main()
 {
     //string s_Val="54",s_Val2="87";
-    string s_Val="1234",s_Val2="5678";
-    //string s_Val = "8937426582736578926", s_Val2 = "78387925687346587269786";
+    //string s_Val="1234",s_Val2="5678";
+    //string s_Val = "12345", s_Val2 = "12345";
+    string s_Val = "8937426582736578926", s_Val2 = "78387925687346587269786";
     //cin >> s_Val >> s_Val2;
     int t_N=s_Val.length()+s_Val2.length();
     int n = f_Pow(2,log2(t_N - 1) + 1);
@@ -133,8 +134,8 @@ int main()
     }
     cout << "\n";
 
-    c_Num *t_Val = FFT(val, n);
-    c_Num *t_Val2 = FFT(val2,n);
+    c_Num*&& t_Val = FFT(val, n);
+    c_Num*&& t_Val2 = FFT(val2,n);
     for (int i = 0; i < n;++i)
     {
         cout << t_Val[i] <<" ";
@@ -162,8 +163,14 @@ int main()
     cout << "\n";
     for (auto it = ans; it != ans + n;++it)
     {
-        it->a += 0.49;
-        it->a = static_cast<long long> (it->a)/n;
+        
+        it->a += 0.5;
+        it->a = static_cast<long long>(it->a);
+        if(it->a==0)
+        {
+            break;
+        }
+        it->a /= n;
         i_Ans.push_back(it->a);
     }
      //   int mod10_16 = f_Pow(10, 16);
@@ -228,7 +235,7 @@ c_Num *FFT(c_Num* &val,int n)
     }
     cout << "\n";
     */
-    long double theta = (360 / n);
+    long double theta = (360.0 / n);
 
     int m = n >> 1;
     c_Num *Ye = new c_Num[m];
@@ -281,7 +288,7 @@ c_Num *iFFT(c_Num* &val,int n)
         return val;
     }
 
-    long double theta = -(360 / n);
+    long double theta = -(360.0 / n);
 
     int m = n >> 1;
     c_Num *Ye = new c_Num[m];

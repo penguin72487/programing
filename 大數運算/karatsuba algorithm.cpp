@@ -3,6 +3,7 @@
 #include<fstream> 
 #include<string>
 #include<sstream>
+#include<ctime>
 using namespace std;
 /*
 using std::reverse;
@@ -22,13 +23,14 @@ int main()
 	string ans;
 	cin.tie(0);
 	cout.tie(0);
-	//fstream file;
-	//file.open("­¼ªk.txt"); 
+	fstream file;
+	file.open("­¼ªk.txt"); 
 	char k;
 	string s_val,s_val2;
-	//file>>s_val>>k>>s_val2;
+	file>>s_val>>k>>s_val2;
+	clockid_t t=clock();
 	
-	while (cin>>s_val>>k>>s_val2)
+	//while (cin>>s_val>>k>>s_val2)
 	{
 		//cout<<s_val<<"\n"<<k<<"\n"<<s_val2<<"\n";
 		
@@ -147,6 +149,7 @@ int main()
 	s_val.clear();
 	s_val2.clear();		
 	}
+	cout << clock() - t<<"ms\n";
 	return 0;
 }
 
@@ -192,7 +195,7 @@ bool small(string s_val,string s_val2)
 		}
 		
 	}
-		
+	
 	return 0;
 	
 } 

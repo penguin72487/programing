@@ -1,6 +1,7 @@
 #include<iostream>
 #include<cmath>
 using namespace std;
+const long double PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628;
 class c_Num{
 public : 
     c_Num(long double t_A,long double t_B)
@@ -65,15 +66,18 @@ public :
     friend ostream &operator<<(ostream &s, c_Num ob);
 };
 ostream &operator<<(ostream &s, c_Num ob);
-
+long double i_Rad(long double w);
 int main()
 {
-    c_Num a(10,-1), b(10,8);
-    cout << a * b << "\n";
+    c_Num a(cos(i_Rad(60.0)),-1), b(10,8);
+    cout << a  << "\n";
 
     return 0;
 }
-
+long double i_Rad(long double w )
+{
+    return w*PI/180.0;
+}
 ostream &operator<< (ostream &s,c_Num ob)
 {
     s << ob.a << "+" << ob.b << "i\n";

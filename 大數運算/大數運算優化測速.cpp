@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<algorithm>
+#include<fstream>
 
 using namespace std;
 	vector <int> ans;
@@ -59,7 +60,7 @@ int main()
 			
 		}
 		
-		 int n=max(s_val.length(),s_val2.length());
+		//int n=max(s_val.length(),s_val2.length());
 
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
@@ -200,7 +201,7 @@ bool zero(vector <int> val)
 bool big(vector <int> val,vector <int> val2)
 {
 
-	int n=max(val.size(),val2.size());
+	//int n=max(val.size(),val2.size());
 	while(*(val.end()-1)==0&&val.size()>val2.size())
 	{
 		val.erase(val.end()-1);

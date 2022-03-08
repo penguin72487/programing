@@ -92,9 +92,18 @@ public :
         b /= tmp;
     }
 
-    friend ostream &operator<<(ostream &s, c_Num& ob);
+    // ostream& operator<<(ostream &s, c_Num& ob);
+    friend ostream &operator<<(ostream &s, c_Num& ob)
+    {
+        s << ob.a << "+" << ob.b << "i";
+        return s;
+    }
+    // ostream &operator<<(ostream &s,c_Num&& tmp)
+    // {
+    //     s << tmp.a << "+" << tmp.b << "i";
+    //     return s;
+    // }
 };
-ostream &operator<<(ostream &s, c_Num& ob);
 long long f_Pow(long long a, long long n);
 c_Num *FFT(c_Num *&val,int n);
 c_Num *iFFT(c_Num *&val,int n);
@@ -200,11 +209,6 @@ int main()
     cout << "\n";
     delete[] ans;
     return 0;
-}
-ostream &operator<<(ostream &s, c_Num& ob)
-{
-    s << ob.a << "+" << ob.b << "i";
-    return s;
 }
 long long f_Pow(long long a, long long n)
 {

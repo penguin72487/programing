@@ -2,6 +2,7 @@
 #include<vector>
 #include<algorithm>
 #include<fstream>
+#include<ctime>
 using namespace std;
 	vector <int> ans;
 
@@ -15,10 +16,11 @@ void di(vector <int> val,vector <int> val2);
 int main()
 {
 	fstream file;
-	file.open("乘法1.txt"); 
+	file.open("乘法.txt");
 	char k;
 	string s_val,s_val2;
 	file>>s_val>>k>>s_val2;
+	time_t t=clock();
 	vector <int> val,val2;
 	
 	//while (cin>>s_val>>k>>s_val2)
@@ -38,7 +40,7 @@ int main()
 			}
 		}
 		
-		 int n=max(s_val.length(),s_val2.length());
+		 //int n=max(s_val.length(),s_val2.length());
 
 	reverse(s_val.begin(),s_val.end());//反轉 
 	reverse(s_val2.begin(),s_val2.end());//反轉 
@@ -109,12 +111,14 @@ int main()
 		}
 	}
 	reverse(ans.begin(),ans.end());
+	int tt = clock() - t;
 	int i=0;
 	while(ans[i]==0)
 	i++;
 	for(;i<ans.size();i++)
 	cout<<ans[i];
 	cout<<endl;
+	cout << tt << "ms\n";
 	ans.clear();
 	val.clear();
 	val2.clear();	

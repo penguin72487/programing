@@ -26,7 +26,6 @@ public :
 int main()
 {
     c_Num a(10,540), b(10,-470);
-    
-    
+
     return 0;
 }

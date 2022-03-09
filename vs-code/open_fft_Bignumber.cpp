@@ -201,6 +201,7 @@ int main()
    		}
 	}
     reverse(i_Ans.begin(), i_Ans.end());
+    int tt = clock() - t;
     auto it = i_Ans.begin();
     while(*it==0)
     {
@@ -212,7 +213,7 @@ int main()
     }
     cout << "\n";
     delete[] ans;
-    cout << clock() - t<<"ms\n";
+    cout <<tt<<"ms\n";
     return 0;
 }
 

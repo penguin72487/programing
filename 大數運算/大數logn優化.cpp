@@ -16,6 +16,8 @@ void di(vector <unsigned long long> val,vector <unsigned long long> val2);
 vector <unsigned long long> stov(string val,int n);
 int main()
 {
+	cout.tie(0);
+    cin.tie(0)->sync_with_stdio(0);
 	fstream file;
 	file.open("­¼ªk.txt"); 
 	char k;
@@ -325,7 +327,7 @@ void ti(vector <unsigned long long> val,vector <unsigned long long> val2)
 	    			ans[i+j+1]+=ans[i+j]/100000000;
 	    		ans[i+j]=ans[i+j]%100000000;
 	   		}
-			printf("%ull ",ans[i+j]);		
+			//printf("%ull ",ans[i+j]);		
 		}
 		
 	}

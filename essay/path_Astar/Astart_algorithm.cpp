@@ -43,7 +43,7 @@ class maze{
         end_X = n - 2;
         end_Y = m - 2;
         maze_Node.resize(n);
-        for (int i = 0; i < m;++i)
+        for (int i = 0; i < n;++i)
         {
             maze_Node[i].resize(m);
         }
@@ -55,7 +55,7 @@ class maze{
         end_X = n - 2;
         end_Y = m - 2;
         maze_Node.resize(n);
-        for (int i = 0; i < m;++i)
+        for (int i = 0; i < n;++i)
         {
             maze_Node[i].resize(m);
         }

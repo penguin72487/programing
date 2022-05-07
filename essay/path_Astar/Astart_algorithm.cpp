@@ -3,7 +3,19 @@
 #include<queue>
 #include<vector>
 using namespace std;
-ofstream path("maze0Path.txt");
+ofstream path("maze1Path.txt");
+fstream f("maze1.txt");
+float q_sqrt(unsigned long long x) { 
+	if(x == 0) return 0; 
+	float result = x; 
+	float xhalf = 0.5f*result; 
+	int i = *(int*)&result; 
+	i = 0x5f375a86- (i>>1); // what the fuck? 
+	result = *(float*)&i; 
+	result = result*(1.5f-xhalf*result*result); // Newton step, repeating increases accuracy 
+	result = result*(1.5f-xhalf*result*result); 
+	return 1.0f/result; 
+}
 class node{
 public:
     int x, y;
@@ -54,6 +66,8 @@ class maze{
         m = t_m;
         end_X = n - 2;
         end_Y = m - 2;
+        //end_X = 3;
+        //end_Y = 6;
         maze_Node.resize(n);
         for (int i = 0; i < n;++i)
         {
@@ -83,7 +97,7 @@ class maze{
                     maze_Node[i][j].pass = 100000000;
                     continue;
                 }
-                maze_Node[i][j].h = ((end_X - i) * (end_X - i) + (end_Y - j) * (end_Y - j));
+                maze_Node[i][j].h = 10000*((end_X - i) * (end_X - i) + (end_Y - j) * (end_Y - j));
                 
             }
         }
@@ -116,6 +130,7 @@ class maze{
             }
             node tmp = maze_Node[x][y];
             STL.pop();
+            
             for (int i = 0; i < 4;++i)
             {
                 if(maze_Node[x+dx[i]][y+dy[i]].pass==0)
@@ -128,7 +143,7 @@ class maze{
             maze_Node[x][y].spot = '&';
             
         }
-            return 1;
+            return 0;
     }
     friend istream operator>>(istream& s, maze &tmp);
     friend ostream& operator<<(ostream& s, maze &tmp)
@@ -148,7 +163,7 @@ int main()
 {
     cout.tie(0);
     cin.tie(0)->sync_with_stdio(0);
-    fstream f("maze0.txt");
+    
     int n, m;
     f >> n >> m;
     maze A(n, m, f);

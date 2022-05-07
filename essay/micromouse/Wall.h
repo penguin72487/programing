@@ -2,19 +2,29 @@
 #include <fstream>
 #include <vector>
 using namespace std;
-#ifndef _WALL_CC_
-#define _WALL_CC_ 1
-
+#ifndef _WALL_H_
+#define _WALL_H_ 1
+class node;
+class wall{
+public:
+    int count_Wall=0;
+    node *pa=nullptr;//if nullptr mean note wall if 1 mean is wall
+};
 class node{
 public:
-
+    int i_X, i_Y;
     bool b_Situ;//def 0 road, 1 wall
-    int count_By[5]={}; // def 0 right, 1 up, 2 left, 3 down, 4 path
+    int count_Node=0;
+    wall *w_direct[4]; // def 0 right, 1 up, 2 left, 3 down, 4 path totle
     void operator<<(char &tmp)
     {
         if(tmp=='X')
         {
-            this->b_Situ = 1;
+            b_Situ = 1;
+            for(int i=0; i<4; i++)
+            {
+                w_direct[i]->pa = this;
+            }
         }
         else 
         {
@@ -34,17 +44,17 @@ public:
     }
 
 };
-class wall{
+class maze_Wall{
 public:
     int n, m;
     vector<vector<node>> maze_Node;
     int end_X, end_Y;
-    wall(int t_R,int t_C,fstream &f_Tmp)
+    maze_Wall(fstream &f_Tmp)
     {
-        n=t_R;
-        m=t_C;
-        end_X = n - 2;
-        end_Y = m - 2;
+        f_Tmp >> n;
+        f_Tmp >> m;
+        f_Tmp>>end_X;
+        f_Tmp>>end_Y;
         maze_Node.resize(n);
         for (int i = 0; i < n;++i)
         {

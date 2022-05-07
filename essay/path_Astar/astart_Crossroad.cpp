@@ -2,6 +2,8 @@
 #include<fstream>
 #include<queue>
 #include<vector>
+#include<list>
+#include<deque>
 using namespace std;
 ofstream path("maze0Path.txt");
 fstream f("maze0.txt");
@@ -11,6 +13,11 @@ public:
     char spot;
     int pass=0; // count passed node;
     long double h = 0; // estimate funtion;
+    
+    priority_queue<node, vector<node>, less<node>> n_Inter;
+
+    
+
     bool operator()(node a,node b)
     {
         if(a.pass+a.h==b.pass+b.h)
@@ -47,22 +54,22 @@ public:
     //     }
     //     return (a.pass + a.h < b.pass + b.h);
     // }
-    // bool cmp_Min(node a,node b)
-    // {
-    //     if(a.pass+a.h==b.pass+b.h)
-    //     {
-    //         if(a.pass==b.pass)
-    //         {
-    //             if(a.h==b.h)
-    //             {
-    //                 return 1;
-    //             }
-    //             return (a.h > b.h);
-    //         }
-    //         return (a.pass>b.pass);
-    //     }
-    //     return (a.pass + a.h > b.pass + b.h);
-    // }
+    bool cmp(node a,node b)
+    {
+        if(a.pass+a.h==b.pass+b.h)
+        {
+            if(a.pass==b.pass)
+            {
+                if(a.h==b.h)
+                {
+                    return 1;
+                }
+                return (a.h > b.h);
+            }
+            return (a.pass>b.pass);
+        }
+        return (a.pass + a.h > b.pass + b.h);
+    }
     class cmp_Min{
         public:
         bool operator()(node a,node b)
@@ -170,81 +177,39 @@ class maze{
     }
     bool sol_astar()
     {
-        priority_queue<node, vector<node>, node::cmp_Min> STL;
-        priority_queue<node, vector<node>, node::cmp_Max> go_Str;
+        queue<node> STL;
+        priority_queue<node, list<node>, node::cmp_Max> go_Str;
         maze_Node[1][1].pass = 1;
         STL.push(maze_Node[1][1]);
         int dx[4] = {0, 1, 0, -1};
         int dy[4] = {1, 0, -1, 0};
-        int x = 1;
-        int y = 1;
-        int v;
+        
         while(!STL.empty())
         {
-            if(go_Str.empty())
-            {
-                go_Str.push(STL.top());
-                STL.pop();
-            }
-            if(x==go_Str.top().x)
-            {
-                if(go_Str.top().y-y==1)
-                {
-                    v = 0;
-                }
-                else
-                {
-                    v = 2;
-                }
-            }
-            else
-            {
-                if(go_Str.top().x-x==1)
-                {
-                    v = 1;
-                }
-                else 
-                {
-                    v = 3;
-                }
-            }
-            x = go_Str.top().x;
-            y = go_Str.top().y;
+            node now = STL.back();
+            STL.pop();
+            int x = now.x;
+            int y = now.y;
             maze_Node[x][y].spot = '$';
             path << *this<<"\n";
             if(x==end_X&&y==end_Y)
             {
                 return 1;
             }
-            node tmp = maze_Node[x][y];
-            go_Str.pop();
+            
             for (int i = 0; i < 4;++i)
             {
                 if(maze_Node[x+dx[i]][y+dy[i]].pass==0)
                 {
-                    maze_Node[x + dx[i]][y + dy[i]].pass = tmp.pass + 1;
-                    go_Str.push(maze_Node[x+dx[i]][y+dy[i]]);
+                    maze_Node[x + dx[i]][y + dy[i]].pass = now.pass + 1;
+                     maze_Node[x + dx[i]][y + dy[i]].n_Inter.push(maze_Node[x+dx[i]][y+dy[i]]);
                     
                 }
             }
-            while(go_Str.size()>1)
-            {
-                STL.push(go_Str.top());
-                go_Str.pop();
-            }
-            if(x+dx[v]==go_Str.top().x)
-            {
-                if(y+dy[v]==go_Str.top().y)
-                {
-                    maze_Node[x][y].spot = '&';
-                    continue;
-                }
-            }
-           
-            STL.push(go_Str.top());
-            go_Str.pop();
+            maze_Node[x][y].spot = '&';
+
         }
-            return 0;
+        return 0;
     }
     friend istream operator>>(istream& s, maze &tmp);
     friend ostream& operator<<(ostream& s, maze &tmp)

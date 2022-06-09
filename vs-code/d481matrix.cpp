@@ -1,9 +1,7 @@
 #include<iostream>
 #include<vector>
+//#include"../penguinLibrary/matrix/matrix.hpp"
 using namespace std;
-#ifndef _MATRIX_HPP_
-#define _MATRIX_HPP_
-
 template <class T>
 class matrix
 {
@@ -55,7 +53,7 @@ public:
         column = t_C;
         *this = tmp;
     }
-    matrix(matrix<T> &B)
+    matrix(const matrix<T>&B)
     {
         val=B.val;
         row=B.row;
@@ -100,10 +98,10 @@ public:
     }
     matrix<T> operator*(matrix<T> B)
     {
-        if(column!=B.row)
-        {
-            return matrix<T>(0, 0);
-        }
+        // if(column!=B.row)
+        // {
+        //     return matrix<T>(0, 0);
+        // }
         matrix<T> ANS(row,B.column);
         for (int i = 0; i < row;++i)
         {
@@ -146,19 +144,37 @@ public:
             {
                 s << *jt<<" ";
             }
-            cout<< "\n";
+            s<< "\n";
         }
         return s;
     }
-    friend istream& operator<<(istream&s, matrix ob)
+    friend istream& operator>>(istream&s, matrix<T> &ob)
     {
-        for(auto it=ob.begin();it!=ob.end();++it)
+        for(auto it=ob.val.begin();it!=ob.val.end();++it)
         {
             for(auto jt=it->begin();jt!=it->end();++jt)
             {
-                cin >> *jt;
+                s >> *jt;
             }
         }
+        return s;
     }
 };
-#endif // _MATRIX_HPP_
+int main()
+{
+    int a,b,c,d;
+    while(cin>>a>>b>>c>>d)
+    {
+        if(b!=c)
+        {
+            cout<<"Error\n";
+        }
+        matrix<long long> A(a, b);
+        matrix<long long> B(c, d);
+        cin >> A>>B;
+        cout << A * B;
+    }
+    
+
+    return 0;
+}

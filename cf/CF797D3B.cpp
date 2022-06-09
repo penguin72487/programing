@@ -21,19 +21,17 @@ int main()
         {
             cin >> b[i];
         }
-        if(n==1)
+        
+        if(a[0]<b[0])
         {
-            if(a[0]<b[0])
-            {
-                cout << "NO\n";
-                break;
-            }
-            else
-            {
-                cout << "YES\n";
-                break;
-            } 
+            cout << "NO\n";
+            continue;
         }
+        else if(n==1)
+        {
+            cout << "YES\n";
+            continue;
+        } 
         int adjacent_a[n];
         adjacent_difference(a,a+n,adjacent_a);
         int adjacent_b[n];

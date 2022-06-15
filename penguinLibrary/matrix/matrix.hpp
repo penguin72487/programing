@@ -11,9 +11,9 @@ class matrix
 
 public:
     vector<vector<T>> val;
-    unsigned long long row;
-    unsigned long long column;
-    matrix(unsigned long long t_R,unsigned long long t_C)
+    long long row;
+    long long column;
+    matrix(long long t_R,long long t_C)
     {
         row = t_R;
         column = t_C;
@@ -26,7 +26,7 @@ public:
 
 
     }
-    matrix(unsigned long long t_R,unsigned long long t_C,initializer_list<T> tmp)
+    matrix(long long t_R,long long t_C,initializer_list<T> tmp)
     {
         row = t_R;
         column = t_C;
@@ -49,19 +49,11 @@ public:
 
 
     }
-    matrix(unsigned long long t_R,unsigned long long t_C,initializer_list<initializer_list<T>> tmp)
+    matrix(matrix<T>& tmp,initializer_list<T> tmp)
     {
-        row = t_R;
-        column = t_C;
-        *this = tmp;
+        
     }
-    matrix(matrix<T> &B)
-    {
-        val=B.val;
-        row=B.row;
-        column = B.column;
-    }
-    vector<T>& operator[](unsigned long long i)
+    vector<T>& operator[](long long i)
     {
         return val[i];
     }
@@ -78,52 +70,13 @@ public:
             
         }
     }
-    void operator= (initializer_list<initializer_list<T>>&& tmp)
-    {
-        val.clear();
-        row=tmp.size();
-        column = tmp.begin()->size();
-        val.resize(row);
-        auto p_Tmp=tmp.begin();
-        for(auto it=val.begin();it!=val.end();++it)
-        {
-            *it=*p_Tmp;
-            ++p_Tmp;
-        }
-
-    }
     void operator=(matrix<T> tmp)
     {
         val=tmp.val;
-        row=tmp.row;
-        column = tmp.column;
-    }
-    matrix<T> operator*(matrix<T> B)
-    {
-        if(column!=B.row)
-        {
-            return matrix<T>(0, 0);
-        }
-        matrix<T> ANS(row,B.column);
-        for (int i = 0; i < row;++i)
-        {
-            for (int j = 0; j < B.column;++j)
-            {
-                for(int k = 0; k < column;++k)
-                {
-                    ANS[i][j] += val[i][k] * B[k][j];
-                }
-            }
-        }
-        return ANS;
     }
     void operator*=(matrix<T> B)
     {
-        //matrix<unsigned long long> t_B(B.row, B.column);t_B = B;
-        if(column!=B.row)
-        {
-            cout << "Error\n";
-        }
+        //matrix<long long> t_B(B.row, B.column);t_B = B;
         matrix<T> ANS(row,B.column);
         for (int i = 0; i < row;++i)
         {
@@ -138,7 +91,7 @@ public:
         val=ANS.val;
     }
 
-    friend ostream &operator<<(ostream &s, matrix<T> ob)
+    friend ostream &operator<<(ostream &s, matrix &ob)
     {
         for(auto it=ob.val.begin();it!=ob.val.end();++it)
         {
@@ -149,16 +102,6 @@ public:
             cout<< "\n";
         }
         return s;
-    }
-    friend istream& operator<<(istream&s, matrix ob)
-    {
-        for(auto it=ob.begin();it!=ob.end();++it)
-        {
-            for(auto jt=it->begin();jt!=it->end();++jt)
-            {
-                cin >> *jt;
-            }
-        }
     }
 };
 #endif // _MATRIX_HPP_

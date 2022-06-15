@@ -29,10 +29,7 @@ int vi_Kadane(vector<int> &v_Arr)
     for(auto it=v_Arr.begin();it!=v_Arr.end();++it)
     {
         pre_Sum = max(*it, *it + pre_Sum);
-        if(pre_Sum>ans)
-        {
-            ans = pre_Sum;
-        }
+            ans =max(ans,pre_Sum);
     }
     return ans;
 }

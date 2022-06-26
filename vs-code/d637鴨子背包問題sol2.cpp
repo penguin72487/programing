@@ -23,11 +23,11 @@ int main()
         {
             dp[j] = max(dp[j], dp[j - A[i]] + B[i]);
         }
-        for (int j = 0; j < w+1;++j)
-        {
-            cout << dp[j] <<" ";
-        }
-        cout << "end\n";
+        // for (int j = 0; j < w+1;++j)
+        // {
+        //     cout << dp[j] <<" ";
+        // }
+        // cout << "end\n";
     }
     cout << dp[w] << "\n";
     delete []dp;

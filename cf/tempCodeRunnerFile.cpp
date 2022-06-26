@@ -1,60 +1,33 @@
-#include <iostream>
-#include <numeric>
+#include<iostream>
+#include<algorithm>
 using namespace std;
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
-    cout.tie(0);
-    int t;
-    cin >> t;
-    while (t--)
+    int n,w;
+    cin >> n>>w;
+    int A[n];//Åé¿n
+    int B[n];//¹¡¨¬·P
+    for (int i = 0; i < n; ++i)
     {
-        int n;
-        cin >> n;
-        int a[n];
-        int b[n];
-        for(int i = 0; i < n; i++)
-        {
-            cin>>a[i];
-        }
-        for(int i = 0; i < n; i++)
-        {
-            cin >> b[i];
-        }
-        if(n==1)
-        {
-            if(a[0]<b[0])
-            {
-                cout << "NO\n";
-                break;
-            }
-            else
-            {
-                cout << "YES\n";
-                break;
-            } 
-        }
-        int adjacent_a[n];
-        adjacent_difference(a,a+n,adjacent_a);
-        int adjacent_b[n];
-        adjacent_difference(b, b + n, adjacent_b);
-        bool flag = 1;
+        cin >> B[i] >> A[i];
+    }
+    int* dp=new int[w + 1];
+    fill(dp, dp+w+1, 0);
 
-        for(int i = 1; i < n; i++)
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = w; j >= A[i]; --j)
         {
-            if(adjacent_a[i] != adjacent_b[i])
-            {
-                if(b[i]!=0)
-                {
-                    flag = 0;
-                    cout << "NO\n";
-                    break;
-                }
-            }
-        }
-        if(flag)
-        {
-            cout << "YES\n";
+            dp[j] = max(dp[j], dp[j - A[i]] + B[i]);
         }
     }
+    for (int i = 0; i < n; ++i)
+    {
+        for (int j = w; j >= A[i]; --j)
+        {
+            dp[j] = min(dp[j], dp[j - A[i]] + B[i]);
+        }
+    }
+    cout << dp[w] << "\n";
+    delete []dp;
 }

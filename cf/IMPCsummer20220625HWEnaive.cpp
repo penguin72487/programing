@@ -34,7 +34,13 @@ int main(){
     cout.tie(0);
     int n,q;
     cin >> n >> q;
-    
+    priority_queue<node,vector<node>, node> list;
+    for(int i=0;i<n;++i)
+    {
+        int a, b;
+        cin >> a>>b;
+        list.push(node(a,b));
+    }
     
 
 }

@@ -4,6 +4,7 @@ using namespace std;
 class node{
     public:
         long long val=0, tag=0;
+        long long leaf=0;
     node()
     {
 
@@ -27,6 +28,7 @@ class Segment_Tree{
             for(int i=n-1; i>0;--i)//build
             {
                 seg_T[i].val = seg_T[(i << 1)].val+seg_T[(i << 1) | 1].val;
+                seg_T[i].leaf=seg_T[(i << 1)].leaf+seg_T[(i << 1) | 1].leaf;;
             }
         }
         void update(int a,int b,int u)
@@ -35,35 +37,16 @@ class Segment_Tree{
             {
                 if (i_op & 1)
                 {
-                    if(i_op <n)
-                    {
-                        seg_T[i_op].tag+=u;
-                        //int i_Now = i_op;
-                        int count_Node=count_chi(i_op);
-                        update(i_op, seg_T[i_op].val + seg_T[i_op].tag * count_Node);
-                    }
-                    else
-                    {
-                        update(i_op, seg_T[i_op].val + u);
-                    }
-                    
-
+                    seg_T[i_op].tag += u;
+                    update(i_op, seg_T[i_op].val + seg_T[i_op].tag * seg_T[i_op].leaf);
                     ++i_op;
                 }
                 if (i_ed & 1)
                 {
                     --i_ed;
-                    if(i_ed <n)
-                    {
-                        seg_T[i_ed].tag+=u;
-                        //int i_Now = i_ed;
-                        int count_Node=count_chi(i_ed);
-                        update(i_ed, seg_T[i_ed].val + seg_T[i_ed].tag * count_Node);
-                    }
-                    else
-                    {
-                        update(i_ed, seg_T[i_ed].val + u);
-                    }
+                    seg_T[i_ed].tag += u;
+                    update(i_ed, seg_T[i_ed].val + seg_T[i_ed].tag * seg_T[i_ed].leaf);
+                    
                 }
                 
             }
@@ -79,21 +62,7 @@ class Segment_Tree{
             }
 
         }
-        int count_chi(int i_Now)
-        {
-            for (int i = 1; ;++i)
-            {
-                if(((i_Now<<i)+(1<<i))>n)
-                {
-                    int count_Node = (1 << i) - 2; 
-                    if((i_Now<<i)<n)
-                    {
-                        count_Node = n - (i_Now << i);
-                    }
-                    return count_Node;
-                }
-            }
-        }
+
 
         long long query(int a,int b)
         {
@@ -124,6 +93,7 @@ int main(){
     for(auto it=seg.begin(); it!=seg.end();++it)
     {
         cin >> it->val;
+        ++it->leaf;
     }
     Segment_Tree seg_T(seg);
 

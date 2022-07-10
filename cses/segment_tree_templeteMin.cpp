@@ -9,7 +9,7 @@ class Segment_Tree{
         {
             n=seg.size();
             seg_T.resize(n);
-            fill(seg_T.begin(), seg_T.end(),(1ull<<63));
+            fill(seg_T.begin(), seg_T.end(),((1ull<<63)-1ull));
             for(int i=0; i<n; i++)
             {
                 seg_T.push_back(seg[i]);
@@ -32,7 +32,7 @@ class Segment_Tree{
         long long query(int a,int b)
         {
             
-            long long ans = 2147483647;
+            long long ans = ((1ull<<63)-1ull);
             for (int i_op = n + a - 1, i_ed = n + b; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
             {
                 if (i_op & 1)

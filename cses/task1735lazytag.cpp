@@ -5,7 +5,7 @@ using namespace std;
 class node
 {
     public:
-    long long val=0ll,tag=0ll,set=0ll;,leaf=1ll;
+    long long val=0ll,tag=0ll,set=0ll,leaf=1ll;
 
 };
 class Segment_Tree{
@@ -39,14 +39,21 @@ class Segment_Tree{
         
         void push(int i_Now)// update change up to father and grand grand... aka build
         {
-            for (int i_op = i_Now + n; i_op;i_op>>=1)
+            if(i_Now>=(n<<1))
             {
-                seg_T[i_Now>>1].val=seg_T[i_Now].val + seg_T[i_Now^1].val;
+                return;
+            }
+            for (int i_op = i_Now; i_op;i_op>>=1)
+            {
+                seg_T[i_op>>1].val=seg_T[i_op].val + seg_T[i_op^1].val;
             }
         }
         void calc(int i_Now) // update change up to father
         {
-            seg_T[i_Now].val = seg_T[i_Now << 1].val+seg_T[(i_Now << 1) | 1].val;
+            if(i_Now<n)
+            {
+                seg_T[i_Now].val = seg_T[i_Now << 1].val+seg_T[(i_Now << 1) | 1].val;
+            }
         }
         void rang_Push(int a,int b)//clear
         {
@@ -60,11 +67,16 @@ class Segment_Tree{
         }
         void apply_Tag(int i_Now,long long u)
         {
+            if(i_Now>=(n<<1))
+            {
+                return;
+            }
             seg_T[i_Now].val += u*seg_T[i_Now].leaf;
             if(i_Now<n)
             {
                 seg_T[i_Now].tag+=u;
             }
+            //push(i_Now);
         }
         void pull(int i_Now)// pull tag down to child aka push 
         {
@@ -76,9 +88,15 @@ class Segment_Tree{
                     if(seg_T[i].tag)
                     {
                         apply_Tag(i<<1,seg_T[i].tag);
-                        apply_Tag(i<<1|1,seg_T[i].tag);
+                        apply_Tag((i<<1)|1,seg_T[i].tag);
                         //seg_T[i].val += seg_T[i_Now].tag;
                         seg_T[i].tag = 0;
+                    }
+                    else if(seg_T[i].set)
+                    {
+                        apply_Set(i << 1, seg_T[i].set);
+                        apply_Set((i << 1)|1, seg_T[i].set);
+                        seg_T[i].set = 0;
                     }
                 }
             }
@@ -91,8 +109,14 @@ class Segment_Tree{
                     if(seg_T[i].tag)
                     {
                         apply_Tag(i<<1,seg_T[i].tag);
-                        apply_Tag(i<<1|1,seg_T[i].tag);
+                        apply_Tag((i<<1)|1,seg_T[i].tag);
                         seg_T[i].tag = 0;
+                    }
+                    else if(seg_T[i].set)
+                    {
+                        apply_Set(i << 1, seg_T[i].set);
+                        apply_Set((i << 1)|1, seg_T[i].set);
+                        seg_T[i].set = 0;
                     }
                 }
             }
@@ -115,17 +139,22 @@ class Segment_Tree{
                 }
                 
             }
-            rang_Push(a,a);
-            rang_Push(b,b);
+            push(a-1+n);
+            push(b+n);
 
         }
         void apply_Set(int i_Now,long long u)
         {
+            if(i_Now>=(n<<1))
+            {
+                return;
+            }
             seg_T[i_Now].val = u*seg_T[i_Now].leaf;
             if(i_Now<n)
             {
                 seg_T[i_Now].set = u;
             }
+            //push(i_Now);
         }
         void rang_Set(int a,int b,long long u)// tracks of point increment aka modify
         {
@@ -135,16 +164,16 @@ class Segment_Tree{
             {
                 if (i_op & 1)
                 {
-                    apply_Tag(i_op++,u);
+                    apply_Set(i_op++,u);
                 }
                 if (i_ed & 1)
                 {
-                    apply_Tag(--i_ed,u);
+                    apply_Set(--i_ed,u);
                 }
                 
             }
-            rang_Push(a,a);
-            rang_Push(b,b);
+            push(a-1+n);
+            push(b+n);
 
         }
         long long query(int a,int b)
@@ -182,7 +211,7 @@ int main(){
         cin >> it->val;
     }
     Segment_Tree seg_T(seg);
-
+    int last_Type=-1;
     while(q-->0)
     {
         int type;
@@ -192,12 +221,25 @@ int main(){
         {
             int a,b, u;
             cin >> a >> b >> u;
+            if(last_Type !=1)
+            {
+                seg_T.rang_Pull(1,n);
+                //seg_T.rang_Push(a,b);
+                last_Type = 1;
+            }
+
             seg_T.rang_Inc(a, b, u);
         }
         else if(type ==2)
         {
             int a,b,u;
             cin >> a >> b >> u;
+            if(last_Type!=2)
+            {
+                seg_T.rang_Pull(1,n);
+                //seg_T.rang_Push(a, b);
+                last_Type = 2;
+            }
             seg_T.rang_Set(a,b,u);
         }
         else 

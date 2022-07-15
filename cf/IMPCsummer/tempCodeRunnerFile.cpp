@@ -117,7 +117,7 @@ int main(){
         seg_T.rang_Set(query[i][0], query[i][2]-1, query[i][2]);
         seg_T.rang_Set(query[i][2]+1, query[i][1], query[i][2]);
     }
-        seg_T.rang_Pull(1, n);
+        //seg_T.rang_Pull(1, n);
         for (int i = 0; i < n; i++)
         {
             cout << seg_T.seg_T[n + i].val << " ";

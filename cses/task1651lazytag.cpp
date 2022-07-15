@@ -51,6 +51,20 @@ class Segment_Tree{
                 seg_T[i_Now>>1].val=seg_T[i_Now].val + seg_T[i_Now^1].val;
             }
         }
+        void calc(int i_Now) // update change up to father
+        {
+            seg_T[i_Now].val = seg_T[i_Now << 1].val+seg_T[(i_Now << 1) | 1].val;
+        }
+        void rang_Push(int a,int b)//clear
+        {
+            for(int i_op= n + a - 1, i_ed = n + b-1; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
+            {
+                for (int i = i_ed; i >= i_op; --i)
+                {
+                    calc(i);
+                }
+            }
+        }
         void pull(int i_Now)// pull tag down to child aka push 
         {
 
@@ -68,10 +82,25 @@ class Segment_Tree{
                 }
             }
         }
+        void rang_Pull(int a,int b){
+            for (int h = log2(n),i_op = n +a-1,i_ed=n+b; h;--h)
+            {
+                for(int i=i_op>>h;i<=(i_ed>>h);++i)
+                {
+                    if(seg_T[i].tag)
+                    {
+                        apply_Tag(i<<1,seg_T[i].tag);
+                        apply_Tag(i<<1|1,seg_T[i].tag);
+                        seg_T[i].tag = 0;
+                    }
+                }
+            }
+
+        }
         void rang_Inc(int a,int b,long long u)// tracks of point increment aka modify
         {
-            pull(a-1);
-            pull(b);
+            rang_Pull(a, a);
+            rang_Pull(b, b);
             for (int i_op = n + a - 1, i_ed = n + b; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
             {
                 if (i_op & 1)
@@ -84,14 +113,14 @@ class Segment_Tree{
                 }
                 
             }
-            push(a-1);
-            push(b);
+            rang_Push(a,a);
+            rang_Push(b,b);
 
         }
         long long query(int a,int b)
         {
-            pull(a-1);
-            pull(b);
+            rang_Pull(a, a);
+            rang_Pull(b, b);
             long long ans = 0;
             for (int i_op = n + a - 1, i_ed = n + b; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
             {

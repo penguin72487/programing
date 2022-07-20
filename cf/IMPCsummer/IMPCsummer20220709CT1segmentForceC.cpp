@@ -15,9 +15,7 @@ class Segment_Tree{
                 seg_B.push_back(*it);
             }
             for(int i=n-1; i>0; --i){//build
-                bool a = (seg_B[i << 1]);
-                bool b = (seg_B[(i << 1) | 1]);
-                seg_B[i] = b & a;
+                seg_B[i] = (bool(seg_B[i << 1]) & bool (seg_B[(i << 1) | 1]));
             }//build
 
         }
@@ -26,9 +24,7 @@ class Segment_Tree{
             seg_B[n + k]+=u;
             for (int i_Now = n + k; i_Now;i_Now>>=1)
             {
-                bool a = (seg_B[i_Now]);
-                bool b = (seg_B[i_Now^1]);
-                seg_B[i_Now >> 1] = a & b;
+                seg_B[i_Now >> 1] = (bool(seg_B[i_Now])&bool(seg_B[i_Now^1]));
             }
         }
         long long query(int a,int b)
@@ -38,13 +34,13 @@ class Segment_Tree{
             {
                 if(i_op & 1)
                 {
-                    bool a = (seg_B[i_op++]);
-                    ans &= a;
+                    
+                    ans &= bool(seg_B[i_op++]);
                 }
                 if(i_ed & 1)
                 {
-                    bool a = (seg_B[--i_ed]);
-                    ans &= a;
+                    
+                    ans &= bool(seg_B[--i_ed]);
                 }
             }
             return ans;

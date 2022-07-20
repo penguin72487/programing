@@ -6,7 +6,7 @@ int main()
     cin >> n;
     ++n;
     //long double rad= (n / 2.0);
-    if(n==0)
+    if(n==1)
     {
         cout << 0 << "\n";
     }

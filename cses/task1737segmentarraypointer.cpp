@@ -25,15 +25,17 @@ class node{
 };
 class Segment_Tree{
     public:
-        vector<node *>root;
-        int n;
-        vector<node> seg;
-        Segment_Tree(vector<node> &seg_T)
-        {
-            root.push_back(new node(0));
-            seg = seg_T;
-            root[0]->l = build(2);
-            root[0]->r = build(3);
+    vector<node *>root;
+    int n;
+    int h;
+    vector<node> seg;
+    Segment_Tree(vector<node> &seg_T)
+    {
+        root.push_back(new node(0));
+        seg = seg_T;
+        root[0]->l = build(2);
+        root[0]->r = build(3);
+        h = log2(n);
     }
     node* build(int i_Now)
     {
@@ -50,33 +52,85 @@ class Segment_Tree{
         }
         return tmp;
     }
+
+    ~Segment_Tree()
+    {
+        for(auto it=root.begin(); it!=root.end();++it)
+        {
+            dis_Node(*it);
+        }
+    }
+    void dis_Node(node *& n_Now)
+    {
+        if(n_Now->l)
+        {
+            dis_Node(n_Now->l);
+        }
+        if(n_Now->r)
+        {
+            dis_Node(n_Now->r);
+        }
+        delete n_Now;
+    }
+    
     void update(int v,int a,int k)
     {
-        root[v]->val=update_Pull(2,root[v]->l,a,k)+update_Pull(3,root[v]->r,a,k);
+        root[v]->l = update_Pull(2, root[v]->l, a, k);
+        root[v]->r=update_Pull(3,root[v]->r,a,k);
+        root[v]->val=root[v]->l->val+root[v]->r->val;
+
     }
-    long long update_Pull(int i_Now,node* child,int a,int k)
+    node* update_Pull(int i_Now,node* child,int a,int k)
     {
-        int h = log2(n);
-        if(i_Now==a)
+        
+        if(a>>(h-(int)log2(i_Now))==i_Now) // if now is a's father
         {
-            child->val = k;
-            return k;
+            node *tmp = new node;
+            tmp->l=update_Pull(i_Now<<1,child->l,a,k);
+            tmp->r=update_Pull((i_Now<<1)|1,child->r,a,k);
+            tmp->val = sum_Point(tmp->l, tmp->r);
         }
-        else if(a>>(h-(int)log2(i_Now))==i_Now)
+        else if(i_Now==a)
         {
-            child->val =update_Pull(i_Now<<1,child->l,a,k)+update_Pull((i_Now<<1)|1,child->r,a,k);
+            node *tmp = new node(k);
+            return tmp;
         }
-        else
+        else if(i_Now>(a+n))
         {
-            return child->val;
+            return nullptr;
+        }
+        else 
+        {
+            return child;
         }
         return 0ll;
     }
+    long long sum_Point(node *l,node *r)
+    {
+        if(l||r)
+        {
+            if(l&&r)
+            {
+                return l->val + r->val;
+            }
+            else
+            {
+                return l? l->val : r->val;
+            }
+        }
+        else
+        {
+            return 0ll;
+        }
+    }
     long long query(int v,int a,int b)
     {
-        long long ans=0ll;
-
-        return ans;
+        return query(1, root[v], a, b);
+    }
+    long long query(int i_Now,node* child,int a,int b)
+    {
+        int level = log2(i_Now);
+        int high_Limit =i_Now<<(h-level);
     }
     void copy_Back(int version){
         root.push_back(new node(root[version]->val));

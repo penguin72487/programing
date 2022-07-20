@@ -6,7 +6,7 @@ class node
 {
     public:
     long long val=0ll,tag=0ll,set=0ll,leaf=1ll;
-
+ 
 };
 class Segment_Tree{
     public:
@@ -34,7 +34,7 @@ class Segment_Tree{
             {
                 seg_T[(i_Now >> 1)].val = seg_T[i_Now ^ 1].val + seg_T[i_Now].val;
             }
-
+ 
         }
         
         void push(int i_Now)// update change up to father and grand grand... aka build
@@ -76,11 +76,11 @@ class Segment_Tree{
             {
                 seg_T[i_Now].tag+=u;
             }
-            //push(i_Now);
+            push(i_Now);
         }
         void pull(int i_Now)// pull tag down to child aka push 
         {
-
+ 
             for (int h = log2(n) ; h;--h)
             {
                 for(int i_op = n + i_Now,i=i_op>>h;i==(i_op>>h);++i)
@@ -118,9 +118,10 @@ class Segment_Tree{
                         apply_Set((i << 1)|1, seg_T[i].set);
                         seg_T[i].set = 0;
                     }
+                    push(i);
                 }
             }
-
+ 
         }
         
         void rang_Inc(int a,int b,long long u)// tracks of point increment aka modify
@@ -139,9 +140,9 @@ class Segment_Tree{
                 }
                 
             }
-            push(a-1+n);
-            push(b+n);
-
+            //push(a-1);
+            //push(b);
+ 
         }
         void apply_Set(int i_Now,long long u)
         {
@@ -172,9 +173,9 @@ class Segment_Tree{
                 }
                 
             }
-            push(a-1+n);
-            push(b+n);
-
+            //push(a-1);
+            //push(b);
+ 
         }
         long long query(int a,int b)
         {
@@ -198,7 +199,7 @@ class Segment_Tree{
             }
             return ans;
         }
-
+ 
 };
 int main(){
     cin.tie(0)->sync_with_stdio(0);
@@ -216,18 +217,18 @@ int main(){
     {
         int type;
         cin >> type;
-
+ 
         if(type ==1)
         {
             int a,b, u;
             cin >> a >> b >> u;
             if(last_Type !=1)
             {
-                seg_T.rang_Pull(1,n);
+                //seg_T.rang_Pull(1,n);
                 //seg_T.rang_Push(a,b);
                 last_Type = 1;
             }
-
+ 
             seg_T.rang_Inc(a, b, u);
         }
         else if(type ==2)
@@ -236,7 +237,7 @@ int main(){
             cin >> a >> b >> u;
             if(last_Type!=2)
             {
-                seg_T.rang_Pull(1,n);
+                //seg_T.rang_Pull(1,n);
                 //seg_T.rang_Push(a, b);
                 last_Type = 2;
             }

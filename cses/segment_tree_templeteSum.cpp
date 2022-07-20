@@ -32,7 +32,7 @@ class Segment_Tree{
         long long query(int a,int b)
         {
             
-            long long ans = 0;
+            long long ans = ((1ull<<63)-1ull);
             for (int i_op = n + a - 1, i_ed = n + b; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
             {
                 if (i_op & 1)

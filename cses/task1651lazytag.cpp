@@ -1,139 +1,47 @@
 #include <iostream>
 #include <vector>
-#include<cmath>
 using namespace std;
-class node
-{
-    public:
-    long long val=0ll,tag=0ll,leaf=1ll;
-
-};
 class Segment_Tree{
     public:
         int n;//i_op
-        vector<node> seg_T;
-        Segment_Tree(vector<node> &seg)
+        vector<long long> seg_T;
+        Segment_Tree(vector<long long> &seg)
         {
             n=seg.size();
             seg_T.resize(n);
+            fill(seg_T.begin(), seg_T.end(),((1ull<<63)-1ull));
             for(int i=0; i<n; i++)
             {
                 seg_T.push_back(seg[i]);
             }
             for(int i=n-1; i>0;--i)//build
             {
-                seg_T[i].val = seg_T[(i << 1)].val+seg_T[(i << 1) | 1].val;
-                seg_T[i].leaf = seg_T[(i << 1)].leaf + seg_T[(i << 1) | 1].leaf;
+                seg_T[i] = min(seg_T[(i << 1)], seg_T[(i << 1) | 1]);
             }
         }
-        void update(int k, long long u)// one point update
+        void update(int k, int u)
         {
             --k;
-            seg_T[n+k].val=u;
+            seg_T[n+k]=u;
             for (int i_Now = n + k; i_Now; i_Now >>= 1)
             {
-                seg_T[(i_Now >> 1)].val = seg_T[i_Now ^ 1].val + seg_T[i_Now].val;
+                seg_T[(i_Now >> 1)] = min(seg_T[i_Now ^ 1], seg_T[i_Now]);
             }
-
-        }
-        void apply_Tag(int i_Now,long long u)
-        {
-            seg_T[i_Now].val += u*seg_T[i_Now].leaf;
-            if(i_Now<n)
-            {
-                seg_T[i_Now].tag+=u;
-            }
-        }
-        void push(int i_Now)// update change up to father and grand grand... aka build
-        {
-            for (int i_op = i_Now + n; i_op;i_op>>=1)
-            {
-                seg_T[i_Now>>1].val=seg_T[i_Now].val + seg_T[i_Now^1].val;
-            }
-        }
-        void calc(int i_Now) // update change up to father
-        {
-            seg_T[i_Now].val = seg_T[i_Now << 1].val+seg_T[(i_Now << 1) | 1].val;
-        }
-        void rang_Push(int a,int b)//clear
-        {
-            for(int i_op= n + a - 1, i_ed = n + b-1; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
-            {
-                for (int i = i_ed; i >= i_op; --i)
-                {
-                    calc(i);
-                }
-            }
-        }
-        void pull(int i_Now)// pull tag down to child aka push 
-        {
-
-            for (int h = log2(n) ; h;--h)
-            {
-                for(int i_op = n + i_Now,i=i_op>>h;i==(i_op>>h);++i)
-                {
-                    if(seg_T[i].tag)
-                    {
-                        apply_Tag(i<<1,seg_T[i].tag);
-                        apply_Tag(i<<1|1,seg_T[i].tag);
-                        //seg_T[i].val += seg_T[i_Now].tag;
-                        seg_T[i].tag = 0;
-                    }
-                }
-            }
-        }
-        void rang_Pull(int a,int b){
-            for (int h = log2(n),i_op = n +a-1,i_ed=n+b; h;--h)
-            {
-                for(int i=i_op>>h;i<=(i_ed>>h);++i)
-                {
-                    if(seg_T[i].tag)
-                    {
-                        apply_Tag(i<<1,seg_T[i].tag);
-                        apply_Tag(i<<1|1,seg_T[i].tag);
-                        seg_T[i].tag = 0;
-                    }
-                }
-            }
-
-        }
-        void rang_Inc(int a,int b,long long u)// tracks of point increment aka modify
-        {
-            rang_Pull(a, a);
-            rang_Pull(b, b);
-            for (int i_op = n + a - 1, i_ed = n + b; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
-            {
-                if (i_op & 1)
-                {
-                    apply_Tag(i_op++,u);
-                }
-                if (i_ed & 1)
-                {
-                    apply_Tag(--i_ed,u);
-                }
-                
-            }
-            rang_Push(a,a);
-            rang_Push(b,b);
 
         }
         long long query(int a,int b)
         {
-            rang_Pull(a, a);
-            rang_Pull(b, b);
-            long long ans = 0;
+            
+            long long ans = ((1ull<<63)-1ull);
             for (int i_op = n + a - 1, i_ed = n + b; i_op < i_ed;i_op >>= 1,i_ed >>= 1)
             {
                 if (i_op & 1)
                 {
-                    ans += seg_T[i_op].val;
-                    ++i_op;
+                    ans = min(ans, seg_T[i_op++]);
                 }
                 if (i_ed & 1)
                 {
-                    --i_ed;
-                    ans += seg_T[i_ed].val;
-                    
+                    ans = min(ans, seg_T[--i_ed]);
                 }
                 
             }
@@ -146,10 +54,10 @@ int main(){
     cout.tie(0);
     int n, q;
     cin >> n >> q;
-    vector<node> seg(n);
+    vector<long long> seg(n);
     for(auto it=seg.begin(); it!=seg.end();++it)
     {
-        cin >> it->val;
+        cin >> *it;
     }
     Segment_Tree seg_T(seg);
 
@@ -157,18 +65,17 @@ int main(){
     {
         int type;
         cin >> type;
-
         if(type ==1)
         {
-            int a,b, u;
-            cin >> a >> b >> u;
-            seg_T.rang_Inc(a, b, u);
+            int k, u;
+            cin >> k >> u;
+            seg_T.update(k, u);
         }
         else 
         {
-            int k;
-            cin >> k;
-            cout << seg_T.query(k, k) << "\n";
+            int a, b;
+            cin >> a >> b;
+            cout <<seg_T.query(a, b) << "\n";
         }
     }
 }

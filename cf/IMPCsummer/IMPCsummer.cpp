@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 #include<cmath>
-#include <string>
-#include <sstream>
 using namespace std;
 class node
 {
@@ -207,34 +205,49 @@ int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
     int n, q;
-    cin >> n;
+    cin >> n >> q;
     vector<node> seg(n);
     for(auto it=seg.begin(); it!=seg.end();++it)
     {
         cin >> it->val;
     }
     Segment_Tree seg_T(seg);
-    cin >> q;
+    int last_Type=-1;
     while(q-->0)
     {
-        int type=0;
-        cin.sync();
-        string s="\n";
-        getline(cin, s);
-        stringstream ss(s);
-        int in[3];
-        while(ss)
+        int type;
+        cin >> type;
+ 
+        if(type ==1)
         {
-            ss>>in[type++];
+            int a,b, u;
+            cin >> a >> b >> u;
+            if(last_Type !=1)
+            {
+                //seg_T.rang_Pull(1,n);
+                //seg_T.rang_Push(a,b);
+                last_Type = 1;
+            }
+ 
+            seg_T.rang_Inc(a, b, u);
         }
-        if(type ==4)
+        else if(type ==2)
         {
-            seg_T.rang_Inc(in[0], n, in[2]);
-            seg_T.rang_Inc(0, in[0], in[2]);
+            int a,b,u;
+            cin >> a >> b >> u;
+            if(last_Type!=2)
+            {
+                //seg_T.rang_Pull(1,n);
+                //seg_T.rang_Push(a, b);
+                last_Type = 2;
+            }
+            seg_T.rang_Set(a,b,u);
         }
         else 
         {
-            cout << min(seg_T.rang_Inc(in[0], n, in[2]),seg_T.rang_Inc(0, in[0], in[2])) << "\n";
+            int a, b;
+            cin >> a >> b;
+            cout << seg_T.query(a,b) << "\n";
         }
     }
 }

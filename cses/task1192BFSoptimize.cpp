@@ -9,21 +9,23 @@ int main(){
     n += 2;
     m+= 2;
     int maze[n][m];
-    char c_T;
+    string c_T;
     int count_Room=0;
     int n_Cash=n-1;
-    int m_Cash = m-1;
+    //int m_Cash = m-1;
     for(int i=1; i<n_Cash; ++i){
-        for(int j=1; j<m_Cash; ++j)
+        cin >> c_T;
+        int j = 0;
+        for(auto it=c_T.begin(); it!=c_T.end();++it)
         {
-            cin >> c_T;
-            if(c_T=='#')
+            
+            if(*it=='#')
             {
-                maze[i][j] = -1;
+                maze[i][++j] = -1;
             }
             else
             {
-                maze[i][j] = 0;
+                maze[i][++j] = 0;
             }
         }
     }

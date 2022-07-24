@@ -28,7 +28,7 @@ int main(){
     ++n;
     priority_queue<pair<long long , int>,vector<pair<long long,int>>,greater<pair<long long,int>>> list;// prior node
     long long dist_from_Begin[n];
-    fill(dist_from_Begin, dist_from_Begin + n + 1, ((1ull << 63) - 1ull));
+    fill(dist_from_Begin, dist_from_Begin + n, ((1ull << 63) - 1ull));
     dist_from_Begin[1] = 0;
     bool visit[n];
     fill(visit, visit + n, 0);

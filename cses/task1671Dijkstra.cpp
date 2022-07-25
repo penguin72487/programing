@@ -1,7 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 int main(){
@@ -9,7 +9,7 @@ int main(){
     cout.tie(0);
     int n,q;
     cin >> n >> q;
-    map<int,map<int,long long>> map_Neighbors;
+    unordered_map<int,unordered_map<int,long long>> map_Neighbors;
     while(q--)
     {
         int a, b;

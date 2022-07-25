@@ -106,7 +106,18 @@ class Segment_Tree{
             {
                 for(int i=i_op>>h;i<=(i_ed>>h);++i)
                 {
-                    if(seg_T[i].tag)
+                    if(seg_T[i].tag&&seg_T[i].set)
+                    {
+                        apply_Set(i << 1, seg_T[i].set);
+                        apply_Set((i << 1)|1, seg_T[i].set);
+                        seg_T[i].set = 0;
+
+                        apply_Tag(i<<1,seg_T[i].tag);
+                        apply_Tag((i<<1)|1,seg_T[i].tag);
+                        seg_T[i].tag = 0;
+
+                    }
+                    else if(seg_T[i].tag)
                     {
                         apply_Tag(i<<1,seg_T[i].tag);
                         apply_Tag((i<<1)|1,seg_T[i].tag);
@@ -154,8 +165,9 @@ class Segment_Tree{
             if(i_Now<n)
             {
                 seg_T[i_Now].set = u;
+                seg_T[i_Now].tag = 0;
             }
-            //push(i_Now);
+            push(i_Now);
         }
         void rang_Set(int a,int b,long long u)// tracks of point increment aka modify
         {
@@ -212,7 +224,6 @@ int main(){
         cin >> it->val;
     }
     Segment_Tree seg_T(seg);
-    int last_Type=-1;
     while(q-->0)
     {
         int type;
@@ -222,25 +233,12 @@ int main(){
         {
             int a,b, u;
             cin >> a >> b >> u;
-            if(last_Type !=1)
-            {
-                //seg_T.rang_Pull(1,n);
-                //seg_T.rang_Push(a,b);
-                last_Type = 1;
-            }
- 
             seg_T.rang_Inc(a, b, u);
         }
         else if(type ==2)
         {
             int a,b,u;
             cin >> a >> b >> u;
-            if(last_Type!=2)
-            {
-                //seg_T.rang_Pull(1,n);
-                //seg_T.rang_Push(a, b);
-                last_Type = 2;
-            }
             seg_T.rang_Set(a,b,u);
         }
         else 

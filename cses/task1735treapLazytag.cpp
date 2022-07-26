@@ -1,6 +1,7 @@
 #include<iostream>
 #include<stack>
 using namespace std;
+
 class node{
     public:
         long long index, pri;
@@ -48,24 +49,7 @@ public:
         }
         return t->sum;
     }
-    long long get_Val(node *t)
-    {
-        if(!t)
-            return 0ll;
-        if(t->tag&&t->set)
-        {
-            return (t->set + t->tag)*t->sz;
-        }
-        else if(t->tag)
-        {
-            return t->val+t->tag;
-        }
-        else if(t->set)
-        {
-            return t->set; 
-        }
-        return t->val;
-    }
+    
     long long get_Size(node* t)
     {
         return t ? t->sz : 0ll;
@@ -103,7 +87,6 @@ public:
         node *a,*b,*c;
         split_By_Index(root, l - 1, a, b);
         split_By_Index(b, r, b, c);
-        pull(b);
         long long ans = get_Sum(b);
         
         root = merge(a, merge(b, c));
@@ -123,21 +106,29 @@ public:
         }
         if(t->tag&&t->set)
         {
+            t->val = t->set;
+            t->sum = t->set*t->sz;
             apply_Set(t->l,t->set);
             apply_Set(t->r,t->set);
             t->set = 0;
+            t->val += t->tag;
+            t->sum += t->tag*t->sz;
             apply_Tag(t->l,t->tag);
             apply_Tag(t->r,t->tag);
             t->tag = 0;
         }
         else if(t->tag)
         {
+            t->val += t->tag;
+            t->sum += t->tag*t->sz;
             apply_Tag(t->l,t->tag);
             apply_Tag(t->r,t->tag);
             t->tag = 0;
         }
         else if(t->set)
         {
+            t->val = t->set;
+            t->sum = t->set*t->sz;
             apply_Set(t->l,t->set);
             apply_Set(t->r,t->set);
             t->set = 0;
@@ -151,7 +142,8 @@ public:
         }
         t->tag += tag;
         //t->sum += t->sz * tag;
-        t->val += t->tag;
+        //t->val += tag;
+        //pull(t);
     }
     private: void apply_Set(node*t,long long set)
     {
@@ -160,11 +152,11 @@ public:
             return;
         }
         t->set = set;     
-        //t->sum = set * t->sz;
-        t->val = t->set;
+        t->sum = set * t->sz;
+        t->val = set;
    
         t->tag = 0;
-
+        //pull(t);
     }
     private: node *merge(node * a,node * b)
     {
@@ -211,16 +203,34 @@ public:
         }
     }
     private: void dis_Treap(node *root)
+    {
+        if(!root)
         {
-            if(!root)
-            {
-                return;
-            }
-            dis_Treap(root->l);
-            dis_Treap(root->r);
-            delete root;
-
+            return;
         }
+        dis_Treap(root->l);
+        dis_Treap(root->r);
+        delete root;
+
+    }
+    long long get_Val(node *t)
+    {
+        if(!t)
+            return 0ll;
+        if(t->tag&&t->set)
+        {
+            return (t->set + t->tag)*t->sz;
+        }
+        else if(t->tag)
+        {
+            return t->val+t->tag;
+        }
+        else if(t->set)
+        {
+            return t->set; 
+        }
+        return t->val;
+    }
     friend ostream &operator<<(ostream &s,Treap& ob)
     {
         ob.cout_Val(s,ob.root);

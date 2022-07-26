@@ -100,8 +100,7 @@ class Segment_Tree{
     
     void update(int v,int a,int k)
     {
-        root[v]->l = update_Pull(2, root[v]->l, a, k);
-        root[v]->r=update_Pull(3,root[v]->r,a,k);
+        root[v]=update_Pull(1,root[v],a,k);
         root[v]->sum_Child();
     }
     node* update_Pull(int i_Now,node* child,int a,int k)
@@ -112,7 +111,7 @@ class Segment_Tree{
             node *tmp = new node(k);
             return tmp;
         }
-        else if((a+n)>>(h-(int)log2(i_Now))==i_Now) // if now is a's father
+        else if(father_Node(i_Now,a+n)) // if now is a's father
         {
             node *tmp = new node;
             tmp->l=update_Pull(i_Now<<1,child->l,a,k);
@@ -145,74 +144,67 @@ class Segment_Tree{
             return 0ll;
         }
     }
+    bool father_Node(int f_Node, int i_Now)
+    {
+
+        return (i_Now >> ((int)log2(i_Now) - (int)log2(f_Node))) == f_Node ? 1 : 0;
+    }
+    bool go_Left_or_Right(int i_Now,int target)// 0 leaf 1 right
+    {
+        return ((target) >> (int(log2(target)) - (int)log2(i_Now) - 1)) & 1 ? 1: 0;
+    }
     long long query(int v,int a,int b)
     {
-        long long ans=root[v]->val;
-        if((a+n)>>((int)log2(a+n)-1)&1)
-        {
-            ans -= query(root[v]->r, (a + n) >> ((int)log2(a + n) - 1), a, 0); //+root[v]->l->val;
-        }
-        else
-        {
-            ans -= query(root[v]->l, (a + n) >> ((int)log2(a + n) - 1), a, 0);
-        }
-
-        if((b+n)>>((int)log2(b+n)-1)&1)
-        {
-            ans -= query(root[v]->r, (b + n) >> ((int)log2(b + n) - 1), b, 1);
-        }
-        else
-        {
-            ans -= query(root[v]->l, (b + n) >> ((int)log2(b + n) - 1), b, 1);//+root[v]->r->val;
-        }
-        if((a+n)>>((int)log2(a+n)-1)==(b+n)>>((int)log2(b+n)-1))
-        {
-            if((a+n)>>((int)log2(a+n)-1)&1)
-            {
-                ans-=root[v]->l->val;
-            }
-            else
-            {
-                ans-=root[v]->r->val;
-            }
-        }
-        return ans;
+        return query(root[v], 1, a,b, 0) + query(root[v], 1,a, b, 1);
     }
-    long long query(node* child,int i_Now,int a,bool type) // type 0 left 1 right 
+    long long query(node* child,int i_Now,int a,int b,bool type) // type 0 left 1 right 
     {
         if(!child)
         {
             return 0ll;
         }
-        else if(i_Now==a+n)
+        else if(type==0&&i_Now==a+n)
         {
-            return 0ll;
+            return child->val;
+        }
+        else if(type==1&&i_Now==b+n)
+        {
+            return child->val;
         }
         else if(i_Now>=n)
         {
             return 0ll;
         }
-        else if((a+n)&(1<<(h-(int)log2(i_Now)-1)))// bit is 1?
+        long long ans=0ll;
+        if(type==0)
         {
-            if(type)
+            if(go_Left_or_Right(i_Now,a+n))// go right
             {
-                return query(child->r,(i_Now<<1)|1,a,type);
+                return query(child->r,(i_Now<<1)|1,a,b,type);
             }
             else
             {
-                return query(child->r,(i_Now<<1)|1,a,type)+child->l->val;
+                if(!father_Node((i_Now<<1)|1,b+n))
+                {
+                    ans += child->r->val;
+                }
+                return ans+query(child->l,i_Now<<1,a,b,type);
+                
             }
-            
         }
         else
         {
-            if(type)
+            if(go_Left_or_Right(i_Now,b+n))// go right
             {
-                return query(child->l, i_Now << 1, a, type) + child->r->val;
+                if(!father_Node(i_Now<<1,a+n))
+                {
+                    ans+=child->l->val;
+                }
+                return ans + query(child->r, (i_Now << 1)|1, a, b, type);
             }
-            else
+            else 
             {
-                return query(child->l, i_Now << 1, a, type);
+                return query(child->l,i_Now<<1,a,b, type);
             }
         }
     }
@@ -221,8 +213,8 @@ class Segment_Tree{
     }
 };
 int main(){
-    //cin.tie(0)->sync_with_stdio(0);
-    //cout.tie(0);
+    cin.tie(0)->sync_with_stdio(0);
+    cout.tie(0);
     int n, q;
     cin >> n >> q;
     vector<node> seg(n);

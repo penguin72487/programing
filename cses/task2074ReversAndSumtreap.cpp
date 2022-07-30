@@ -39,13 +39,13 @@ public:
         return t ? t->sz : 0ll;
     }
 
-    void rang_Revers(int a,int b)
+    void rang_Revers(int l,int r)
     {
-        node *l,*r,*c;
-        split_By_Size(root, a - 1, l,r);
-        split_By_Size(r, b, r, c);
-        r->tag ^= 1;
-        root = merge(l, merge(r,c));
+        node *a,*b,*c;
+        split_By_Size(root, r, b, c);
+        split_By_Size(b, l-1, a, b);
+        b->tag ^= 1;
+        root = merge(a, merge(b,c));
     }
     long long query(int l,int r)
     {

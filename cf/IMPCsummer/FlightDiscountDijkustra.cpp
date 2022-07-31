@@ -7,7 +7,7 @@ using namespace std;
 class myComparator 
 {
 public:
-  int operator()(const tuple<long long, int, int>& tuple1,const tuple<long long, int, int>& tuple2)
+  bool operator()(const tuple<long long, int, int>& tuple1,const tuple<long long, int, int>& tuple2)
   {
     // Second element of tuples is equal
     if (get<0>(tuple1) == get<0>(tuple2)) 
@@ -28,8 +28,8 @@ unordered_map<int,unordered_map<int,long long>> map_Neighbors;
 priority_queue<pair<long long , int>,vector<pair<long long,int>>,greater<pair<long long,int>>> list;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, greater<tuple<long long, int, int>>> route_Rank;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, less<tuple<long long, int, int>>> route_Rank;
-priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, myComparator > route_Rank;
-//priority_queue<tuple<long long, int, int>> route_Rank;
+//priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, myComparator > route_Rank;
+priority_queue<tuple<long long, int, int>> route_Rank;
 vector<long long> dist_from_Begin;
 vector<long long> route_From_Whome;
 void Dijkstra(int i_Op)
@@ -134,23 +134,24 @@ int main(){
         }
     }
     Dijkstra(1);
-    vector<int> path;
-    path.push_back(n - 1);
-    for (auto it = route_From_Whome[n - 1]; it != 1;it=route_From_Whome[it])
-    {
-        path.push_back(it);
-    }
-    path.push_back(1);
-    int max_price = 0;
-    for (auto it = next(path.rbegin());it!=path.rend();++it)
-    {
-        int u = map_Neighbors[*prev(it)][*it];         
-        if(u>max_price)
-        {
-            max_price = u;
-        }
-    }
-    while(!route_Rank.empty()||get<0>(route_Rank.top())>=max_price)
+    // vector<int> path;
+    // path.push_back(n - 1);
+    // for (auto it = route_From_Whome[n - 1]; it != 1;it=route_From_Whome[it])
+    // {
+    //     path.push_back(it);
+    // }
+    // path.push_back(1);
+    // int max_price = 0;
+    // for (auto it = next(path.rbegin());it!=path.rend();++it)
+    // {
+    //     int u = map_Neighbors[*prev(it)][*it];         
+    //     if(u>max_price)
+    //     {
+    //         max_price = u;
+    //     }
+    // }
+    //while(!route_Rank.empty()&&get<0>(route_Rank.top())>=max_price)
+    while(!route_Rank.empty())
     {
 
         long long be_U = get<0>(route_Rank.top());
@@ -165,5 +166,5 @@ int main(){
 
         // prior node
 
-    cout << dist_from_Begin[n - 1] - (int)((max_price+1) / 2) << "\n";
+    cout << dist_from_Begin[n - 1]<< "\n";
 }

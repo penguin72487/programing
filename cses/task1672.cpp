@@ -1,5 +1,3 @@
-#pragma GCC optimize("O3")
-#pragma G   optimize("O3")
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -33,7 +31,7 @@ void Dijkstra(int i_Op)
             if(node_Dist+it->second<=dist_from_Begin[i_Op][it->first])
             {
                 dist_from_Begin[i_Op][it->first] = node_Dist + it->second;
-                dist_from_Begin[it->first][i_Op] = min(node_Dist + it->second,dist_from_Begin[it->first][i_Op]);
+                //dist_from_Begin[it->first][i_Op] = min(node_Dist + it->second,dist_from_Begin[it->first][i_Op]);
                 list.push(make_pair(dist_from_Begin[i_Op][it->first], it->first));
             }
             //dist_from_Begin[it->first] = max(dist_from_Begin[i_Node]+it->second,dist_from_Begin[it->first]);
@@ -61,22 +59,22 @@ int main(){
         if(map_Neighbors[a].find(b) == map_Neighbors[a].end())
         {
             map_Neighbors[a][b] = u;
-            dist_from_Begin[a][b] = u;
+            //dist_from_Begin[a][b] = u;
         }
         else
         {
             map_Neighbors[a][b] = min(u, map_Neighbors[a][b]);
-            dist_from_Begin[a][b] = min(u, map_Neighbors[a][b]);
+            //dist_from_Begin[a][b] = min(u, map_Neighbors[a][b]);
         }
         if(map_Neighbors[b].find(a) == map_Neighbors[b].end())
         {
             map_Neighbors[b][a] = u;
-            dist_from_Begin[b][a] = u;
+            //dist_from_Begin[b][a] = u;
         }
         else
         {
             map_Neighbors[b][a] = min(u, map_Neighbors[b][a]);
-            dist_from_Begin[b][a]=min(u, map_Neighbors[b][a]);
+            //dist_from_Begin[b][a]=min(u, map_Neighbors[b][a]);
         }
         
     }

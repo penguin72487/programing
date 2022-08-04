@@ -24,28 +24,28 @@ public:
     return get<0>(tuple1) < get<0>(tuple2);
   }
 };
- 
+
 priority_queue<pair<long long , int>,vector<pair<long long,int>>,greater<pair<long long,int>>> list;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, greater<tuple<long long, int, int>>> route_Rank;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, less<tuple<long long, int, int>>> route_Rank;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, myComparator > route_Rank;
- 
- 
+
+
 void Dijkstra(int i_Op,vector<long long> &dist_from_Begin,vector<long long> &route_From_Whome, unordered_map < int, unordered_map<int, long long>> &map_Neighbors)
 {
     int n=dist_from_Begin.size();
     dist_from_Begin[i_Op] = 0;
     bool visit[n];
     fill(visit, visit + n, 0);
- 
+
     list.push(make_pair(0,i_Op));
     while(!list.empty())
     {
         long long node_Dist=list.top().first;
         int i_Node =  list.top().second;
         list.pop();
- 
- 
+
+
         if(visit[i_Node])
         {
             continue;
@@ -61,7 +61,7 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin,vector<long long> &rou
             }
             //dist_from_Begin[it->first] = max(dist_from_Begin[i_Node]+it->second,dist_from_Begin[it->first]);
         }
- 
+
     }
 }
 void Dijkstra(int i_Op,vector<long long> &dist_from_Begin, unordered_map < int, unordered_map<int, long long>> &map_Neighbors)
@@ -70,15 +70,15 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin, unordered_map < int, 
     dist_from_Begin[i_Op] = 0;
     bool visit[n];
     fill(visit, visit + n, 0);
- 
+
     list.push(make_pair(0,i_Op));
     while(!list.empty())
     {
         long long node_Dist=list.top().first;
         int i_Node =  list.top().second;
         list.pop();
- 
- 
+
+
         if(visit[i_Node])
         {
             continue;
@@ -94,7 +94,7 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin, unordered_map < int, 
             }
             //dist_from_Begin[it->first] = max(dist_from_Begin[i_Node]+it->second,dist_from_Begin[it->first]);
         }
- 
+
     }
 }
 int main(){
@@ -119,22 +119,61 @@ int main(){
     long long u;
     while(m--)
     {
- 
+
         cin >> a >> b >> u;
-        route_Rank.push(make_tuple(u,a,b));
-        if(map_Neighbors[a].find(b) == map_Neighbors[a].end())
+        auto it = map_Neighbors[a].find(b);
+        auto jt = map_Neighbors[b].find(a);
+        if(it == map_Neighbors[a].end()&&jt == map_Neighbors[b].end())
         {
             map_Neighbors[a][b] = u;
+            //dist_from_Begin[a][b] = u;
+        }
+        else if(it != map_Neighbors[a].end())
+        {
+            map_Neighbors[a][b] = min(u, map_Neighbors[a][b]);
+            //dist_from_Begin[a][b] = min(u, map_Neighbors[a][b]);
         }
         else
         {
-            map_Neighbors[a][b] = min(u, map_Neighbors[a][b]);
+            map_Neighbors[b][a] = min(u, map_Neighbors[b][a]);
         }
- 
-        map_Revers_Route[b][a]= u;
+        // if(map_Neighbors[b].find(a) == map_Neighbors[b].end())
+        // {
+        //     map_Neighbors[b][a] = u;
+        //     //dist_from_Begin[b][a] = u;
+        // }
+        // else
+        // {
+        //     map_Neighbors[b][a] = min(u, map_Neighbors[b][a]);
+        //     //dist_from_Begin[b][a]=min(u, map_Neighbors[b][a]);
+        // }
         
     }
- 
+    
+    for (auto it = map_Neighbors.begin(); it != map_Neighbors.end();++it)
+    {
+        a=it->first;
+        for (auto jt = it->second.begin(); jt != it->second.end();++jt)
+        {
+            b = jt->first;
+            u=jt->second;
+            route_Rank.push(make_tuple(u,a,b));
+            //map_Neighbors[b][a] = u;
+        }
+    }
+    for (auto it = map_Neighbors.begin(); it != map_Neighbors.end();++it)
+    {
+        a=it->first;
+        for (auto jt = it->second.begin(); jt != it->second.end();++jt)
+        {
+            b = jt->first;
+            u=jt->second;
+            //route_Rank.push(make_tuple(u,a,b));
+            map_Revers_Route[b][a] = u;
+                //dist_from_Begin[b][a] = u;
+        }
+    }
+    
     Dijkstra(1,dist_from_Begin,route_From_Whome, map_Neighbors);
     Dijkstra(n - 1, dist_from_End, map_Revers_Route);
     long long ans = dist_from_Begin[n-1];
@@ -157,14 +196,14 @@ int main(){
     //while(!route_Rank.empty()&&get<0>(route_Rank.top())>=max_price)
     while(!route_Rank.empty())
     {
- 
+
         long long be_U = get<0>(route_Rank.top());
         long long half_U = be_U >> 1;
         ans = min(ans,half_U+dist_from_Begin[get<1>(route_Rank.top())]+dist_from_End[get<2>(route_Rank.top())]);
         route_Rank.pop();
     }
- 
+
         // prior node
- 
+
     cout << ans<< "\n";
 }

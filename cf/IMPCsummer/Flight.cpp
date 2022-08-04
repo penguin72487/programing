@@ -24,28 +24,28 @@ public:
     return get<0>(tuple1) < get<0>(tuple2);
   }
 };
- 
+
 priority_queue<pair<long long , int>,vector<pair<long long,int>>,greater<pair<long long,int>>> list;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, greater<tuple<long long, int, int>>> route_Rank;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, less<tuple<long long, int, int>>> route_Rank;
 //priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, myComparator > route_Rank;
- 
- 
+
+
 void Dijkstra(int i_Op,vector<long long> &dist_from_Begin,vector<long long> &route_From_Whome, unordered_map < int, unordered_map<int, long long>> &map_Neighbors)
 {
     int n=dist_from_Begin.size();
     dist_from_Begin[i_Op] = 0;
     bool visit[n];
     fill(visit, visit + n, 0);
- 
+
     list.push(make_pair(0,i_Op));
     while(!list.empty())
     {
         long long node_Dist=list.top().first;
         int i_Node =  list.top().second;
         list.pop();
- 
- 
+
+
         if(visit[i_Node])
         {
             continue;
@@ -61,7 +61,7 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin,vector<long long> &rou
             }
             //dist_from_Begin[it->first] = max(dist_from_Begin[i_Node]+it->second,dist_from_Begin[it->first]);
         }
- 
+
     }
 }
 void Dijkstra(int i_Op,vector<long long> &dist_from_Begin, unordered_map < int, unordered_map<int, long long>> &map_Neighbors)
@@ -70,15 +70,15 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin, unordered_map < int, 
     dist_from_Begin[i_Op] = 0;
     bool visit[n];
     fill(visit, visit + n, 0);
- 
+
     list.push(make_pair(0,i_Op));
     while(!list.empty())
     {
         long long node_Dist=list.top().first;
         int i_Node =  list.top().second;
         list.pop();
- 
- 
+
+
         if(visit[i_Node])
         {
             continue;
@@ -94,7 +94,7 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin, unordered_map < int, 
             }
             //dist_from_Begin[it->first] = max(dist_from_Begin[i_Node]+it->second,dist_from_Begin[it->first]);
         }
- 
+
     }
 }
 int main(){
@@ -105,21 +105,21 @@ int main(){
     ++n;
     priority_queue<tuple<long long, int, int>> route_Rank;
     unordered_map<int,unordered_map<int,long long>> map_Neighbors;
-    unordered_map<int, unordered_map<int, long long>> map_Revers_Route;
+    //unordered_map<int, unordered_map<int, long long>> map_Revers_Route;
     vector<long long> dist_from_Begin;
-    vector<long long> dist_from_End;
+    //vector<long long> dist_from_End;
     vector<long long> route_From_Whome;
     dist_from_Begin.resize(n);
-    dist_from_End.resize(n);
+    //dist_from_End.resize(n);
     route_From_Whome.resize(n);
     fill(dist_from_Begin.begin(), dist_from_Begin.end(),((1ull << 63) - 1ull));
-    fill(dist_from_End.begin(), dist_from_End.end(),((1ull << 63) - 1ull));
+    //fill(dist_from_End.begin(), dist_from_End.end(),((1ull << 63) - 1ull));
     fill(route_From_Whome.begin(), route_From_Whome.end(), 1ll);
     int a, b;
     long long u;
     while(m--)
     {
- 
+
         cin >> a >> b >> u;
         route_Rank.push(make_tuple(u,a,b));
         if(map_Neighbors[a].find(b) == map_Neighbors[a].end())
@@ -130,13 +130,13 @@ int main(){
         {
             map_Neighbors[a][b] = min(u, map_Neighbors[a][b]);
         }
- 
-        map_Revers_Route[b][a]= u;
+
+        //map_Revers_Route[b][a]= u;
         
     }
- 
+
     Dijkstra(1,dist_from_Begin,route_From_Whome, map_Neighbors);
-    Dijkstra(n - 1, dist_from_End, map_Revers_Route);
+    //Dijkstra(n - 1, dist_from_End, map_Revers_Route);
     long long ans = dist_from_Begin[n-1];
     // vector<int> path;
     // path.push_back(n - 1);
@@ -157,14 +157,14 @@ int main(){
     //while(!route_Rank.empty()&&get<0>(route_Rank.top())>=max_price)
     while(!route_Rank.empty())
     {
- 
+
         long long be_U = get<0>(route_Rank.top());
         long long half_U = be_U >> 1;
-        ans = min(ans,half_U+dist_from_Begin[get<1>(route_Rank.top())]+dist_from_End[get<2>(route_Rank.top())]);
+        ans = min(ans,half_U+dist_from_Begin[n-1]-dist_from_Begin[get<2>(route_Rank.top())]+dist_from_Begin[get<1>(route_Rank.top())]);
         route_Rank.pop();
     }
- 
+
         // prior node
- 
+
     cout << ans<< "\n";
 }

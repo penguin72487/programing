@@ -4,16 +4,15 @@
 #include<iterator>
 #include <set>
 #include <unordered_map>
+#include <fstream>
 using namespace std;
- 
+// #define file fstream f("task1202Test7.txt");cout.tie(0)->sync_with_stdio(0);
+// #define cin f
+// #define return f.close();return 
 priority_queue<pair<long long , int>,vector<pair<long long,int>>,greater<pair<long long,int>>> list;
 
 void Dijkstra(int i_Op, vector<long long> &dist_from_Begin, vector<set<long long>> &route_From_Whome, unordered_map < int, unordered_map<int, vector<long long>>> &map_Neighbors);
-int requested[3] = {0,2147483647,0};
-int &count_Route = requested[0];
-int &min_CountRoutes = requested[1];
-int &max_CountRoutes = requested[2];
-void path_DFS(int i_Now, int dfs_Count_Routes, unordered_map < int, unordered_map<int, vector<long long>>> &map_Neighbors, vector<set<long long>> &route_From_Whome);
+void path_DFS(int i_Now, unordered_map < int, unordered_map<int, vector<long long>>> &map_Neighbors, vector<set<long long>> &route_From_Whome);
 const long long MOD = 1E9 + 7;
 vector<long long> dp_Path;
 vector<long long> dp_MinRoute;
@@ -37,11 +36,15 @@ int main(){
     ++n;
     dp_Path.resize(n);
     dp_MinRoute.resize(n);
-    dp_MaxRoute.resize(n); 
-    
+    dp_MaxRoute.resize(n);
+
+
     fill(dp_Path.begin(), dp_Path.end(), 0ll);
     fill(dp_MinRoute.begin(), dp_MinRoute.end(), ((1ull << 63) - 1ull));
     fill(dp_MaxRoute.begin(), dp_MaxRoute.end(),0);
+    dp_MinRoute[1] = 0;
+    dp_MaxRoute[1] = 0;
+    dp_Path[1] = 1;
 
     vector<long long> dist_from_Begin(n);
     vector<set<long long> > route_From_Whome(n);
@@ -50,14 +53,9 @@ int main(){
 
     cout << dist_from_Begin[n - 1] << " ";
 
-    count_Route = path_DFS(n - 1, 0, map_Neighbors, route_From_Whome);
+    path_DFS(n - 1, map_Neighbors, route_From_Whome);
+    cout << dp_Path[n - 1]<<" "<<dp_MinRoute[n-1]<<" "<<dp_MaxRoute[n-1]<<"\n";
 
-    for (int i = 0; i < 3; ++i)
-    {
-        cout << requested[i] << " ";
-    }
-
-    cout << "\n";
     return 0;
 }
 
@@ -92,12 +90,17 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin,vector<set<long long> 
                     route_From_Whome[it->first].clear();
                     route_From_Whome[it->first].insert(i_Node);
                     list.push(make_pair(dist_from_Begin[it->first], it->first));
+                    dp_Path[it->first] =dp_Path[i_Node];
+                    dp_Path[it->first] %= MOD;
                 }
                 else if(node_Dist+*jt==dist_from_Begin[it->first])
                 {
                     //dist_from_Begin[it->first] = node_Dist + *jt;
                     route_From_Whome[it->first].insert(i_Node);
                     list.push(make_pair(dist_from_Begin[it->first], it->first));
+                    dp_Path[it->first] +=dp_Path[i_Node];
+                    dp_Path[it->first] %= MOD;
+
                 }
             }
             
@@ -106,32 +109,38 @@ void Dijkstra(int i_Op,vector<long long> &dist_from_Begin,vector<set<long long> 
  
     }
 }
-void  path_DFS(int i_Now,int dfs_Count_Routes,unordered_map < int, unordered_map<int, vector<long long>>> &map_Neighbors,vector<set<long long> >& route_From_Whome)
+void  path_DFS(int i_Now,unordered_map < int, unordered_map<int, vector<long long>>> &map_Neighbors,vector<set<long long> >& route_From_Whome)
 {
     if(route_From_Whome[i_Now].empty())
     {
-        min_CountRoutes = min(dfs_Count_Routes, min_CountRoutes);
-        max_CountRoutes = max(dfs_Count_Routes,max_CountRoutes);
-        dp_Path[i_Now] = 1;
-        return;
+        // dp_MinRoute[i_Now] = min(dfs_Count_Routes, dp_MinRoute[i_Now]);
+        // dp_MaxRoute[i_Now] = max(dfs_Count_Routes, dp_MaxRoute[i_Now]);
+        dp_MinRoute[i_Now] = 0;
+        dp_MaxRoute[i_Now] = 0;
+        //dp_Path[i_Now] = 1;
+        
     }
     else
     {
-        long long res = 0;
+        
         for(auto it=route_From_Whome[i_Now].begin();it!=route_From_Whome[i_Now].end();++it)
         {
-            if(dp_Path[*it])
+            if(dp_MaxRoute[*it])
             {
-                res+=dp_Path[*it];
+                //dp_Path[i_Now]+=dp_Path[*it];
+                dp_MaxRoute[i_Now]=max(dp_MaxRoute[*it]+1,dp_MaxRoute[i_Now]);
+                dp_MinRoute[i_Now]=min(dp_MinRoute[*it]+1,dp_MinRoute[i_Now]);
             }
             else
             {
-                path_DFS(*it, dfs_Count_Routes+1, map_Neighbors, route_From_Whome);
-                res+=dp_Path[*it];
+                path_DFS(*it, map_Neighbors, route_From_Whome);
+                //dp_Path[i_Now]+=dp_Path[*it];
+                dp_MaxRoute[i_Now]=max(dp_MaxRoute[*it]+1,dp_MaxRoute[i_Now]);
+                dp_MinRoute[i_Now]=min(dp_MinRoute[*it]+1,dp_MinRoute[i_Now]);
             }
             
         }
-        dp_Path[i_Now] = res % MOD;
+        dp_Path[i_Now] %= MOD;
     }
 
 }

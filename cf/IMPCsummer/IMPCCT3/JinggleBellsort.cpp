@@ -25,7 +25,7 @@ cout.tie(0);
             flag = 0;
             for (auto it = next(arr.begin());it  != arr.end();++it)
             {
-                if(*it<*prev(it)&&(*it^*prev(it)))
+                if(*it<*prev(it)&&(*it^*prev(it))&1)
                 {
                     swap(*it,*prev(it));
                     flag = 1;

@@ -71,20 +71,15 @@ int main()
     {
         it->second->done();
     }
-    while(t--)
+    while(input[0]==0)
     {
         ++count;
         cout << "SYSTEM " << count << "\n";
-        int time;
+        int& time=input[0];
         while(cin >> time)
         {
             if(time ==9000)
             {
-                if(t>0)
-                {
-                    cin >> time;
-                }
-
                 break;
             }
             

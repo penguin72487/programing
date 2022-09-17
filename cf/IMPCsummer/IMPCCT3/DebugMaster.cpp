@@ -13,6 +13,14 @@ cout.tie(0);
         cin >> tp;
         if(n<3)
         {
+            if(n==2)
+            {
+                if(tp[0]==tp[1])
+                {
+                    cout << "NO\n";
+                    continue;
+                }
+            }
             cout << "YES\n";
         }
         else

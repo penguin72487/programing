@@ -4,7 +4,7 @@ using namespace std;
 class rational//¤À¼Æ¹Bºâ 
 {
 public:
-	int a=0;
+	int a=0;//numerator
 	char b='/';
 	int c=1;
 	rational()
@@ -149,6 +149,12 @@ public:
 		
 		
 	}
+	int gcd( int a, int b )
+{
+    if(!b)
+    return a;
+    return gcd( b, a%b );
+}
 	rational simple()
 	{
 		
@@ -204,13 +210,21 @@ public:
 		}
 		return ans;
 	}
-	friend istream &operator>>(ostream &s, rational& ob);
-	friend ostream &operator<<(ostream &s, rational ob);
-	int gcd( int a, int b )
+	friend istream &operator>>(istream &s, rational& ob)
 	{
-	    if(!b)
-	    return a;
-	    return gcd( b, a%b );
+		
+		s>>ob.a;
+		s>>ob.b;
+		s>>ob.c;
+		return s;
+	}
+	friend ostream &operator<<(ostream &s, rational ob)
+	{
+		if(ob.c!=1)
+		s<<ob.a<<ob.b<<ob.c;
+		else
+		s<<ob.a;
+		return s;
 	}
 	int lcm(int a,int b)
 	{
@@ -225,22 +239,6 @@ int gcd( int a, int b )
     if(!b)
     return a;
     return gcd( b, a%b );
-}
-istream &operator>>(istream &s, rational& ob)
-{
-	
-	s>>ob.a;
-	s>>ob.b;
-	s>>ob.c;
-	return s;
-}
-ostream &operator<<(ostream &s, rational ob)
-{
-	if(ob.c!=1)
-	s<<ob.a<<ob.b<<ob.c;
-	else
-	s<<ob.a;
-	return s;
 }
 int main()
 {

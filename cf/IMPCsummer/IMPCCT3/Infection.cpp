@@ -18,12 +18,12 @@ cout.tie(0);
         }
         sort(child.begin(), child.end());
         int Infected = 0;
-        int increse=1;
+        //int increse=1;
         for (auto it = upper_bound(child.begin(), child.end(), Infected); it != child.end();it = upper_bound(child.begin(), child.end(), Infected))
         {
             ans += child.end()-it;
-            ++increse;
-            Infected += child.end()-it+increse;
+            //++increse;
+            Infected += child.end() - it+1; //+increse;
         }
         cout << ans+1 << "\n";
     }

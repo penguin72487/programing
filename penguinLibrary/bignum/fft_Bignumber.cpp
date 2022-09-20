@@ -5,7 +5,7 @@
 #include<algorithm>
 #include<ctime>
 using namespace std;
-const long double PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628;
+
 class c_Num{
 public : 
     c_Num(long double t_A,long double t_B)
@@ -330,5 +330,6 @@ c_Num *iFFT(c_Num* &val,int n)
 }
 long double i_Rad(long double w )
 {
+    const long double PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628;
     return w*PI/180.0;
 }

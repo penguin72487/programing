@@ -8,7 +8,7 @@ using namespace std;
 class bignumber{
     public:
         string s;
-        vector<unsigned long long> val;
+        vector<long long> val;
         bool sign=0;
         int digit=18;
         bignumber(){}
@@ -26,29 +26,29 @@ class bignumber{
             bignumber ans;
             if(val.size() >b.val.size())
             {
-                auto it = val.rbegin();
-                for (auto jt=b.val.rbegin();jt!=b.val.rend();++jt,++it)
+                auto it = val.begin();
+                for (auto jt=b.val.begin();jt!=b.val.end();++jt,++it)
                 {
                     ans.val.push_back(*it + *jt);
                 }
-                for (; it!=val.rend();++it)
+                for (; it!=val.end();++it)
                 {
                     ans.val.push_back(*it);
                 }
             }
             else 
             {
-                auto it = b.val.rbegin();
-                for (auto jt=val.rbegin();jt!=val.rend();++jt,++it)
+                auto it = b.val.begin();
+                for (auto jt=val.begin();jt!=val.end();++jt,++it)
                 {
                     ans.val.push_back(*it + *jt);
                 }
-                for (; it!=b.val.rend();++it)
+                for (; it!=b.val.end();++it)
                 {
                     ans.val.push_back(*it);
                 }
             }
-            unity_Carry();
+            ans.unity_Carry();
             return ans;
         }
         bignumber operator-(bignumber &b)
@@ -57,34 +57,34 @@ class bignumber{
 
             if(val.size() >b.val.size())
             {
-                auto it = val.rbegin();
-                for (auto jt=b.val.rbegin();jt!=b.val.rend();++jt,++it)
+                auto it = val.begin();
+                for (auto jt=b.val.begin();jt!=b.val.end();++jt,++it)
                 {
                     ans.val.push_back(*it - *jt);
                 }
-                for (; it!=val.rend();++it)
+                for (; it!=val.end();++it)
                 {
                     ans.val.push_back(*it);
                 }
             }
             else 
             {
-                auto it = b.val.rbegin();
-                for (auto jt=val.rbegin();jt!=val.rend();++jt,++it)
+                auto it = b.val.begin();
+                for (auto jt=val.begin();jt!=val.end();++jt,++it)
                 {
                     ans.val.push_back(*jt-*it);
                 }
-                for (; it!=b.val.rend();++it)
+                for (; it!=b.val.end();++it)
                 {
                     ans.val.push_back(*it);
                 }
             }
-            unity_Carry();
+            ans.unity_Carry();
             return ans;
         }
         void unity_Carry(){
-            unsigned long long max_Carry = q_Pow(10,digit);// 100000000000...
-            unsigned long long mi_Carry = q_Pow(10, digit) - 1;//9999999999...
+            long long max_Carry = q_Pow(10,digit);// 100000000000...
+            long long mi_Carry = q_Pow(10, digit) - 1;//9999999999...
             for(auto it=val.begin();it!=val.end();++it)
             {
                 if(*it>mi_Carry)
@@ -106,13 +106,16 @@ class bignumber{
         }
         void s_To_Vull()
         {
+            
+
             auto it=s.rbegin();
-            for(;it!=s.rend();)
+            for (unsigned long long base=1; it != s.rend();base=1)
             {
                 val.push_back(0);
-                for (int i = 0; i < digit && it != s.rend(); ++i,++it)
+                
+                for (int i = 0; i < digit && it != s.rend(); ++i,++it,base=(base<<3)+(base<<1))
                 {
-                    val.back() = (val.back() << 3) + (val.back() << 1)+(*it-'0');
+                    val.back()+=(*it-'0')*base;
                 }
             }
             val.shrink_to_fit();
@@ -124,6 +127,15 @@ class bignumber{
         }
 
         friend ostream& operator<<(ostream& o,bignumber &b) {
+            if(*b.val.begin()==0)
+            {
+                o << "0";
+                return o;
+            }
+            if(b.sign==1)
+            {
+                o << '-';
+            }
             cout << *b.val.rbegin();
             for(auto it=++(b.val.rbegin());it!=b.val.rend();++it)
             {
@@ -136,6 +148,15 @@ class bignumber{
             return o;
         }
         friend ostream& operator<<(ostream& o,bignumber b) {
+            if(*b.val.begin()==0)
+            {
+                o << "0";
+                return o;
+            }
+            if(b.sign==1)
+            {
+                o << '-';
+            }
             cout << *b.val.rbegin();
             for(auto it=++(b.val.rbegin());it!=b.val.rend();++it)
             {
@@ -150,7 +171,7 @@ class bignumber{
                 else 
                 {
                     
-                    for (int i = -1; i < b.digit;++i)
+                    for (int i = 0,cash=b.digit-1; i < cash;++i)
                     {
                         cout << "0";
                     }
@@ -184,6 +205,7 @@ int main()
     bignumber b;
     char c_Operator;
     cin >> a >>c_Operator>> b;
+    //cout << a.s << "\n" << b.s << "\n";
     switch (c_Operator)
     {
         case '+':

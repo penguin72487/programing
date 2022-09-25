@@ -9,8 +9,8 @@ int main(){
     {
         int n;
         cin >> n;
-        int list[n];
-        int adj_List[n];
+        long long list[n];
+        long long adj_List[n];
         for(int i = 0,tmp=0; i < n; ++i)
         {
             cin>>list[i];

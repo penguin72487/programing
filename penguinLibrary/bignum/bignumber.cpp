@@ -82,6 +82,21 @@ class bignumber{
             ans.unity_Carry();
             return ans;
         }
+        bool operator == (bignumber b)
+        {
+            if(val.size() == b.val.size())
+            {
+                for(auto it=b.val.begin(),jt=val.begin();it!=b.val.end();++it,++jt)
+                {
+                    if(*it!=*jt)
+                    {
+                        return 0;
+                    }
+                }
+                return 1;
+            }
+            return 0;
+        }
         void unity_Carry(){
             long long max_Carry = q_Pow(10,digit);// 100000000000...
             long long mi_Carry = q_Pow(10, digit) - 1;//9999999999...

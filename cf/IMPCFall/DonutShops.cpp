@@ -15,7 +15,7 @@ int main(){
         }
         else 
         {
-            if(a==(c/b))
+            if(a==(float)c/b)
             {
                 ans_A = c / a+a-1;
             }
@@ -26,7 +26,7 @@ int main(){
             
         }
 
-        if(a<=(c/b))
+        if(a<=((float)c/b))
         {
             ans_B = -1;
         }

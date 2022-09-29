@@ -8,6 +8,8 @@ using namespace std;
 
 class c_Num{
 public : 
+    long double a;
+    long double b;
     c_Num(long double t_A,long double t_B)
     {
         a = t_A;
@@ -23,8 +25,7 @@ public :
         a = 0.0;
         b = 0.0;
     }
-    long double a;
-    long double b;
+    
     /*
     void operator = (c_Num tmp)
     {

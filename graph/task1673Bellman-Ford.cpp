@@ -27,10 +27,11 @@ void bellman_Ford(int now)
 long long bellman_Ford(int now,int target)
 {
     pass_By.resize(dist.size());
+    fill(pass_By.begin(),pass_By.end(),0);
     for(long long i=0;i<dist.size()&&flag&&cycle;++i)
     {
         flag = 0;
-        fill(pass_By.begin(),pass_By.end(),0);
+        
         bellman_Ford(now);
     }
     if(flag||cycle)

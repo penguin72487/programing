@@ -4,21 +4,19 @@
 #include<set>
 #include<algorithm>
 #include <tuple>
+#include<unordered_map>
 using namespace std;
 vector<long long> dist;
-vector<vector<pair<int, int>>> tunnel;
-queue<tuple<int, int, int>> STL;
-vector<unsigned long long> pass_By;
+unordered_map<int,unordered_map<int,long long>> tunnel;
+queue<tuple<int, int, long long>> STL;
+unordered_map<int,unordered_map<int,long long>> path;
+unordered_map<int,unordered_map<int,long long>> count_Pass;
+set<int> update;
 bool flag=0;
 bool cycle=0;
 void bellman_Ford(int now)
 {
-    set<tuple<int, int, int>> path;
-    for (auto it = tunnel[now].begin(); it != tunnel[now].end();++it)
-    {
-        STL.push(make_tuple(now, it->first, it->second));
-    }
-
+    
     //pass_Node[now] = 1;
     // for (auto it = tunnel[now].begin(); it != tunnel[now].end();++it)
     // {
@@ -27,22 +25,28 @@ void bellman_Ford(int now)
 
     while(!STL.empty())
     {
-        int t_Now, v, u;
+        long long t_Now, v, u;
         tie(t_Now,v,u)=STL.front();
         STL.pop();
-        ++pass_By[t_Now];
-        if(path.find(make_tuple(t_Now, v, u)) != path.end())
+        
+        if(path[t_Now].find(v) != path[t_Now].end())
         {
             continue;
         }
-        path.insert(make_tuple(t_Now, v, u));
+        ++count_Pass[t_Now][v];
+        path[t_Now][v]= 1;
         if(dist[t_Now]+u>dist[v])
         {
             flag = 1;
             dist[v] = dist[t_Now] + u;
+            update.insert(v);
             for (auto it = tunnel[v].begin(); it != tunnel[v].end();++it)
             {
-                STL.push(make_tuple(t_Now, it->first, it->second));
+                if(path[v].find(it->first) != path[v].end())
+                {
+                    continue;
+                }
+                STL.push(make_tuple(v, it->first, it->second));
             }
         }
         
@@ -50,13 +54,11 @@ void bellman_Ford(int now)
 }
 long long bellman_Ford(int now,int target)
 {
-    pass_By.resize(dist.size());
-    fill(pass_By.begin(),pass_By.end(),0);
-    // for (auto it = tunnel[now].begin(); it != tunnel[now].end();++it)
-    // {
-    //         dist[it->first] = dist[now] + it->second;
-    //         STL.push(it->first);
-    // }
+
+    for (auto it = tunnel[now].begin(); it != tunnel[now].end();++it)
+    {
+            STL.push(make_tuple(now, it->first, it->second));
+    }
     for(int i=0,tmp=dist.size();i<tmp;++i)
     {
         flag=0;
@@ -65,8 +67,39 @@ long long bellman_Ford(int now,int target)
         {
             break;
         }
+        for(auto it=update.begin();it!=update.end();++it)
+        {
+            for(auto jt=tunnel[*it].begin();jt!=tunnel[*it].end();++jt)
+            {
+                STL.push(make_tuple(*it,jt->first,jt->second));
+            }
+        }
+        update.clear();
+        path.clear(); 
     }
-    return pass_By[target]==dist.size()?-1:dist[target];
+    flag =0;
+    while(!STL.empty())
+    {
+        STL.pop();
+    }
+    for(auto it=count_Pass.begin();it!=count_Pass.end();++it)
+    {
+        for(auto jt = it->second.begin();jt!=it->second.end();++jt)
+        {
+            if(jt->second==dist.size())
+            {
+                flag = 1;
+                tunnel[it->first][jt->first] = (1ll<<50);
+                STL.push(make_tuple(it->first, jt->first, (1ll<<50)));
+            }
+        }
+    }
+    if(flag==1)
+    {
+        bellman_Ford(0);
+    }
+    long long ans = dist[target] > (1ll << 49) ? -1 : dist[target];
+    return ans;
 }
 
 int main(){
@@ -74,7 +107,7 @@ int main(){
     cout.tie(0);
     int n, m;
     cin >> n >> m;
-    tunnel.resize(n); // adj list
+     // adj list
     
 
     for(int i=0,a,b,c; i<m; ++i)
@@ -82,10 +115,10 @@ int main(){
         cin >> a >> b>>c;
         --a;
         --b;
-        tunnel[a].push_back(make_pair(b,c));
+        tunnel[a][b] = c;
     }
     dist.resize(n);
-    fill(dist.begin(),dist.end(),-((1ull<<31)));
+    fill(dist.begin(),dist.end(),-((1ll<<46)));
     dist[0] = 0;
     cout << bellman_Ford(0,n-1)<<"\n";
 

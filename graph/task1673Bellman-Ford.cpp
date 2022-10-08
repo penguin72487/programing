@@ -34,7 +34,7 @@ int main(){
     int n, m;
     cin >> n >> m;
      // adj list
-    vector<long long> dist(n,(~(1ll<<46)+1));
+    vector<long long> dist(n,(~(1ll<<42)+1));
     vector<tuple<int, int, long long>> tunnel(m);
     vector<vector<int>> adj_List(n);//adj list
     vector<vector<int>> bdj_list(n);//adj list

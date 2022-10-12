@@ -44,11 +44,11 @@ int main(){
     for(int i=0,a,b,c; i<m; ++i)
     {
         cin >> a >> b>>c;
-        --a;
-        --b;
-        adj_List[a].push_back(b);
-        bdj_list[b].push_back(a);
-        tunnel.push_back(make_tuple(a,b,c));
+        // --a;
+        // --b;
+        adj_List[a-1].push_back(b-1);
+        bdj_list[b-1].push_back(a-1);
+        tunnel.push_back(make_tuple(a-1,b-1,c));
     }
     BFS(0,path,adj_List);
     BFS(n - 1, repath,bdj_list);

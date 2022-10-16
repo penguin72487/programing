@@ -29,10 +29,10 @@ int main(){
         {
             ans += *it;
         }
-        auto jt = upper_bound(w.begin(), w.end(),1);
-        for (; jt != w.end();++jt)
+        //auto jt = upper_bound(w.begin(), w.end(),1);
+        for (auto jt=w.begin(); jt!=w.end(); ++jt)
         {
-            it += *jt - 1;
+            it += *jt - 2;
             ans += *it;
         }
 

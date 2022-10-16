@@ -17,15 +17,15 @@ int main(){
         cin >> n;
         map<int,int> ii_Map;
         int a[n];
-        for(int i=0; i<n; i++){
+        for(int i=0; i<n; ++i){
             cin >> a[i];
             ii_Map[a[i]] = i + 1;
         }
 
         int ans=-1;
-        for(int i=1;i<=1000;i++)
+        for(int i=1;i<1001;++i)
         {
-            for(int j=1;j<=1000;j++)
+            for(int j=1;j<1001;++j)
             {
                 if(gcd(i,j)==1&&ii_Map[i]&&ii_Map[j])
                 {

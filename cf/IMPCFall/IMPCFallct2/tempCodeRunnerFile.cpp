@@ -34,7 +34,7 @@ int main(){
         }
         
         //auto jt = upper_bound(w.begin(), w.end(),1);
-        for (auto jt=upper_bound(w.begin(), w.end(),1); jt!=w.end(); ++jt,++it)
+        for (auto jt=upper_bound(w.begin(), w.end(),1); jt!=w.end(); ++jt)
         {
             it += *jt - 2;
             ans += *it;

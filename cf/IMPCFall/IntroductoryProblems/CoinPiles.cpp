@@ -16,12 +16,13 @@ int main(){
         {
             swap(a, b);
         }
-        if(a%3==0&&b%3==0)
+        if(a>2*b)
+        {
+            cout<<"NO\n";
+        }
+        else if((2*b-a)%3==0&&(5*a-4*b)%3==0)
         {
             cout << "YES\n";
-        }
-        else if((a%3==2&&b%3==1)||(a%3==1&&b%3==2)){
-            cout<<"YES\n";
         }
         else {
             cout<<"NO\n";

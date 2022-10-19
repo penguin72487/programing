@@ -1,13 +1,9 @@
 #include<iostream>
+#include<deque>
+#include<vector>
 using namespace std;
-void gray(int now,int n,string s){
-    if(n==now)
-    {
-        cout << s<<"\n";
-        return;
-    }
-    gray(now+1,n,"0"+s);
-    gray(now+1,n,"1"+s);
+void gray(int now,int n,deque<bool> s){
+
     
 }
 int main(){
@@ -15,7 +11,17 @@ int main(){
     cout.tie(0);
     int n;
     cin >> n;
-    gray(1, n, string("0"));
+    vector<deque<bool>> s(2);
+    vector<deque<bool>> tmp;
+    s[0].push_back(0);
+    s[1].push_back(1);
+    tmp = s;
+    for(int i = 0; i < n; ++i){
+        s.resize(s.size()<<1);
+        for(auto it = s.begin(),jt=s.rbegin().base(); it <jt; ++it,--jt){
+            it->push_back(0);
+        }
+    }
 
     return 0;
 }

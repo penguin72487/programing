@@ -3,15 +3,23 @@ using namespace std;
 class Solution {
 public:
     void moveZeroes(vector<int>& nums) {
-        for(auto it=nums.begin(); it!=nums.end();++it)
+        if(nums.size() == 1)
         {
-            if(*it==0)
-            {
-                nums.erase(it);
-                nums.push_back(0);
+            return;
+        }
+        int p = 0;
+        
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] != 0) {
+                swap(nums[i], nums[p]);
+                p++;
             }
         }
         return;
+    }
+    void swap(int &a,int &b)
+    {
+        a^=b^=a^=b;
     }
 };
 int main()
@@ -19,6 +27,6 @@ int main()
     cout.tie(0)->sync_with_stdio(0);
     cin.tie(0);
     Solution s;
-    vector<int> num = {0,1,0,3,12};
+    vector<int> num = {0,1};
     s.moveZeroes(num);
 }

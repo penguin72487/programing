@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 int main(){
     
@@ -7,7 +7,7 @@ int main(){
     int i_Max = 0;
     int i_Min = 2147483647;
     long long sum = 0;
-    cout << "please input a positive integer (0 end) :";
+    cout << "please input a positive integer (0 end) : ";
     while (cin >> n)
     {
         if(n == 0)
@@ -18,12 +18,13 @@ int main(){
         i_Max = max(i_Max, n);
         i_Min=min(i_Min, n);
         sum += n;
-        cout << "\nplease input a positive integer (0 end) :";
+        cout << "\nplease input a positive integer (0 end) : ";
     }
     //cout.tie(0)->sync_with_stdio(0);
     cout << "max = " << i_Max<<"\n";
     cout << "min = " << i_Min << "\n";
-    cout << "AVG = " << ((long double)sum / (long double)i);
+    long double AVG = ((long double)sum / (long double)i)+(long double)0.0005;
+    cout << "AVG = " << fixed<<setprecision(3)<<AVG << "\n";
 
     return 0;
 }

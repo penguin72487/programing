@@ -14,6 +14,6 @@ string intob(long long n){
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    cout<<intob(-3)<<"\n";
+    cout<<intob(10)<<"\n";
     return 0;
 }

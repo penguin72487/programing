@@ -11,46 +11,39 @@ void swap(int & a,int & b)
     a = b;
     b=tmp;
 }
-vector<int> mergesort(int op, int ed,vector<int> &a)
-{
-    vector<int> tmp;
-    if(op ==ed)
-    {
-        
-        tmp.push_back(op);
-        return tmp;
-    }
-    int mid = (op + ed) / 2;
-    vector<int> l = mergesort(op,mid,a);
-    vector<int> r = mergesort(mid+1,ed,a);
-    auto it = l.begin();
-    auto jt = r.begin();
-    while(it!=l.end()||jt!=r.end())
-    {
-        if(it==l.end()||jt==r.end())
-        {
-            if(it==l.end())
-            {
-                tmp.push_back(*jt);
-                ++jt;
-            }
-            else {
-                tmp.push_back(*it);
-                ++it;
-            }
+void merge(vector<int> &a, int op, int mid, int end){
+
+    vector<int> LeftSub(a.begin()+op, a.begin()+mid+1),
+                RightSub(a.begin()+mid+1, a.begin()+end+1);
+
+    LeftSub.push_back(2147483647);      // 在LeftSub[]尾端加入值為 Max 的元素
+    RightSub.push_back(2147483647);    // 在RightSub[]尾端加入值為 Max 的元素
+
+    int idxLeft = 0, idxRight = 0;
+
+    for (int i = op; i <= end; i++) {
+
+        if (LeftSub[idxLeft] <= RightSub[idxRight] ) {
+            a[i] = LeftSub[idxLeft];
+            idxLeft++;
         }
-        if(it<jt)
-        {
-            tmp.push_back(*it);
-            ++it;
-        }
-        else {
-            tmp.push_back(*jt);
-            ++jt;
+        else{
+            a[i] = RightSub[idxRight];
+            idxRight++;
         }
     }
-    return tmp;
 }
+
+void mergesort(vector<int> &a, int op, int end){
+                                         
+    if (op < end) {                   
+        int mid = (op+end)/2;         
+        mergesort(a, op, mid);    
+        mergesort(a, mid+1, end);   
+        merge(a, op, mid, end);   
+    }
+}
+
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
@@ -61,7 +54,7 @@ int main(){
         cin>>a[i];
     }
     
-    mergesort(0,n-1,a);
+    mergesort(a,0,n-1);
 
     for(int i=0; i<n;++i)
     {

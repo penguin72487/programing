@@ -3,6 +3,7 @@
 #include<queue>
 using namespace std;
 /*
+https://practice.geeksforgeeks.org/problems/nearly-sorted-1587115620/1?ref=gcse
 class Solution
 {
     public:

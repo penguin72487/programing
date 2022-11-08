@@ -27,5 +27,7 @@ int main(){
     cout<<n<<" ";
     intohex(n);
     cout << "\n";
+    //printf("%x", n);
+
     return 0;
 }

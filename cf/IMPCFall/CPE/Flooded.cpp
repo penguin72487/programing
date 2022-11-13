@@ -28,14 +28,15 @@ int main(){
                 region.push_back(t);
             }
         }
-        long long flood;
+        long double flood;
         cin >> flood;
-        flood /= 100;
+        flood /= 100.0;
         cout << "Region " << k<<"\n";
         if(n==m&&n==1)
         {
-            cout << "Water level is "<<fixed <<setprecision(2)<< float(region[0]+flood) << " meters.\n";
-            cout << "100.00 percent of the region is under water.\n";
+            cout << "Water level is "<<fixed <<setprecision(2)<< double(region[0]+flood) << " meters.\n";
+            cout << "100.00 percent of the region is under water.\n\n";
+            continue;
         }
         sort(region.begin(),region.end());
         vector<long long> pre_Sum(n*m);
@@ -48,9 +49,9 @@ int main(){
             {
                 //cout << region[i-1]<< "\n";
                 sum = region[i-1]*(i)-pre_Sum[i-1];
-                float f = float(flood -sum) / (float)(i);
+                double f = double(flood -sum) / (double)(i);
                 cout<<"Water level is "<<fixed <<setprecision(2)<< region[i-1]+f<< " meters.\n";
-                cout << float(i) / float(n*m)*100 << " percent of the region is under water.\n";
+                cout << double(i) / double(n*m)*100 << " percent of the region is under water.\n\n";
                 flag = 1;
                 break;
             }
@@ -59,9 +60,9 @@ int main(){
         {
             int i = n*m;
             long long sum = region[i-1]*(i)-pre_Sum[i-1];
-            float f = float(flood -sum) / (float)(i);
+            double f = double(flood -sum) / (double)(i);
             cout<<"Water level is "<<fixed <<setprecision(2)<< region[i-1]+f<< " meters.\n";
-            cout << float(i) / float(n*m)*100 << " percent of the region is under water.\n";
+            cout << double(i) / double(n*m)*100 << " percent of the region is under water.\n\n";
         }
         
 

@@ -5,12 +5,12 @@ using namespace std;
 // {
 //     a^=b^=a^=b;
 // }
-void swap(int & a,int & b)
-{
-    int tmp = a;
-    a = b;
-    b=tmp;
-}
+// void swap(int & a,int & b)
+// {
+//     int tmp = a;
+//     a = b;
+//     b=tmp;
+// }
 void quicksort(int op, int ed,vector<int> &a)
 {
     if(op>=ed)

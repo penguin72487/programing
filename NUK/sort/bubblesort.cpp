@@ -1,9 +1,9 @@
 #include<iostream>
 using namespace std;
-// void swap(int & a,int & b)
-// {
-//     a^=b^=a^=b;
-// }
+void swap(int & a,int & b)
+{
+    a^=b^=a^=b;
+}
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);

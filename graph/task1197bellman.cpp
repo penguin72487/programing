@@ -35,7 +35,12 @@ int main(){
             {
                 flag = 1;
                 dist[v] = dist[u]+d;
+<<<<<<< HEAD
+
+=======
+>>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
                 path_From[v] = u;
+                op = v;
             }
         }
         if(!flag)
@@ -49,10 +54,15 @@ int main(){
         
         vector<bool> pass_By(n,0);
         vector<int> ans;
+<<<<<<< HEAD
+=======
 
+>>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
         
+        //int tmp = n - 1;
         int now = op;
         cout << "YES\n";
+        //now = path_From[now];
         while(!pass_By[now])
         {
             //cout << now << "n\n";
@@ -60,11 +70,21 @@ int main(){
             ans.push_back(now+1);
             now = path_From[now];
         }
+<<<<<<< HEAD
+        //ans.push_back(op+1);
+        cout << now+1 << " ";
+=======
         ans.push_back(now+1);
+>>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
         for(auto it=ans.rbegin(); it!=ans.rend();++it)
         {
+            
             cout << *it << " ";
+<<<<<<< HEAD
+            if(*it==now+1)
+=======
             if(*it ==now+1)
+>>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
             {
                 break;
             }

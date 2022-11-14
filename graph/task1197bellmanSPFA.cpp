@@ -2,6 +2,8 @@
 #include<vector>
 #include<tuple>
 #include<unordered_map>
+#include<map>
+#include<queue>
 using namespace std;
 int main(){
     cin.tie(0)->sync_with_stdio(0);
@@ -12,41 +14,51 @@ int main(){
     vector<long long> path_From(n,-1);
     dist[0] = 0;
     vector<tuple<int, int, long long>> vec;
+    queue<tuple<int, int, long long>> q;
+    map<tuple<int, int, long long>, bool> pass;
+    map<tuple<int, int, long long>, int> count_Pass;
+    
     int a, b;
     long long c;
     for (int i = 0;i < m; ++i)
     {
         cin >> a >> b >> c;
         vec.push_back(make_tuple(a-1,b-1,c));
-
+        q.push(vec.back());
+        pass[vec.back()] = 1;
+        count_Pass[vec.back()] = 1;
     }
     
     bool flag = 0;
     int u, v;
     long long d;
     int op=0;
-    for (int i = 0; i < n; ++i)
-    {   
-        flag = 0;
-        for(auto it = vec.begin();it != vec.end();++it)
+    while(!q.empty())
+    {
+        if(count_Pass[q.front()]>n)
         {
-            tie(u, v, d) = *it;
-            if(dist[u]+d<dist[v])
-            {
-                flag = 1;
-                dist[v] = dist[u]+d;
-<<<<<<< HEAD
-
-=======
->>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
-                path_From[v] = u;
-                op = v;
-            }
-        }
-        if(!flag)
-        {
+            flag = 1;
             break;
         }
+        tie(u, v, d) = q.front();
+        pass[q.front()] = 0;
+        q.pop();
+
+        if(dist[u]+d<dist[v])
+        {
+            //flag = 1;
+            dist[v] = dist[u]+d;
+            path_From[v] = u;
+            op = v;
+            if(pass[make_tuple(u,v,d)]==0)
+            {
+                q.push(make_tuple(u, v, d));
+                ++count_Pass[vec.back()];
+                pass[make_tuple(u, v, d)]=1;
+            }
+            
+        }
+        
     }
     
     if(flag)
@@ -54,15 +66,10 @@ int main(){
         
         vector<bool> pass_By(n,0);
         vector<int> ans;
-<<<<<<< HEAD
-=======
 
->>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
         
-        //int tmp = n - 1;
         int now = op;
         cout << "YES\n";
-        //now = path_From[now];
         while(!pass_By[now])
         {
             //cout << now << "n\n";
@@ -70,21 +77,11 @@ int main(){
             ans.push_back(now+1);
             now = path_From[now];
         }
-<<<<<<< HEAD
-        //ans.push_back(op+1);
-        cout << now+1 << " ";
-=======
         ans.push_back(now+1);
->>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
         for(auto it=ans.rbegin(); it!=ans.rend();++it)
         {
-            
             cout << *it << " ";
-<<<<<<< HEAD
-            if(*it==now+1)
-=======
             if(*it ==now+1)
->>>>>>> fcdb1b5cb985bd3155139a8bbc7a11a8afc31435
             {
                 break;
             }

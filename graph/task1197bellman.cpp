@@ -16,18 +16,18 @@ int main(){
     vector<tuple<int, int, long long>> vec;
     int a, b;
     long long c;
-    map<tuple<int, int, long long>,int> count;
     for (int i = 0;i < m; ++i)
     {
         cin >> a >> b >> c;
         vec.push_back(make_tuple(a-1,b-1,c));
-        count[vec.back()] = 0;
+
     }
     
     bool flag = 0;
     int u, v;
     long long d;
-    for (int i = 0; i < (n << 1); ++i)
+    int op=0;
+    for (int i = 0; i < n; ++i)
     {   
         flag = 0;
         for(auto it = vec.begin();it != vec.end();++it)
@@ -37,8 +37,9 @@ int main(){
             {
                 flag = 1;
                 dist[v] = dist[u]+d;
-                ++count[*it];
+
                 path_From[v] = u;
+                op = v;
             }
         }
         if(!flag)
@@ -52,19 +53,11 @@ int main(){
         
         vector<bool> pass_By(n,0);
         vector<int> ans;
-        int op=0;
-        //int tmp = n - 1;
-        for(auto it=vec.begin(); it != vec.end();++it)
-        {
-            if(count[*it]==n)
-            {
-                op = get<0>(*it);
-                break;
-            }
-        }
         
+        //int tmp = n - 1;
         int now = op;
         cout << "YES\n";
+        //now = path_From[now];
         while(!pass_By[now])
         {
             //cout << now << "n\n";
@@ -72,10 +65,16 @@ int main(){
             ans.push_back(now+1);
             now = path_From[now];
         }
-        ans.push_back(op+1);
+        //ans.push_back(op+1);
+        cout << now+1 << " ";
         for(auto it=ans.rbegin(); it!=ans.rend();++it)
         {
+            
             cout << *it << " ";
+            if(*it==now+1)
+            {
+                break;
+            }
         }
         cout << "\n";
     }

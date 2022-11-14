@@ -78,15 +78,25 @@ int main(){
             now = path_From[now];
         }
         ans.push_back(now+1);
-        for(auto it=ans.rbegin(); it!=ans.rend();++it)
+        if(ans[0]==now+1)
         {
-            cout << *it << " ";
-            if(*it ==now+1)
+            for(auto it=ans.rbegin(); it!=ans.rend();++it)
             {
-                break;
+                cout << *it << " ";
             }
         }
-        cout << "\n";
+        else {
+            for(auto it=ans.rbegin(); it!=ans.rend();++it)
+            {
+                cout << *it << " ";
+                if(*it ==now+1)
+                {
+                    break;
+                }
+            }
+            cout << "\n";
+        }
+
     }
     else {
         cout << "NO\n";

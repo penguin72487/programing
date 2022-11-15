@@ -15,7 +15,7 @@ int main(){
     dist[0] = 0;
     vector<tuple<int, int, long long>> vec;
     queue<tuple<int, int, long long>> q;
-    map<tuple<int, int, long long>, bool> pass;
+    //map<tuple<int, int, long long>, bool> pass;
     map<tuple<int, int, long long>, int> count_Pass;
     
     int a, b;
@@ -25,8 +25,8 @@ int main(){
         cin >> a >> b >> c;
         vec.push_back(make_tuple(a-1,b-1,c));
         q.push(vec.back());
-        pass[vec.back()] = 1;
-        count_Pass[vec.back()] = 1;
+        //pass[vec.back()] = 1;
+        count_Pass[vec.back()] = 0;
     }
     
     bool flag = 0;
@@ -35,14 +35,17 @@ int main(){
     int op=0;
     while(!q.empty())
     {
+        tie(u, v, d) = q.front();
+        //pass[q.front()] = 0;
+        ++count_Pass[q.front()];
+        q.pop();
         if(count_Pass[q.front()]>n)
         {
             flag = 1;
+            op = v;
             break;
         }
-        tie(u, v, d) = q.front();
-        pass[q.front()] = 0;
-        q.pop();
+
 
         if(dist[u]+d<dist[v])
         {
@@ -50,11 +53,11 @@ int main(){
             dist[v] = dist[u]+d;
             path_From[v] = u;
             op = v;
-            if(pass[make_tuple(u,v,d)]==0)
+            //if(pass[make_tuple(u,v,d)]==0)
             {
                 q.push(make_tuple(u, v, d));
-                ++count_Pass[vec.back()];
-                pass[make_tuple(u, v, d)]=1;
+                
+                //pass[make_tuple(u, v, d)]=1;
             }
             
         }

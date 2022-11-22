@@ -21,15 +21,13 @@ int main(){
     }
     
     bool flag = 0;
-    int u, v;
-    long long d;
     int op=0;
     for (int i = 0; i < n; ++i)
     {   
         flag = 0;
-        for(auto it = vec.begin();it != vec.end();++it)
+        for(auto& [u,v,d] :vec)
         {
-            auto [u, v, d] = *it;
+            //auto [u, v, d] = it;
             if(dist[u]+d<dist[v])
             {
                 flag = 1;

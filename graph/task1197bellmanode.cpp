@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<tuple>
+#include<unordered_map>
 using namespace std;
 int main(){
     cin.tie(0)->sync_with_stdio(0);
@@ -10,13 +11,13 @@ int main(){
     vector<long long> dist(n,(1ll<<60));
     vector<long long> path_From(n,-1);
     dist[0] = 0;
-    vector<tuple<int, int, long long>> vec;
+    vector<vector<pair<int, long long>>> vec(n);
     int a, b;
     long long c;
     for (int i = 0;i < m; ++i)
     {
         cin >> a >> b >> c;
-        vec.push_back(make_tuple(a-1,b-1,c));
+        vec[a-1].push_back(make_pair(b-1,c));
 
     }
     
@@ -27,16 +28,22 @@ int main(){
     for (int i = 0; i < n; ++i)
     {   
         flag = 0;
-        for(auto it = vec.begin();it != vec.end();++it)
+        for(int i=0;i<n;++i)
         {
-            auto [u, v, d] = *it;
-            if(dist[u]+d<dist[v])
+            for(auto it=vec[i].begin();it!=vec[i].end();++it)
             {
-                flag = 1;
-                dist[v] = dist[u]+d;
-                path_From[v] = u;
-                op = v;
+                u = i;
+                v = it->first;
+                d = it->second;
+                if(dist[u]+d<dist[v])
+                {
+                    flag = 1;
+                    dist[v] = dist[u]+d;
+                    path_From[v] = u;
+                    op = v;
+                }
             }
+
         }
         if(!flag)
         {
@@ -49,6 +56,7 @@ int main(){
         
         vector<bool> pass_By(n,0);
         vector<int> ans;
+
         
         //int tmp = n - 1;
         int now = op;

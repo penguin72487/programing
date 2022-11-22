@@ -59,7 +59,7 @@ int main(){
         for(auto it=tunnel.begin(); it!=tunnel.end();++it)
         {
             auto [v, u, d] = *it;
-            if(path[v]&&repath[u]&&dist[v]+d>dist[u])
+            if(path[v] and repath[u] and dist[v]+d>dist[u])
             {
                 flag = 1;
                 dist[u] = dist[v] + d;

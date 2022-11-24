@@ -12,7 +12,7 @@ int main(){
         {
             break;
         }
-        while(a&&b)
+        while(a||b)
         {
             if(a%10+b%10+add>9)
             {
@@ -29,8 +29,12 @@ int main(){
         {
             cout << "No carry operation.\n";
         }
+        else if(ans==1)
+        {
+            cout << "1 carry operation.\n";
+        }
         else {
-            cout << ans << " carry operation.\n";
+            cout << ans << " carry operations.\n";
         }
         
     }

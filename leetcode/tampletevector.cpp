@@ -21,4 +21,5 @@ int main()
     Solution s;
     vector<int> num = {2,1,2};
     cout<<s.largestPerimeter(num);
+    return 0;
 }

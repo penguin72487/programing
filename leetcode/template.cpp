@@ -19,4 +19,5 @@ int main()
     cin.tie(0);
     Solution s;
     cout<<s.fib(40);
+    return 0;
 }

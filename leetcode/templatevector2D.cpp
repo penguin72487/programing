@@ -13,4 +13,5 @@ int main()
     Solution s;
     vector<vector<int>> num = {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 7}};
     cout << s.checkStraightLine(num);
+    return 0;
 }

@@ -34,4 +34,5 @@ int main()
     cin.tie(0);
     Solution s;
     cout<<s.interpret("G()(al)");
+    return 0;
 }

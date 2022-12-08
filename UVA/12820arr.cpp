@@ -1,3 +1,4 @@
+
 #include<bits/stdc++.h>
 using namespace std;
 int main(){
@@ -12,32 +13,38 @@ int main(){
         for(int i=0; i<n;++i)
         {
             cin >> s;
+            if(s.size()==1)
+            {
+                s.push_back(s[0]+1);
+            }
             for(auto& it:s)
             {
                 ++c[i][it - 'a'];
             }
         }
         int ans = 0;
+        
         for(int i=0; i<n;++i)
         {
-            set<int> si;
-            multiset<int> msi;
+            vector<int> vi(31);
+            bool flag = 1;
             for(auto& it:c[i])
             {
-                if(it<=0)
-                {
-                    continue;
-                }
-                si.insert(it);
-                msi.insert(it);
+                ++vi[it];
             }
-            if(si.size()==1)
+            for (int i = 1; i < 31;++i)
             {
-                continue;
+                if(vi[i] >1)
+                {
+                    flag = 0;
+                    break;
+                }
             }
-            ans += (si.size() == msi.size());
+            ans += flag;
         }
-        
+
+
+
         cout <<"Case "<<k<<": "<< ans << "\n";
     }
     return 0;

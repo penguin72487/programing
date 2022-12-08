@@ -11,9 +11,7 @@ int main(){
             break;
         }
         h2 += 24;
-        int d1 = (h1 * 60 + m1);
-        int d2 = (h2 * 60 + m2);
-        cout << (d2-d1)%1440 << "\n";
+        cout << (h2 * 60 + m2-h1 * 60 + m1)%1440 << "\n";
     }
 
     return 0;

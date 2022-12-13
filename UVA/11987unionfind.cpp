@@ -25,34 +25,33 @@ class unifi{//union find
             return;
         }
         else {
-            
-            if(uni[a]==a)
+            if(uni_Graph[a].size()==1)
             {
-                if(uni_Graph[a].size()>1)// if father would move
+                setA_To_setB(a,b);
+            }
+            else if(uni[a]==a)
+            {
+                int num=*uni_Graph[a].begin();
+                for(auto& it:uni_Graph[a])
                 {
-                    int num = *uni_Graph[a].begin();
-                    uni[num] = num;
-                    setA_To_setB(a, num);
-                    uni[a] = a;
-                    uni_Graph[num].erase(a);
-                    uni_Graph[a].insert(a);
-                    setA_To_setB(a, b);
+                    if(it!=a)
+                    {
+                        num = it;
+                        break;
+                    }
                 }
-                else {
-                    setA_To_setB(a, b);
-                }
+                uni[num] = num;
+                setA_To_setB(a, num);
+                a_To_setB(a, b);
             }
             else {
-                uni_Graph[find_F(a)].erase(a);
                 sum_Uni[find_F(a)] -= a;
-
+                uni_Graph[find_F(a)].erase(a);
+                uni_Graph[a].insert(a);
                 uni[a] = a;
                 sum_Uni[a] += a;
-                uni_Graph[a].insert(a);
                 setA_To_setB(a, b);
             }
-            // sum_Uni[find_F(a)] -= a;
-            // sum_Uni[find_F(b)] += a;
         }
     }
     void setA_To_setB(int a, int b){ // move set A into set B

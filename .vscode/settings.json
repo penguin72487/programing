@@ -106,6 +106,14 @@
       "thread": "cpp",
       "typeindex": "cpp",
       "valarray": "cpp",
-      "variant": "cpp"
+      "variant": "cpp",
+      "barrier": "cpp",
+      "expected": "cpp",
+      "source_location": "cpp",
+      "latch": "cpp",
+      "semaphore": "cpp",
+      "spanstream": "cpp",
+      "stacktrace": "cpp",
+      "syncstream": "cpp"
     }
   }

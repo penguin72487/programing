@@ -111,7 +111,7 @@ int main()
     freopen("fft_bignum_out.txt", "w", stdout);
     cin >> s_Val;
     freopen("fft_bignum_in_val2.txt","r",stdin);
-    cin>> s_Val2;
+    cin>> s_Val2;   
     clockid_t t=clock();
     int t_N=s_Val.length()+s_Val2.length();
     int n = f_Pow(2,log2(t_N - 1) + 1);

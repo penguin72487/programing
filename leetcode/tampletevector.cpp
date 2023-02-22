@@ -2,16 +2,13 @@
 using namespace std;
 class Solution {
 public:
-    int largestPerimeter(vector<int>& num) {
-        sort(num.rbegin(), num.rend());
-        for (int i = 2,n=num.size();i<n;++i) {
-            if(num[i-2]<num[i-1]+num[i])
-            {
-                return num[i - 2] + num[i - 1] + num[i];
-            }
+    int singleNonDuplicate(vector<int>& nums) {
+        int ans = 0;
+        for(auto i:nums)
+        {
+            ans ^= i;
         }
-
-            return 0;
+        return ans;
     }
 };
 int main()
@@ -19,7 +16,7 @@ int main()
     cout.tie(0)->sync_with_stdio(0);
     cin.tie(0);
     Solution s;
-    vector<int> num = {2,1,2};
-    cout<<s.largestPerimeter(num);
+    vector<int> num = {1,1,2,3,3,4,4,8,8};
+    cout<<s.singleNonDuplicate(num)<<"\n";
     return 0;
 }

@@ -28,29 +28,79 @@ public:
     void erase(long long v)
     {
         node* now = root;
-        while (now)
+        node* pre = nullptr;
+
+        while(now)
         {
-            if (now->val == v)
+            if(now->val == v)
             {
-                root = merge(root, merge(now->l, now->r));
-                delete now;
-                --n;
-                return;
+                if (now->val == v)
+                {
+                    if(pre == nullptr)
+                    {
+
+                    }
+                    else if(pre->l == now)
+                    {
+                        pre->l =nullptr;
+                    }
+                    else
+                    {
+                        pre->r = nullptr;
+                    }
+                    root = merge(root, merge(now->l, now->r));
+                    delete now;
+                    --n;
+                    return;
+                }
             }
-            else if (now->val < v)
+            else if(now->val < v)
             {
+                pre = now;
                 now = now->r;
             }
             else
             {
+                pre = now;
                 now = now->l;
             }
         }
+
+        // while (now)
+        // {
+        //     if (now->val == v)
+        //     {
+        //         root = merge(root, merge(now->l, now->r));
+        //         delete now;
+        //         --n;
+        //         return;
+        //     }
+        //     else if (now->val < v)
+        //     {
+        //         now = now->r;
+        //     }
+        //     else
+        //     {
+        //         now = now->l;
+        //     }
+        // }
     }
-    // void update(int k,int u)
-    // {
-    
-    // }
+    friend ostream& operator<<(ostream& os,Treap& t)
+    {
+        t.inorder(t.root);
+        return os;
+    }
+    void inorder(node* now)
+    {
+        if(!now)
+        {
+            return;
+        }
+        inorder(now->l);
+        cout << now->val << " ";
+        inorder(now->r);
+    }
+    private :
     void left_rotate(node *&t)
     {
         node *tmp = t->r;
@@ -95,7 +145,7 @@ public:
 
     // }
 
-    private: node *merge(node * a,node * b)
+    node *merge(node * a,node * b)
     {
         if(!a || !b)
             return a ? a : b;
@@ -125,17 +175,17 @@ public:
         }
 
     }
-    private: void dis_Treap(node *root)
+    void dis_Treap(node *root)
+    {
+        if(!root)
         {
-            if(!root)
-            {
-                return;
-            }
-            dis_Treap(root->l);
-            dis_Treap(root->r);
-            delete root;
-
+            return;
         }
+        dis_Treap(root->l);
+        dis_Treap(root->r);
+        delete root;
+
+    }
 };
 
 
@@ -144,17 +194,29 @@ public:
 
 int main()
 {
-    cin.tie(0)->sync_with_stdio(0);
-    cout.tie(0);
-    int n;
-    cin >> n;
+    // cin.tie(0)->sync_with_stdio(0);
+    // cout.tie(0);
+    int n=16;
+    //cin >> n;
     int t[n];
     Treap root;
     srand(time(0));
+    long long r=rand()%n;
+    long long s = rand();
     for(int i = 0; i < n; i++)
     {
-        //cin >> t[i];
+        t[i] = rand();
+    }
+    for(int i = 0; i < n; i++)
+    {
         root.insert(t[i]);
+    }
+    cout<<r<<" "<<s<<"\n";
+    for(int i = 0; i < n; i++)
+    {
+        cout << root << "\n";
+        int tmp = (r*i+s) % n;
+        root.erase(t[tmp]);
     }
     return 0;
 }

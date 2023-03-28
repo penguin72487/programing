@@ -1,222 +1,142 @@
 #include<bits/stdc++.h>
 using namespace std;
-class node{
-    public:
-        long long val, pri;
-        node *l, *r;
-        node(long long v) : val(v), pri(rand()),l(nullptr), r(nullptr){
 
-        }
+class node {
+public:
+    long long val, pri;
+    node *l, *r;
+
+    node(long long v) : val(v), pri(rand()), l(nullptr), r(nullptr) {
+    }
 };
 
-class Treap
-{
+class Treap {
 public:
     node *root = nullptr;
-    int n=0;
-    ~Treap()
-    {
+    int n = 0;
+
+    ~Treap() {
         dis_Treap(root);
     }
 
-    void insert(long long v)
-    {
-        node *node_tmp = new node(v);
-        root = merge(root, node_tmp);
+    void insert(long long v) {
+        root = insert(root, new node(v));
         ++n;
     }
-    void erase(long long v)
-    {
-        node* now = root;
-        node* pre = nullptr;
 
-        while(now)
-        {
-            if(now->val == v)
-            {
-                if (now->val == v)
-                {
-                    if(pre == nullptr)
-                    {
-
-                    }
-                    else if(pre->l == now)
-                    {
-                        pre->l =nullptr;
-                    }
-                    else
-                    {
-                        pre->r = nullptr;
-                    }
-                    root = merge(root, merge(now->l, now->r));
-                    delete now;
-                    --n;
-                    return;
-                }
-            }
-            else if(now->val < v)
-            {
-                pre = now;
-                now = now->r;
-            }
-            else
-            {
-                pre = now;
-                now = now->l;
-            }
-        }
-
-        // while (now)
-        // {
-        //     if (now->val == v)
-        //     {
-        //         root = merge(root, merge(now->l, now->r));
-        //         delete now;
-        //         --n;
-        //         return;
-        //     }
-        //     else if (now->val < v)
-        //     {
-        //         now = now->r;
-        //     }
-        //     else
-        //     {
-        //         now = now->l;
-        //     }
-        // }
+    void erase(long long v) {
+        root = erase(root, v);
     }
-    friend ostream& operator<<(ostream& os,Treap& t)
-    {
+
+    void print() {
+        inorder(root);
+        cout << endl;
+    }
+    friend ostream &operator<<(ostream &out, Treap &t) {
         t.inorder(t.root);
-        return os;
+        return out;
     }
-    void inorder(node* now)
-    {
-        if(!now)
-        {
+
+private:
+    void left_rotate(node *&t) {
+        node *tmp = t->r;
+        t->r = tmp->l;
+        tmp->l = t;
+        t = tmp;
+    }
+
+    void right_rotate(node *&t) {
+        node *tmp = t->l;
+        t->l = tmp->r;
+        tmp->r = t;
+        t = tmp;
+    }
+
+    void inorder(node *now) {
+        if (!now) {
             return;
         }
         inorder(now->l);
         cout << now->val << " ";
         inorder(now->r);
     }
-    private :
-    void left_rotate(node *&t)
-    {
-        node *tmp = t->r;
-        t->r = tmp->l;
-        tmp->l = t;
-        t = tmp;
-    }
-    void right_rotate(node *&t)
-    {
-        node *tmp = t->l;
-        t->l = tmp->r;
-        tmp->r = t;
-        t = tmp;
-    }
-    
-    // private: node* insert(node *now, node* t)
-    // {
-    //     if(!now)
-    //     {
-    //         return t;
-    //     }
-    //     if(now->val < t->val)
-    //     {
-    //         now->r = insert(now->r, t);
-    //     }
-    //     else
-    //     {
-    //         now->l = insert(now->l, t);
-    //     }
-    //     if(now->pri < t->pri)
-    //     {
-    //         if(now->l == t)
-    //         {
-    //             right_rotate(now);
-    //         }
-    //         else
-    //         {
-    //             left_rotate(now);
-    //         }
-    //     }
-    //     return now;
 
-    // }
-
-    node *merge(node * a,node * b)
-    {
-        if(!a || !b)
-            return a ? a : b;
-        if(a->pri > b->pri)
-        {
-            if(b->val < a->val)
-            {
-                a->l = merge(a->l, b);
-            }
-            else
-            {
-                a->r = merge(a->r, b);
-            }
-            return a;
+    node *insert(node *now, node *t) {
+        if (!now) {
+            return t;
         }
-        else
-        {
-            if(a->val < b->val)
-            {
-                b->l = merge(a, b->l);
+        if (now->val < t->val) {
+            now->r = insert(now->r, t);
+            if (now->pri < now->r->pri) {
+                left_rotate(now);
             }
-            else
-            {
-                b->r = merge(a, b->r);
+        } else {
+            now->l = insert(now->l, t);
+            if (now->pri < now->l->pri) {
+                right_rotate(now);
             }
+        }
+        return now;
+    }
+
+    node *erase(node *now, long long v) {
+        if (!now) {
+            return nullptr;
+        }
+        if (now->val == v) {
+            node *ret = merge(now->l, now->r);
+            delete now;
+            --n;
+            return ret;
+        } else if (now->val < v) {
+            now->r = erase(now->r, v);
+        } else {
+            now->l = erase(now->l, v);
+        }
+        return now;
+    }
+
+    node *merge(node *a, node *b) {
+        if (!a || !b) {
+            return a ? a : b;
+        }
+        if (a->pri > b->pri) {
+            a->r = merge(a->r, b);
+            return a;
+        } else {
+            b->l = merge(a, b->l);
             return b;
         }
-
     }
-    void dis_Treap(node *root)
-    {
-        if(!root)
-        {
+
+    void dis_Treap(node *root) {
+        if (!root) {
             return;
         }
         dis_Treap(root->l);
         dis_Treap(root->r);
         delete root;
-
     }
 };
 
-
-
-
-
-int main()
-{
-    // cin.tie(0)->sync_with_stdio(0);
-    // cout.tie(0);
-    int n=16;
-    //cin >> n;
+int main() {
+    int n = 16;
     int t[n];
-    Treap root;
+    Treap treap;
     srand(time(0));
-    long long r=rand()%n;
-    long long s = rand();
-    for(int i = 0; i < n; i++)
-    {
+    for (int i = 0; i < n; i++) {
         t[i] = rand();
     }
     for(int i = 0; i < n; i++)
     {
-        root.insert(t[i]);
+        treap.insert(t[i]);
     }
-    cout<<r<<" "<<s<<"\n";
+    //cout<<r<<" "<<s<<"\n";
+    random_shuffle(t, t + n);
     for(int i = 0; i < n; i++)
     {
-        cout << root << "\n";
-        int tmp = (r*i+s) % n;
-        root.erase(t[tmp]);
+        cout<<treap<<"\n";
+        treap.erase(t[i]);
     }
     return 0;
 }

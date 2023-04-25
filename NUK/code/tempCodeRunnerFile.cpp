@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include<bits/stdc++.h>
 using namespace std;
 bool segment(int target,vector<int> v)
@@ -53,3 +54,6 @@ int main(){
 
     return 0;
 }
+=======
+D
+>>>>>>> 0f81b470c6c2f1109d07ac44d27cc764d04e3f3d

@@ -11,6 +11,12 @@ int main(){
         long long n, tr, tp, ts;
         cin >> n >> tr >> tp >> ts;
         ts-=tp;
+        if(ts<0)
+        {
+            cout << 0 << "\n";
+            continue;
+        }
+
         vector<long long> a(n, 0);
         for (int i = 0; i < n;i++)
         {
@@ -29,8 +35,12 @@ int main(){
                 break;
             }
         }
-        long double ld=  (long double)(ts) / ( (long double)(tr) +  (long double)(tp));
-        cout << min(ans, (long long)(ld)+1) << "\n";
+        cout << min(ans, ts/(tr+tp)+1) << "\n";
     }
     return 0;
 }
+/*
+1
+4 1 3 0
+10 10 10 10
+*/

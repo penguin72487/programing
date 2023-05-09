@@ -10,24 +10,28 @@ int main(){
         cin>>n>>m;
         vector<int> a(n);
         vector<int> p(m);
-        for(int i=0; i<n; i++){
-            cin>>a[i];
+        for(auto& it:a)
+        {
+            cin>>it;
         }
-        for(int i=0; i<m; i++){
-            cin>>p[i];
+        for(auto& it:p)
+        {
+            cin>>it;
         }
         sort(p.begin(), p.end());
         for(auto& i:p){
             --i;
         }
+        p.push_back(n);
         int op=p[0];
 
-        for(int i=1; i<m; i++){
-            if(p[i]!=p[i-1]+1){
-                
+        for(int i=1; i<m+1; i++){
+            if(p[i]>p[i-1]+1){
+                sort(a.begin()+op, a.begin()+p[i-1]+2);
+                op=p[i];
             }
         }
-        sort(a.begin()+p[m-1], a.end());
+        //sort(a.begin()+op, a.begin()+op+2);
         bool flag=true;
         for(int i=0; i<n-1; i++){
             if(a[i]>a[i+1]){

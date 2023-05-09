@@ -1,85 +1,57 @@
 #include <SFML/Graphics.hpp>
-#include <cmath>
-#include <random>
+#include <bits/stdc++.h>
 
-int main()
-{
-    // 创建窗口
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Fern");
+// 葉子大小參數
+const float leafWidth = 100.0f;
+const float leafHeight = 200.0f;
 
-    // 创建形状（鐵線蕨）
-    sf::ConvexShape fern;
-    fern.setPointCount(4); // 鐵線蕨由4个点组成
-    fern.setPoint(0, sf::Vector2f(0, 0));
-    fern.setPoint(1, sf::Vector2f(5, 0));
-    fern.setPoint(2, sf::Vector2f(5, 20));
-    fern.setPoint(3, sf::Vector2f(0, 20));
+// 計算葉子點的位置
+sf::Vector2f getLeafPointPosition(float x, float y) {
+    float xPos = x * leafWidth / 2.0f * (1.0f - y / leafHeight);
+    return sf::Vector2f(xPos, y);
+}
 
-    // 设置颜色和外观
-    fern.setFillColor(sf::Color(34, 139, 34)); // 森林绿
-    fern.setOutlineThickness(1); // 边框厚度为1
-    fern.setOutlineColor(sf::Color(0, 100, 0)); // 暗绿色
+int main() {
+    // 隨機數種子
+    std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
-    // 设置变换矩阵
-    sf::Transform transform;
-    float angle = 0.0f; // 初始角度
-    float scale = 1.0f; // 初始缩放
-    float tx = 400.0f; // 初始x轴平移
-    float ty = 550.0f; // 初始y轴平移
-    transform.rotate(angle); // 旋转
-    transform.scale(scale, scale); // 缩放
-    transform.translate(tx, ty); // 平移
+    // 創建視窗
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Leaf Generator");
 
-    // 随机数生成器
-    std::default_random_engine generator;
-    std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
+    // 創建畫布
+    sf::RenderTexture renderTexture;
+    renderTexture.create(800, 600);
+    renderTexture.clear(sf::Color::White);
 
-    // 渲染循环
-    while (window.isOpen())
-    {
-        // 处理窗口事件
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
-        // 清除屏幕
-        window.clear(sf::Color::White);
+        // 繪製葉子點
+        for (int i = 0; i < 1000; ++i) {
+            float x = static_cast<float>(std::rand()) / RAND_MAX;
+            float y = static_cast<float>(std::rand()) / RAND_MAX * leafHeight;
 
-        // 绘制多个鐵線蕨
-        for (int i = 0; i < 10000; i++) {
-            // 随机选择一个变换
-            float r = distribution(generator);
-            if (r < 0.01f) {
-                transform = sf::Transform::Identity;
-                transform.translate(0, 0.16f * ty);
-                transform.rotate(-9.0f);
-                transform.scale(0.02f, 0.02f);
-            }
-            else if (r < 0.86f) {
-                transform.rotate(0.0f);
-                transform.scale(0.85f, 0.85f);
-                transform.translate(0, 0.08f * ty);
-            }
-            else if (r < 0.93f) {
-                transform.rotate(90.0f);
-                transform.scale(0.2f, 0.2f);
-                transform.translate(0, 0.08f * ty);
-            }
-            else {
-                transform.rotate(-90.0f);
-                transform.scale(0.2f, 0.2f);
-                transform.translate(0, 0.08f);
-            }
+            sf::CircleShape point(1);
+            point.setFillColor(sf::Color::Green);
+            sf::Vector2f leftPos = getLeafPointPosition(-x, y);
+            sf::Vector2f rightPos = getLeafPointPosition(x, y);
+            point.setPosition(leftPos + sf::Vector2f(400.0f - leafWidth / 2.0f, 200.0f));
+            renderTexture.draw(point);
+            point.setPosition(rightPos + sf::Vector2f(400.0f - leafWidth / 2.0f, 200.0f));
+            renderTexture.draw(point);
         }
-                // 应用变换并绘制
+
+        // 顯示圖像
+        renderTexture.display();
         window.clear(sf::Color::White);
-        window.draw(fern, transform);
+        sf::Sprite sprite(renderTexture.getTexture());
+        window.draw(sprite);
         window.display();
     }
 
+    return 0;
 }
-
-

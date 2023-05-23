@@ -8,35 +8,7 @@
       "compilerPath": "C:/msys64/mingw64/bin/g++.exe",
       "cStandard": "c17",
       "cppStandard": "c++17",
-      "intelliSenseMode": "windows-gcc-x64",
-      "browse": {
-        "path": ["${workspaceFolder}"],
-        "limitSymbolsToIncludedHeaders": true,
-        "databaseFilename": ""
-      }
-    },
-    {
-      "name": "Win32",
-      "includePath": [
-        "${workspaceFolder}/**",
-        "C:/SFML-2.5.1/include"
-      ],
-      "defines": [
-        "_DEBUG",
-        "UNICODE"
-      ],
-      "compilerPath": "C:/MinGW/bin/g++.exe",
-      "cStandard": "c17",
-      "cppStandard": "c++14",
-      "intelliSenseMode": "windows-gcc-x64",
-      "browse": {
-        "path": [
-          "${workspaceFolder}",
-          "C:/SFML-2.5.1/include"
-        ],
-        "limitSymbolsToIncludedHeaders": true,
-        "databaseFilename": ""
-      }
+      "intelliSenseMode": "windows-gcc-x64"
     }
   ],
   "version": 4

@@ -9,6 +9,7 @@ int main(){
     int n = 10;
     //int arr[10] = {0};
     vector<int> a(n,0);
-    vector<vector<long long>> b(n, vector<long long>(n, 1ll<<60)); // arr[n][n]={0};1<<30 =          1<<1      100000000000000000000000
+    vector<vector<long long>> b(n, vector<long lng>(n, 1ll<<60)); //o arr[n][n]={0};1<<30 =          1<<1      100000000000000000000000
+    
     return 0;
 }

@@ -5,6 +5,8 @@ int main(){
     cout.tie(0);
     double s,a;
     string str;
+    double pi=acos(-1);
+    double r=6440;
     while(cin>>s>>a>>str)
     {
         if(str=="min")
@@ -15,8 +17,7 @@ int main(){
         {
             a=360-a;
         }
-        double ans = 2*s*acos(-1)*a/360;
-        cout<<fixed<<setprecision(6)<<ans<<" "<<2*s*sin(a*acos(-1)/180)<<"\n";
+        cout<<fixed<<setprecision(6)<<2*pi*(r+s)*a/360<<" "<<2*(r+s)*sin(a/2/180*pi)<<"\n";
     }
     return 0;
 }

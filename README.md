@@ -1,4 +1,4 @@
-# zero-judge-practice
+# programing
 我是錢昱名，目前(2021/11/5)就讀明倫高中三年級，習慣用企鵝這個暱稱，這裡是幾乎從高二使用github後快一年的我所有寫過的程式。主要練習的網站就是高中生程式解題系統 [zerojudge](https://zerojudge.tw/)
 我的zj[統計資料](https://zerojudge.tw/UserStatistic?id=105222)寫不出來可以來參考我的代碼。~~大部分新手要用的代碼都在```zerojudge/水題```那個資料夾~~
 ## 我的學習歷程

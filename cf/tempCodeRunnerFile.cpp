@@ -1,15 +1,20 @@
-#include<bits/stdc++.h>
-using namespace std;
-int main(){
-    cin.tie(0)->sync_with_stdio(0);
-    cout.tie(0);
-    int t;
-    cin>>t;
-    while(t--){
-        int a, b, c;
-        cin>>a>>b>>c;
-        int diff=abs(a-b);
-        cout<<diff/(c*2)<<"\n";
-    }
-    return 0;
-}
+2
+5
+22 25 26 45 22
+00001
+5
+2 0
+1 2 4
+1 2 2
+1 2 2
+2 1
+5
+11 29 6 40 18
+11100
+5
+2 0
+1 3 5
+2 1
+2 1
+1 1 3
+ 

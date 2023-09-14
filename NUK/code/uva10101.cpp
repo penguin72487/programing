@@ -1,22 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
 vector<int> vec;
-void to_Bangla(long long x,int count)
-{
-    if(x==0)
-    {
-        return;
-    }
-    if(count%4==1)
-    {
-        vec.push_back(x%10);
-        to_Bangla(x/10,count+1);
-    }
-    else {
-        vec.push_back(x%100);
-        to_Bangla(x/100,count+1);
-    }
-}
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
@@ -25,46 +9,68 @@ int main(){
     while(cin>>n)
     {
         ++t;
+        cout<<setw(4)<<t<<". ";
         vec.clear();
-        to_Bangla(n,0);
-        vector<string> vec2;
-        for (int i = 0;i<vec.size();i++)
+        vector<string> vs;
+        if(n==0)
         {
-            if(vec[i]!=0)
-            {
-                vec2.push_back(to_string(vec[i]));
-            }
-
-
-            if(i%4==0)
-            {
-                vec2.push_back("shata");
-            }
-            else if(i%4==1)
-            {
-                vec2.push_back("hajar");
-            }
-            else if(i%4==2)
-            {
-                vec2.push_back("lakh");
-            }
-            else if(i%4==3)
-            {
-                vec2.push_back("kuti");
-            }
+            cout<<"0\n";
+            continue;
         }
-        if (!vec2.empty()) {
-            vec2.pop_back();
-        }
-        reverse(vec2.begin(),vec2.end());
-        cout<<t<<". ";
-        for(auto it:vec2)
+        while(n)
         {
-            cout << it << " ";
+            int k=n%100;
+            if(k!=0)
+            {
+                vs.push_back(to_string(k));
+            }
+            n/=100;
+            if(n==0)break; 
+            k=n%10;
+            if(k!=0)
+            {
+                vs.push_back("shata");
+                vs.push_back(to_string(k));
+            }
+            n/=10;
+            if(n==0)break;
+            k=n%100;
+
+            if(k!=0)
+            {
+                vs.push_back("hajar");
+                vs.push_back(to_string(k));
+            }
+            n/=100;
+            if(n==0)break;
+            k=n%100;
+
+            if(k!=0)
+            {
+                vs.push_back("lakh");
+                vs.push_back(to_string(k));
+            }
+            n/=100;
+            if(n==0)
+            {
+                break;
+            }
+            else{
+                vs.push_back("kuti");
+            }
         }
-        cout << "\n";
+        for(int i=vs.size()-1;i>=0;--i)
+        {
+            cout << vs[i];
+            if(i!=0)
+            {
+                cout<<" ";
+            }
+        }
+        cout<<"\n";
     }
-
     return 0;
 }
-//4
+/*
+400600004090000
+*/

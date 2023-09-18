@@ -46,8 +46,9 @@ class segment{
         {
             apply(p<<1);
             apply(p<<1|1);
+            tree[p].lazy_Tag=0;
         }
-        tree[p].lazy_Tag=0;
+        
     }
     void pull(int p)//update change up to father
     {

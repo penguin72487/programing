@@ -1,24 +1,21 @@
-#pragma GCC optimize("O3")
-#pragma G   optimize("O3")
 #include<iostream>
 #include<vector>
 #include<memory>
-using namespace std;
-class node{
-    public:
-        long long index, pri;
-        long long val, sum;
-        shared_ptr<node> l, r;
-        node(long long k, long long v) : index(k), pri(rand()), val(v), sum(v), l(nullptr), r(nullptr){
- 
-        }
-        node(shared_ptr<node> t): index(t->index), pri(t->pri), val(t->val), sum(t->sum), l(t->l), r(t->r){
- 
-        }
-};
- 
+using namespace std; 
 class Treap
 {
+    class node{
+        public:
+            long long index, pri;
+            long long val, sum;
+            shared_ptr<node> l, r;
+            node(long long k, long long v) : index(k), pri(rand()), val(v), sum(v), l(nullptr), r(nullptr){
+    
+            }
+            node(shared_ptr<node> t): index(t->index), pri(t->pri), val(t->val), sum(t->sum), l(t->l), r(t->r){
+    
+            }
+    };
 public:
     vector<shared_ptr<node>> root;
     int n=0;

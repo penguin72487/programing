@@ -59,12 +59,14 @@ class segment{
             auto &r = tree[i_Op^1];
             it.i_Val0 = l.i_Val0 ^ r.i_Val0;
             it.i_Val1 = l.i_Val1 ^ r.i_Val1;
-
+ 
         }
     }
-
+ 
     void modify(int l,int r)//[l,r)
     {
+        // push(l+n);
+        // push(r+n-1);
         for(int i_Op=l+n,i_Ed=r+n;i_Op<i_Ed;i_Op>>=1,i_Ed>>=1)
         {
             if(i_Op&1)
@@ -80,7 +82,9 @@ class segment{
                 pull(i_Ed);
             }
         }
-
+        // pull(l+n);
+        // pull(r+n-1);
+ 
     }
     void query(int b)
     {
@@ -89,7 +93,7 @@ class segment{
         else
             cout << tree[1].i_Val0 << " ";
     }
-
+ 
 };
 int main(){
     cin.tie(0)->sync_with_stdio(0);

@@ -1,2 +1,0 @@
-*.zip !text !filter !merge !diff
-*.in !text !filter !merge !diff

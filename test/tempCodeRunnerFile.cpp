@@ -1,2 +1,0 @@
-fclose(stdout);
-    // fclose(stdin);

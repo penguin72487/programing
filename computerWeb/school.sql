@@ -40,5 +40,3 @@ CREATE TABLE classes (
     FOREIGN KEY (eid) REFERENCES Instructors(eid),
     FOREIGN KEY (sid) REFERENCES Student(sid)
 );
-insert into Student 
-values ('s073','錢昱名','0912345678','1999-01-01',3.5);

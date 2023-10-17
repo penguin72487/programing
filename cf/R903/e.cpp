@@ -14,11 +14,22 @@ int main(){
         {
             cin>>it;
         }
-        vector<int> dp(n+1,1<<30);
+        vector<int> dp(n + 1);
+        for (int i = 0; i <=n;++i)
+        {
+            dp[i] = i;
+        }
         for (int i = 0; i < n;++i)
         {
-            dp[i+v[i]] = min(dp[i+v[i]], dp[i] + 1);
+            if(i + v[i]+1<=n)
+            {
+                dp[i + v[i]+1] = min({dp[i],dp[i + v[i]+1]});
+                dp[n] = min(dp[n], dp[i] + n-i-v[i]-1);
+            }
+            dp[i+1]=min(dp[i+1],dp[i]+1);
+            
         }
+        cout << dp[n] << "\n";
     }
     return 0;
 }

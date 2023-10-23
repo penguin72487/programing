@@ -3,23 +3,22 @@
 #pragma GCC target("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,avx2,fma,tune=native")
 #pragma comment(linker, "/stack:200000000")
 using namespace std;
-namespace dimensionTwo{
-    void print()
-    {
-        cout<<"this is dimension two\n";
-    }
+
+int multipleByValue(int count) {
+    count *= count;
+    return count;
 }
-namespace dimensionThree{
-    void print()
-    {
-        cout<<"this is dimension three\n";
-    }
+
+void multipleByReference(int &count) {
+    count *= count;
 }
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    dimensionTwo::print();
-    dimensionThree::print();
+    int count = 6;
+    int count2 = 15;
+    cout << "count = " << count << "\n";
+    cout << "count2 = " << count2 << "\n";
     
     return 0;
 }

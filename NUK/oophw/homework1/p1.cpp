@@ -26,7 +26,7 @@ int main()
 		vector<double> ma_time;
 
 		int t = 10;
-		int kt = 3000;
+		int kt = 30000;
 		for (int i{0}; i != 10;++i)
 		{
 			clock_t begin = clock();

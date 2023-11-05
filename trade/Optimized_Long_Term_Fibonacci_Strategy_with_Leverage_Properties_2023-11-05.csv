@@ -1,0 +1,29 @@
+標題,價格
+交易範圍,2022-11-07 16:00 — 2023-11-05 04:00
+回測範圍,2022-11-06 00:00 — 2023-11-05 04:00
+商品代碼,BINANCE:ETHBTC
+時間週期,15 分鐘
+圖表類型,K線
+點值,1
+貨幣,BTC
+Tick Size,0.00001
+精確度,系統預設
+Fibonacci Lookback Period Start,150
+Fibonacci Lookback Period End,50
+Volume Multiplier for Entry,2
+Risk Percentage for Stop Loss,1
+ATR Length for Stop Loss,14
+Leverage,3
+EMA Trend Filter Length,50
+Trailing Stop ATR Multiplier,2
+初始資金,100000 BTC
+訂單數量,5% 權益
+金字塔式,1 訂單
+佣金,0%
+滑點,0 ticks
+為限價單核對價格,0 ticks
+多頭倉位保證金,0%
+空頭倉位保證金,0%
+重新計算 訂單完成後,在
+重新計算 在每筆數據上,在
+重新計算 在K線關閉時,在

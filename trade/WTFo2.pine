@@ -1,0 +1,60 @@
+//@version=4
+strategy("Optimized Long Term Fibonacci Strategy with Leverage", overlay=true, default_qty_type=strategy.percent_of_equity, default_qty_value=5)
+
+// 優化後的策略参数
+fibStartLength = input(150, minval=1, title="Fibonacci Lookback Period Start")
+fibEndLength = input(50, minval=1, title="Fibonacci Lookback Period End")
+volMultiplier = input(2, title="Volume Multiplier for Entry")
+riskPct = input(1, title="Risk Percentage for Stop Loss")
+atrLength = input(14, title="ATR Length for Stop Loss")
+leverage = input(3, title="Leverage")
+
+// 趋势过滤器
+emaFilterLength = input(50, title="EMA Trend Filter Length")
+longTrendFilter = ema(close, emaFilterLength) < close
+shortTrendFilter = ema(close, emaFilterLength) > close
+
+// 计算平均交易量
+avgVol = sma(volume, fibStartLength)
+
+// 计算ATR和风险管理
+atr = atr(atrLength)
+riskPerTrade = strategy.equity * (riskPct / 100) * leverage
+
+// 计算Fibonacci通道的高点和低点
+highLevel = highest(high, fibStartLength)
+lowLevel = lowest(low, fibEndLength)
+// 计算Fibonacci回撤水平
+fibRange = highLevel - lowLevel
+fib618 = highLevel - fibRange * 0.618
+fib382 = highLevel - fibRange * 0.382
+fib236 = highLevel - fibRange * 0.236
+
+// 绘制Fibonacci通道
+plot(highLevel, color=color.red, linewidth=2, title="High Level")
+plot(fib618, color=color.blue, linewidth=2, title="Fib 0.618 Level")
+plot(fib382, color=color.orange, linewidth=2, title="Fib 0.382 Level")
+plot(fib236, color=color.green, linewidth=2, title="Fib 0.236 Level")
+plot(lowLevel, color=color.red, linewidth=2, title="Low Level")
+
+// 交易信号逻辑
+longCondition = crossover(close, fib236) and (volume / avgVol) > volMultiplier and longTrendFilter
+shortCondition = crossunder(close, fib618) and (volume / avgVol) > volMultiplier and shortTrendFilter
+
+// 进场策略
+if (longCondition)
+    strategy.entry("Long", strategy.long, qty=riskPerTrade / atr)
+
+if (shortCondition)
+    strategy.entry("Short", strategy.short, qty=riskPerTrade / atr)
+
+// 調整跟踪止損
+trailStopAtrMultiplier = input(2, title="Trailing Stop ATR Multiplier")
+trailStop = atr * trailStopAtrMultiplier
+
+strategy.exit("Trailing Stop", "Long", trail_points = trailStop, trail_offset = trailStop * 0.1)
+strategy.exit("Trailing Stop", "Short", trail_points = trailStop, trail_offset = trailStop * 0.1)
+
+// 退出条件：当价格回撤到Fib 0.382水平时平仓，或者当盈利超过ATR的6倍时
+strategy.close("Long", when=crossunder(close, fib382) or (strategy.openprofit > atr * 6))
+strategy.close("Short", when=crossover(close, fib382) or (strategy.openprofit > atr * 6))

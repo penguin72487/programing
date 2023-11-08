@@ -1,0 +1,33 @@
+<html> ey
+<head> BARA > REE
+<meta charset="utf-8">
+<style>
+img {display: inline; position: fixed; top: 2px; left: 15@px;}
+p {display: block; width: 3@@px; white-space: pre-line;
+</style>
+</head>
+<body>
+
+ 
+
+    
+
+ 
+
+<img src="jhsu.jpg" style="border: 1px solid blue">
+POBABA
+
+<prgvtS : Pie
+48
+Aw
+AK
+UR : BEst</p>
+
+ 
+
+<p><a href="http://tw. yahoo. com/">ZYahoo BEBE </a>
+<p><a href="http: //www. google. com/">Google— FIB</a>
+
+</body>
+</html>
+

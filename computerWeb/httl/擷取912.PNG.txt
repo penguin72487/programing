@@ -1,0 +1,44 @@
+ANOnNRWN =
+
+@aN>A00
+
+14
+15
+16
+17
+18
+
+<html>
+<head>
+<met
+<sty
+im
+
+</st
+</head
+<body>
+<img
+</body
+</html>
+
+a charset="utf-8">
+
+le>
+
+Bt
+
+width: 10%;
+
+display: block;
+
+margin: 5px auto;
+
+border: solid 1@px hotpink; border-radius: 1@px;
+padding: @.5cm 5cm;
+
+yle>
+>
+
+src="jhsu.jpg">
+>
+

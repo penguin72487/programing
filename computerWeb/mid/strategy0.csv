@@ -1,0 +1,71 @@
+1,1,WTFo5,//@version=4
+strategy("WTF5", overlay=true, default_qty_type=strategy.percent_of_equity, default_qty_value=5, commission_type=strategy.commission.percent, commission_value=0.04)
+
+// Adjusted strategy parameters for higher frequency
+fibStartLength = input(75, minval=1, title="Fibonacci Lookback Period Start") // Reduced for faster response
+fibEndLength = input(25, minval=1, title="Fibonacci Lookback Period End") // Reduced for faster response
+volMultiplier = input(1.5, title="Volume Multiplier for Entry") // Lowered to trigger trades on smaller volume changes
+riskPct = input(0.5, title="Risk Percentage for Stop Loss")
+atrLength = input(14, title="ATR Length for Stop Loss")
+leverage = input(1, title="Leverage")
+trailStopAtrMultiplier = input(2, title="Trailing Stop ATR Multiplier")
+
+// Adjusted trend filter for higher sensitivity
+emaFilterLength = input(25, title="EMA Trend Filter Length") // Shortened for quicker trend detection
+longTrendFilter = ema(close, emaFilterLength) < close
+shortTrendFilter = ema(close, emaFilterLength) > close
+
+// Average volume calculation remains the same
+avgVol = sma(volume, fibStartLength)
+
+// ATR and risk management remains the same
+atr = atr(atrLength)
+riskPerTrade = strategy.equity * (riskPct / 100) * leverage
+
+// Fibonacci channel high and low
+highLevel = highest(high, fibStartLength)
+lowLevel = lowest(low, fibEndLength)
+// Adjusted Fibonacci retracement levels for more frequent trades
+fibRange = highLevel - lowLevel
+fib786 = highLevel - fibRange * 0.786
+fib618 = highLevel - fibRange * 0.618
+fib500 = highLevel - fibRange * 0.500
+fib382 = highLevel - fibRange * 0.382
+fib236 = highLevel - fibRange * 0.236
+fib1 = highLevel - fibRange * 1.0
+fib1618 = highLevel - fibRange * 1.618
+fib2618 = highLevel - fibRange * 2.618
+
+// Draw Fibonacci channel with additional level
+plot(highLevel, color=color.red, linewidth=2, title="High Level")
+plot(fib618, color=color.blue, linewidth=2, title="Fib 0.618 Level")
+plot(fib500, color=color.purple, linewidth=2, title="Fib 0.500 Level") // New mid-level
+plot(fib382, color=color.orange, linewidth=2, title="Fib 0.382 Level")
+plot(fib236, color=color.green, linewidth=2, title="Fib 0.236 Level")
+plot(lowLevel, color=color.red, linewidth=2, title="Low Level")
+
+// Adjusted trade signal logic for higher frequency
+longCondition = (crossover(close, fib236) or crossover(close, fib382) or crossover(close, fib500) or crossover(close, fib618) or crossover(close, fib786) or crossover(close, fib1) or crossover(close, fib1618) or crossover(close, fib2618)) and (volume / avgVol) > volMultiplier and longTrendFilter
+
+shortCondition = (crossunder(close, fib236) or crossunder(close, fib382) or crossunder(close, fib500) or crossunder(close, fib618) or crossunder(close, fib786) or crossunder(close, fib1) or crossunder(close, fib1618) or crossunder(close, fib2618)) and (volume / avgVol) > volMultiplier and shortTrendFilter
+
+// Entry strategy remains the same
+if (longCondition)
+    strategy.entry("Long", strategy.long, qty=riskPerTrade / atr)
+
+if (shortCondition)
+    strategy.entry("Short", strategy.short, qty=riskPerTrade / atr)
+
+// Trailing stop adjustment remains the same
+profitMultiplier = input(8, title="Profit Target Multiplier")
+trailStop = atr * trailStopAtrMultiplier
+// strategy.exit("Stop Loss", "Long", loss = strategy.equity * (riskPct / 100))
+// strategy.exit("Stop Loss", "Short", loss = strategy.equity * (riskPct / 100))
+
+strategy.exit("Trailing Stop", "Long", trail_points = trailStop, trail_offset = trailStop * 1)
+strategy.exit("Trailing Stop", "Short", trail_points = trailStop, trail_offset = trailStop * 1)
+
+// Adjusted exit conditions for higher frequency
+strategy.close("Long", when=(crossunder(close, fib236) or crossunder(close, fib382) or crossunder(close, fib500) or crossunder(close, fib618) or crossunder(close, fib786) or crossunder(close, fib1) or crossunder(close, fib1618) or crossunder(close, fib2618)) or (strategy.openprofit > atr * profitMultiplier))
+
+strategy.close("Short", when=(crossover(close, fib236) or crossover(close, fib382) or crossover(close, fib500) or crossover(close, fib618) or crossover(close, fib786) or crossover(close, fib1) or crossover(close, fib1618) or crossover(close, fib2618)) or (strategy.openprofit > atr * profitMultiplier))

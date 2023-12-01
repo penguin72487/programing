@@ -20,16 +20,16 @@ CREATE TABLE review(
     review_Id INT AUTO_INCREMENT,
     strategy_Id INT,
 
-    ROI DOUBLE,//
-    totle_Profit DOUBLE,//淨利 全部%
-    max_Drawdown DOUBLE,//最大虧損交易 全部USDT
-    max_Drawdown_Percent DOUBLE,//最大虧損交易 全部%
-    max_Runup DOUBLE,//最大盈利交易 全部USDT
-    max_Runup_Percent DOUBLE,//最大盈利交易 全部%
-    sharpe_Ratio DOUBLE,//夏普比率 全部USDT
-    profit_Factor DOUBLE,//盈利因子 全部USDT
-    win_Rate DOUBLE,//勝率 全部%
-    totle_closed_Trade INT,// 所有已平倉交易 全部USDT
+    ROI DOUBLE,--
+    totle_Profit DOUBLE,
+    max_Drawdown DOUBLE,
+    max_Drawdown_Percent DOUBLE,
+    max_Runup DOUBLE,
+    max_Runup_Percent DOUBLE,
+    sharpe_Ratio DOUBLE,
+    profit_Factor DOUBLE,
+    win_Rate DOUBLE,
+    totle_closed_Trade INT,
     PRIMARY KEY (review_Id),
     FOREIGN KEY (strategy_Id) REFERENCES strategy(strategy_Id)
 );
@@ -43,12 +43,11 @@ CREATE TABLE trade_parameter(
     PRIMARY KEY (parameter_Id),
     FOREIGN KEY (review_Id) REFERENCES review(review_Id)
 );
-INSERT INTO trade_parameter (review_Id, init_Fund, trade_Fee) VALUES (2,100.0,0.05);
+
 CREATE TABLE trade(
     trade_Id INT AUTO_INCREMENT,
     review_Id INT,
     trade_Order INT,
-    strategy_Id INT,
     entry_Date DATE,
     entry_Time TIME,
     exit_Date DATE,
@@ -58,6 +57,5 @@ CREATE TABLE trade(
     profit DOUBLE,
     trade_Amount DOUBLE,
     PRIMARY KEY (trade_Id),
-    FOREIGN KEY (strategy_Id) REFERENCES strategy(strategy_Id),
     FOREIGN KEY (review_Id) REFERENCES review(review_Id)
 );

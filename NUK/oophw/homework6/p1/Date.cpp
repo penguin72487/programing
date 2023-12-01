@@ -85,3 +85,8 @@ void Date::nextDay()
     else
         day++;
 }
+ostream& operator<<(ostream& out, const Date& d)
+{
+    out<<d.month<<"/"<<d.day<<"/"<<d.year;
+    return out;
+}

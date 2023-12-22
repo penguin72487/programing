@@ -9,7 +9,10 @@
           "-g",
           "${file}",
           "-o",
-          "${fileDirname}\\${fileBasenameNoExtension}.exe"
+          "${fileDirname}\\${fileBasenameNoExtension}.exe",
+          "-lws2_32",
+          "-lcurl",
+          "-lpthread"
         ],
         "options": {
           "cwd": "${fileDirname}"

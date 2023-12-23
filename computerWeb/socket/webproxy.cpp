@@ -14,7 +14,7 @@ namespace net = boost::asio;
 using tcp = net::ip::tcp;
 
 
-std::string get_file_content(std::string& path) {
+std::string get_file_content(std::string path) {
     if(path[0]=='/')
         path = path.substr(1);
     std::ifstream file(path);

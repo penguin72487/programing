@@ -14,10 +14,12 @@ int main() {
     CommissionEmployee *commissionEmployeePtr = nullptr;
 
     // create derived-class object
-    BasePlusCommissionEmployee basePlusCommissionEmployee("Bob", "Lewis", "333-33-3333", 5000, .04, 300);
+    BasePlusCommissionEmployee basePlusCommissionEmployee("HaHa", "Billy", "A1115531", 5000, .04, 300);
 
     // create derived-class pointer
     BasePlusCommissionEmployee *basePlusCommissionEmployeePtr = nullptr;
+
+
 
     // set floating-point output formatting
     cout << fixed << setprecision(2);

@@ -32,7 +32,7 @@ void sendRequest(const char* sendbuf) {
         // 設置服務器地址
         serverAddr.sin_family = AF_INET;
         serverAddr.sin_port = htons(80); // 使用端口80
-        serverAddr.sin_addr.s_addr = inet_addr("125.228.43.50"); // 使用指定的IP地址
+        serverAddr.sin_addr.s_addr = inet_addr("140.112.5.189"); // 使用指定的IP地址
 
         // 連接到服務器
         if (connect(ConnectSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {

@@ -8,7 +8,7 @@ using namespace std;
 
 void sendRequest(const char* sendbuf) {
     while(true) {
-        
+        // this_thread::sleep_for(chrono::seconds(1));  // 暫停1秒
         WSADATA wsaData;
         SOCKET ConnectSocket;
         struct sockaddr_in serverAddr;

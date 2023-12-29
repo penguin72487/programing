@@ -2,54 +2,51 @@
 // Introducing polymorphism, virtual functions and dynamic binding.
 #include <iostream>
 #include <iomanip>
-#include "CommissionEmployee.cpp"
-#include "BasePlusCommissionEmployee.cpp"
+#include "CommissionEmployee.hpp"
+#include "BasePlusCommissionEmployee.hpp"
+#include <vector>
 using namespace std;
-
+void virtualViaPointer(const CommissionEmployee * const); // prototype
+void virtualViaReference(const CommissionEmployee &); // prototype
 int main() {
     // create base-class object
-    CommissionEmployee commissionEmployee("Sue", "Jones", "222-22-2222", 10000, .06);
-
-    // create base-class pointer
-    CommissionEmployee *commissionEmployeePtr = nullptr;
-
-    // create derived-class object
-    BasePlusCommissionEmployee basePlusCommissionEmployee("HaHa", "Billy", "A1115531", 5000, .04, 300);
-
-    // create derived-class pointer
-    BasePlusCommissionEmployee *basePlusCommissionEmployeePtr = nullptr;
-
-
-
-    // set floating-point output formatting
     cout << fixed << setprecision(2);
-
+    CommissionEmployee commissionEmployee("Sue", "Jones", "222-22-2222", 10000, .06);
+    BasePlusCommissionEmployee basePlusCommissionEmployee("Bob", "Lewis", "333-33-3333", 5000, .04, 300);
     // output objects using static binding
-    cout << "Invoking print function on base-class and derived-class\nobjects with static binding\n";
-    commissionEmployee.print();
-    cout << "\n";
-    basePlusCommissionEmployee.print();
-    cout << "\n";
 
-    // output objects using dynamic binding
-    cout << "Invoking print function on base-class and derived-class\nobjects with dynamic binding\n";
-    // base-class pointer to base-class object
-    commissionEmployeePtr = &commissionEmployee;
-    cout << "Calling virtual function print with base-class pointer\nto base-class object invokes base-class print function:\n";
-    commissionEmployeePtr->print();
-    cout << "\n";
+    commissionEmployee.print(); // static binding
+    cout << "\nearned $" << commissionEmployee.earnings() << "\n\n";
+    basePlusCommissionEmployee.print(); // static binding
+    cout << "\nearned $" << basePlusCommissionEmployee.earnings() << "\n\n";
+    
+    vector<CommissionEmployee *> employees(2);
+    employees[0] = &commissionEmployee;
+    employees[1] = &basePlusCommissionEmployee;
+    cout << "Virtual function calls made off base-class pointers:\n\n";
+    // call virtualViaPointer to print each CommissionEmployee's information and earnings using dynamic binding
+    cout << "Virtual function calls made off base-class pointers:\n\n";
+    // call virtualViaPointer to print each CommissionEmployee's information and earnings using dynamic binding
+    for (const CommissionEmployee *employeePtr : employees) {
+        virtualViaPointer(employeePtr);
+    }
+    // call virtualViaReference to print each CommissionEmployee's information and earnings using dynamic binding
+    cout << "Virtual function calls made off base-class references:\n\n";
+    // call virtualViaReference to print each CommissionEmployee's information and earnings using dynamic binding
+    for (const CommissionEmployee *employeePtr : employees) {
+        virtualViaReference(*employeePtr);
+    }
 
-    // derived-class pointer to derived-class object
-    basePlusCommissionEmployeePtr = &basePlusCommissionEmployee;
-    cout << "Calling virtual function print with derived-class pointer\nto derived-class object invokes derived-class print function:\n";
-    basePlusCommissionEmployeePtr->print();
-    cout << "\n";
-
-    // base-class pointer to derived-class object
-    commissionEmployeePtr = &basePlusCommissionEmployee;
-    cout << "Calling virtual function print with base-class pointer\nto derived-class object invokes derived-class print function:\n";
-    commissionEmployeePtr->print();
-    cout << "\n";
 
     return 0;
+}
+// call CommissionEmployee virtual functions print and earnings off a base-class pointer using dynamic binding
+void virtualViaPointer(const CommissionEmployee * const baseClassPtr) {
+    baseClassPtr->print();
+    cout << "\nearned $" << baseClassPtr->earnings() << "\n\n";
+}
+// call CommissionEmployee virtual functions print and earnings off a base-class reference using dynamic binding
+void virtualViaReference(const CommissionEmployee &baseClassRef) {
+    baseClassRef.print();
+    cout << "\nearned $" << baseClassRef.earnings() << "\n\n";
 }

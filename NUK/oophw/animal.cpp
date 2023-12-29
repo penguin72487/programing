@@ -1,57 +1,66 @@
 #include <iostream>
 #include <string>
-
+#include<vector>
 // 基礎類別
 class Animal {
 public:
-    virtual ~Animal() = default; // 虛擬解構子
-    virtual void move() const { // 虛擬函數
-        std::cout << "The animal makes a sound\n";
-    }
+    virtual ~Animal() = default;
+    virtual void move() const = 0; // 純虛擬函數
 };
-
 // 衍生類別
 class Fish : public Animal {
 public:
     void move() const override {
-        std::cout << "swimming\n";
+        std::cout << moveType << "\n";
     }
+private:
+    std::string moveType = "swimming";
 };
 
 class Frog : public Animal {
 public:
     void move() const override {
-        std::cout << "Jump\n";
+        std::cout << moveType << "\n";
     }
+private:
+    std::string moveType = "hopping";
 };
 
 class Bird : public Animal {
 public:
     void move() const override {
-        std::cout << "flying\n";
+        std::cout << moveType << "\n";
     }
-};
+private:
+    std::string moveType = "flying";
 
+};
+void moveAnimal(const Animal &animal) {
+    animal.move();
+}
+void moveAnimal(const Animal *animal) {
+    animal->move();
+}
 int main() {
     // 靜態繫結
     Fish myFish;
-    myFish.move(); // 輸出 "Blub blub"
+    Frog myFrog;
+    Bird myBird;
+    myFish.move();
+    myFrog.move();
+    myBird.move();
 
     // 動態繫結
-    Animal* myAnimal = new Fish();
-    myAnimal->move(); // 輸出 "Blub blub"
-
-    delete myAnimal;
-
-    myAnimal = new Frog();
-    myAnimal->move(); // 輸出 "Frog
-
-    delete myAnimal;
-
-    myAnimal = new Bird();
-    myAnimal->move(); // 輸出 "Tweet tweet"
-
-    delete myAnimal;
+    std::vector <Animal *> animals(3);
+    animals[0] = &myFish;
+    animals[1] = &myFrog;
+    animals[2] = &myBird;
+    for (auto *animalPtr : animals) {
+        moveAnimal(animalPtr);
+    }
+    for (auto *animalPtr : animals) {
+        moveAnimal(*animalPtr);
+    }
 
 
 

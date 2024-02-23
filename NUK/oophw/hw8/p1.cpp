@@ -30,7 +30,6 @@ public:
         return costPerOunce;
     }
 
-    // ... 其他成員函數 ...
 };
 
 // 衍生類別 TwoDayPackage
@@ -48,7 +47,6 @@ public:
         return Package::calculateCost() + flatFee;
     }
 
-    // ... 其他成員函數 ...
 };
 
 // 衍生類別 OvernightPackage

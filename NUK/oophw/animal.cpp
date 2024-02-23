@@ -5,7 +5,7 @@
 class Animal {
 public:
     virtual ~Animal() = default;
-    virtual void move() const = 0; // 純虛擬函數
+    virtual void move() const = 0; // pure virtual function
 };
 // 衍生類別
 class Fish : public Animal {

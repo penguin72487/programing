@@ -114,6 +114,9 @@
       "semaphore": "cpp",
       "spanstream": "cpp",
       "stacktrace": "cpp",
-      "syncstream": "cpp"
+      "syncstream": "cpp",
+      "xiosbase": "cpp",
+      "format": "cpp",
+      "stdfloat": "cpp"
     }
   }

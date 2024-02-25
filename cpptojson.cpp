@@ -27,6 +27,10 @@ int main(){
             {
                 cout << "\\";
             }
+            else if(it=='\\')
+            {
+                cout << "\\";
+            }
             cout << it;
         }
         cout << "\",\n";

@@ -3,35 +3,101 @@
 using namespace std;
 class Solution {
 public:
-    bool canTraverseAllPairs(vector<int>& nums) {
-
+    bool canTraverseAllPairs(vector<int>& nums) 
+    {
+        if(nums.size()==1){
+            return 1;
+        }
         map<int, set<int>> mis;
-        for(auto i:nums){
-            for(int j=1; j*j<=i; j++){
-                while(i%j==0){
-                    i/=j;
-                    if(i%j!=0){
-                        mis[j].insert(i);
-                        mis[i].insert(j);
+        for(auto n:nums){
+            auto primeDivisors = get_primeDivisors(n);
+            for(auto p:primeDivisors){
+                for(auto q:primeDivisors){
+                    if(p==q)
+                    {
+                        mis[p];
                     }
+                    else{
+                        mis[p].insert(q);
+                    }
+                    
                 }
-                
             }
+
         }
-        int odd = 0;
-        // int even = 0;
-        for(auto i:mis){
-            if((i.second.size()&1)&&i.second.size()>1){
-                odd++;
-            }
-            // else{
-            //     even++;
-            // }
-        }
-        if(odd!=0 && odd!=2){
+        auto dsu = get_Dsu(mis);
+        if(!sameLine(dsu)){
             return 0;
         }
+        
 
+            // return oneLine(mis);
+            return 1;
+
+
+    }
+    set<int> get_primeDivisors(int n){
+        set<int> primeDivisors;
+        bool prime = 1;
+        for (int i = 2;i<=n;i++){
+            if(n%i==0){
+                prime = 0;
+                primeDivisors.insert(i);
+                while(n%i==0){
+                    n/=i;
+                }
+            }
+        }
+        if(prime){
+            primeDivisors.insert(n);
+        }
+        return primeDivisors;
+    }
+    map<int, int> get_Dsu(map<int, set<int>> mis){
+        map<int, int> parent;
+        map<int, int> rank;
+        for(auto m:mis){
+            parent[m.first] = m.first;
+            rank[m.first] = 0;
+        }
+        for(auto m:mis){
+            for(auto s:m.second){
+                if(parent[s]!=parent[m.first])
+                {
+                    if(rank[m.first]<rank[s]){
+                        parent[m.first] = parent[s];
+                        rank[m.first] = rank[s];
+                    }
+                    else if(rank[m.first]>rank[s]){
+                        parent[m.first] = s;
+                    }
+                    else{
+                        parent[s] = m.first;
+                        rank[s]++;
+                    }
+                }
+
+            }
+        }
+        return parent;
+
+    }
+    bool oneLine(map<int, set<int>> mis){
+        int odd = 0;
+        for(auto m:mis){
+            if(m.second.size()&1){
+                odd++;
+            }
+        }
+        return odd<=2;
+    }
+    bool sameLine(map<int, int> dsu){
+        int root = dsu.begin()->second;
+        for(auto d:dsu){
+            if(d.second!=root){
+                return 0;
+            }
+        }
         return 1;
     }
 };
@@ -43,8 +109,12 @@ int main() {
         auto start = high_resolution_clock::now();
     #endif
     Solution s;
-    vector<int> nums = {3,9,5};
-    cout << s.canTraverseAllPairs(nums);
+    vector<int> nums2 = {40,22,15};
+    cout << s.canTraverseAllPairs(nums2)<<endl;
+    // vector<int> nums = {2,3,6};
+    // cout << s.canTraverseAllPairs(nums)<<endl;
+    // vector<int> nums1 = {3, 9, 5};
+    // cout << s.canTraverseAllPairs(nums1)<<endl;
 
 #ifdef ENABLE_TIMING
         auto stop = high_resolution_clock::now();

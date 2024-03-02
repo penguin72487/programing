@@ -5,7 +5,7 @@ void mergeSort(int* l, int* r) {
     if(l<r-1)
     {
         auto m = l+(r-l)/2;
-        auto il=m+1, ir=m+1;
+        auto il=m, ir=m;
         auto lm = il - 1;
         auto rm=r-1;
         mergeSort(l,il);

@@ -7,30 +7,28 @@ int main() {
 
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    
-    int t;
-    cin>>t;
-
-    #ifdef ENABLE_TIMING
-        using namespace std::chrono;
-        auto start = high_resolution_clock::now();
-    #endif
-    while (t--)
+    int n = 100;
+    map<int, vector<int>> mvi;
+    list<int> l;
+    for(int i=0;i<n;i++)
     {
-        int n, k;
-        cin>>n>>k;
-
+        l.push_back(i);
+    }
+    int di = 1;
+    while(!l.empty())
+    {
+        for(auto)
+    }
+    for(auto it:mvi)
+    {
+        cout<<it.first<<": ";
+        for(auto i:it.second)
+        {
+            cout<<i<<" ";
+        }
+        cout<<endl;
     }
     
-
-    
-
-
-    #ifdef ENABLE_TIMING
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        cout << "\nTotal time taken: " << duration.count() << " ms.\n";
-    #endif
 
     return 0;
 }

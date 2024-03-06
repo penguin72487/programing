@@ -15,11 +15,17 @@ int main() {
     {
         int n;
         cin>>n;
-        vector<int> a(n);
+        vector<int> a(n,0);
         for(int i=1;i<n;i++)
         {
             cin>>a[i];
             --a[i];
+        }
+        vector<vector<int>> adj(n);
+        for(int i=1;i<n;i++)
+        {
+            adj[a[i]].push_back(i);
+            adj[i].push_back(a[i]);
         }
 
         string s;
@@ -34,22 +40,30 @@ int main() {
             }
         }
         int ans = 0;
+        vector<int> dp(n, 0);
         vector<int> vis(n, 0);
         while(!q.empty())
         {
             int it = q.front();
             q.pop();
-            if(vis[it])
+            if(vis[it]>0)
                 continue;
             vis[it] = 1;
+            // cout<<it<<"visired\n"<<endl;
             if (s[it] == 'S'||s[it] == 'C')
             {
-                q.push(a[it]);
-                vis[a[it]]++;
+                for(auto i:adj[it])
+                {
+                    if(!vis[i])
+                    {
+                        q.push(i);
+                        dp[i]++;
+                    }
+                }
             }
             else if(s[it] == 'P')
             {
-                ans+=vis[it];
+                ans+=dp[it];
             }
 
         }

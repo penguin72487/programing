@@ -9,7 +9,7 @@ int main() {
         using namespace std::chrono;
         auto start = high_resolution_clock::now();
     #endif
-    
+    cout << "Hello, World!" << endl;
 
 
     #ifdef ENABLE_TIMING

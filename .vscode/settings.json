@@ -13,7 +13,7 @@
     "C_Cpp.clang_format_sortIncludes": true,
     "C_Cpp.intelliSenseEngine": "Default", 
     "C_Cpp.errorSquiggles": "Disabled", 
-    "C_Cpp.autocomplete": "Disabled",
+    "C_Cpp.autocomplete": "default",
     "clang.cflags": [
       "--target=x86_64-w64-mingw",
       "-std=c11",
@@ -24,6 +24,20 @@
       "-std=c++17",
       "-Wall"
     ],
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": false
+    },
+    "editor.acceptSuggestionOnCommitCharacter": true,
+    "editor.acceptSuggestionOnEnter": "smart",
+    "editor.quickSuggestionsDelay": 500,
+    "editor.suggestOnTriggerCharacters": true,
+    "editor.tabCompletion": "off",
+    "editor.suggest.localityBonus": false,
+    "editor.suggestSelection": "recentlyUsed",
+    "editor.wordBasedSuggestions": "off",
+    "editor.parameterHints.enabled": true,
     "clang.completion.enable": true,
     "files.associations": {
       "iostream": "cpp",

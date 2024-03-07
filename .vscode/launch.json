@@ -1,8 +1,7 @@
 {
-  "version": "0.2.0",
   "configurations": [
     {
-      "name": "g++.exe - Build and debug active file",
+      "name": "C/C++: g++.exe build and debug active file",
       "type": "cppdbg",
       "request": "launch",
       "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
@@ -18,15 +17,14 @@
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
+        },
+        {
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
         }
       ],
       "preLaunchTask": "C/C++: g++.exe build active file"
-    },
-    {
-      "name": "Python: Current File",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}"
     },
     {
       "name": "C/C++ Runner: Debug Session",
@@ -47,5 +45,6 @@
         }
       ]
     }
-  ]
+  ],
+  "version": "2.0.0"
 }

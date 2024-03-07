@@ -14,7 +14,7 @@ bool is_center(vector<string> &m, int x, int y)
     }
     return true;
 }
-vector<vector<int>> count_Cross(set<pair<int, int>> &center, int x, int y)
+vector<vector<int>> count_Cross(set<pair<int, int>> &center)
 {
     vector<vector<int>> cross(7, vector<int>(7,0));
     for(auto c:center)
@@ -64,6 +64,11 @@ set<pair<int, int>> get_Center(vector<string> &m)
     }
     return center;
 }
+ostream operator<<(ostream& o, vector<vector<int> m)
+{
+
+
+}
 
 int main() {
     cin.tie(0)->sync_with_stdio(0);
@@ -83,19 +88,20 @@ int main() {
         }
         int ans = 0;
         set<pair<int, int>> center = get_Center(m);
-        vector<vector<int>> cross = count_Cross(center, 7, 7);
+        vector<vector<int>> cross = count_Cross(center);
         while(center.size())
         {
             auto [x, y] = get_max_cross_Spot(cross);
-            cout<<x<<" "<<y<<endl;
+            // cout<<x<<" "<<y<<endl;
             ans++;
-            center.erase({x,y});
+            // center.erase({x,y});
             m[x][y] = 'W';
             for(int i=0;i<4;i++)
             {
                 cross[x+dx[i]][y+dy[i]]--;
             }
             center = get_Center(m);
+            cross = count_Cross(center);
         }
         cout<<ans<<endl;
         

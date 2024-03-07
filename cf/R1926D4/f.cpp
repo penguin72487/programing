@@ -20,7 +20,7 @@ vector<vector<int>> count_Cross(set<pair<int, int>> &center)
     for(auto c:center)
     {
         auto [x1, y1] = c;
-        cross[x1][y1] = 1;
+        // cross[x1][y1] =  1;
         for(int i=0;i<4;i++)
         {
             cross[x1+dx[i]][y1+dy[i]]++;
@@ -28,18 +28,24 @@ vector<vector<int>> count_Cross(set<pair<int, int>> &center)
     }
     return cross;
 }
-pair<int,int> get_max_cross_Spot(vector<vector<int>> &cross)
+vector<pair<int,int>>get_max_cross_Spot(vector<vector<int>> &cross)
 {
     int max_cross = 0;
-    pair<int, int> max_spot;
+    vector<pair<int,int>> max_spot;
     for(int i=1;i<6;i++)
     {
         for(int j=1;j<6;j++)
         {
             if(cross[i][j]>max_cross)
             {
+
+                max_spot.clear();
+                max_spot.push_back({i,j});
                 max_cross = cross[i][j];
-                max_spot = {i,j};
+            }
+            else if(cross[i][j]==max_cross)
+            {
+                max_spot.push_back({i,j});
             }
         }
     }
@@ -64,15 +70,38 @@ set<pair<int, int>> get_Center(vector<string> &m)
     }
     return center;
 }
-ostream operator<<(ostream& o, vector<vector<int> m)
+ostream& operator<<(ostream& o, vector<vector<int>> m)
 {
-
-
+    for(auto i:m)
+    {
+        for(auto j:i)
+        {
+            o<<j<<" ";
+        }
+        o<<endl;
+    }
+    return o;
 }
-
+void dfs(vector<string> m, int x, int y,int step,int& ans)
+{
+    m[x][y] = 'W';
+    set<pair<int, int>> center = get_Center(m);
+    vector<vector<int>> cross = count_Cross(center);
+    if(center.size()==0)
+    {
+        ans=min(ans,step);
+        return;
+    }
+    // cout<<cross<<endl;
+    auto max_spot = get_max_cross_Spot(cross);
+    for(auto [i,j]:max_spot)
+    {
+        dfs(m, i, j, step+1, ans);
+    }
+}
 int main() {
-    cin.tie(0)->sync_with_stdio(0);
-    cout.tie(0);
+    // cin.tie(0)->sync_with_stdio(0);
+    // cout.tie(0);
     int t;
     cin>>t;
     #ifdef ENABLE_TIMING
@@ -86,22 +115,13 @@ int main() {
         {
             cin>>m[i];
         }
-        int ans = 0;
+        int ans = INT_MAX;
         set<pair<int, int>> center = get_Center(m);
         vector<vector<int>> cross = count_Cross(center);
-        while(center.size())
+        auto max_spot = get_max_cross_Spot(cross);
+        for(auto [i,j]:max_spot)
         {
-            auto [x, y] = get_max_cross_Spot(cross);
-            // cout<<x<<" "<<y<<endl;
-            ans++;
-            // center.erase({x,y});
-            m[x][y] = 'W';
-            for(int i=0;i<4;i++)
-            {
-                cross[x+dx[i]][y+dy[i]]--;
-            }
-            center = get_Center(m);
-            cross = count_Cross(center);
+            dfs(m, i, j, 0, ans);
         }
         cout<<ans<<endl;
         
@@ -119,6 +139,36 @@ int main() {
 }
 
 /*
+4
+WWWWWWW
+WWWWBBB
+WWWWWBW
+WWBBBBB
+WWWBWWW
+WWBBBWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WBBBBBW
+WBBBBBW
+WBBBBBW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WWWWWWW
+WBBBBBW
+BBBBBBB
+BBBBBBB
+WWWWWWW
+BBBBBBB
+BBBBBBB
+BBBBBBB
+
 1
 BBBBBBB
 BBBBBBB

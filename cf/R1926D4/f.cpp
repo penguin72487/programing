@@ -28,22 +28,38 @@ vector<vector<int>> count_Cross(set<pair<int, int>> &center)
     }
     return cross;
 }
-vector<pair<int,int>>get_max_cross_Spot(vector<vector<int>> &cross)
+// vector<pair<int,int>>get_max_cross_Spot(vector<vector<int>> &cross)
+// {
+//     int max_cross = 1;
+//     vector<pair<int,int>> max_spot;
+//     for(int i=1;i<6;i++)
+//     {
+//         for(int j=1;j<6;j++)
+//         {
+//             if(cross[i][j]>max_cross)
+//             {
+
+//                 max_spot.clear();
+//                 max_spot.push_back({i,j});
+//                 max_cross = cross[i][j];
+//             }
+//             else if(cross[i][j]==max_cross)
+//             {
+//                 max_spot.push_back({i,j});
+//             }
+//         }
+//     }
+//     return max_spot;
+// }
+vector<pair<int,int>>get_cross_Spot(vector<vector<int>> &cross)
 {
-    int max_cross = 0;
+    int max_cross = 1;
     vector<pair<int,int>> max_spot;
     for(int i=1;i<6;i++)
     {
         for(int j=1;j<6;j++)
         {
-            if(cross[i][j]>max_cross)
-            {
-
-                max_spot.clear();
-                max_spot.push_back({i,j});
-                max_cross = cross[i][j];
-            }
-            else if(cross[i][j]==max_cross)
+            if(cross[i][j]>=max_cross)
             {
                 max_spot.push_back({i,j});
             }
@@ -70,7 +86,7 @@ set<pair<int, int>> get_Center(vector<string> &m)
     }
     return center;
 }
-ostream& operator<<(ostream& o, vector<vector<int>> m)
+ostream& operator<<(ostream& o, vector<vector<int>> &m)
 {
     for(auto i:m)
     {
@@ -82,6 +98,20 @@ ostream& operator<<(ostream& o, vector<vector<int>> m)
     }
     return o;
 }
+ostream& operator<<(ostream& o, vector<string> &m)
+{
+    for(auto i:m)
+    {
+        for(auto j:i)
+        {
+            o<<j<<" ";
+        }
+        o<<endl;
+    }
+    return o;
+}
+
+
 void dfs(vector<string> m, int x, int y,int step,int& ans)
 {
     m[x][y] = 'W';
@@ -89,11 +119,16 @@ void dfs(vector<string> m, int x, int y,int step,int& ans)
     vector<vector<int>> cross = count_Cross(center);
     if(center.size()==0)
     {
+        // cout<<m<<endl;
         ans=min(ans,step);
         return;
     }
+    m[x][y] = '%';
+    // cout << m << endl;
     // cout<<cross<<endl;
-    auto max_spot = get_max_cross_Spot(cross);
+    m[x][y] = 'W';
+    // auto max_spot = get_max_cross_Spot(cross);
+    auto max_spot = get_cross_Spot(cross);
     for(auto [i,j]:max_spot)
     {
         dfs(m, i, j, step+1, ans);
@@ -118,13 +153,14 @@ int main() {
         int ans = INT_MAX;
         set<pair<int, int>> center = get_Center(m);
         vector<vector<int>> cross = count_Cross(center);
-        auto max_spot = get_max_cross_Spot(cross);
+        // auto max_spot = get_max_cross_Spot(cross);
+        auto max_spot = get_cross_Spot(cross);
         for(auto [i,j]:max_spot)
         {
-            dfs(m, i, j, 0, ans);
+            dfs(m, i, j, 1, ans);
         }
-        cout<<ans<<endl;
-        
+        ans = ans == INT_MAX ? 0 : ans;
+        cout << ans << endl;
     }
     
 

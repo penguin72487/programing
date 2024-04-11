@@ -15,7 +15,7 @@ public:
 
     // Define virtual stream operators as member functions or outside class
     virtual ostream& print(ostream& os) const = 0; // Example of a pure virtual function for polymorphic behavior
-    virtual istream& input(istream& is) = 0;
+    virtual void input(vector<tuple<int, int, int>>& vt_Input)  = 0;
 };
 class matrixO : public matrix {
 
@@ -47,14 +47,10 @@ public:
         return os;
     }
 
-    istream& input(istream& is) override {
-        for (int i = 0; i < n;++i)
-        {
-            int a,b,c;
-            is >> a >> b >> c;
+    void input(vector<tuple<int, int, int>>& vt_Input) override {
+        for(auto& [a, b, c]: vt_Input){
             mat[a][b] = c;
         }
-        return is;
     }
 
 
@@ -89,11 +85,8 @@ public:
         return os;
     }
 
-    istream& input(istream& is) override {
-        for(auto& [a, b, c]: mat){
-            is >> a >> b >> c;
-        }
-        return is;
+    void input(vector<tuple<int, int, int>>& vt_Input) override {
+        mat = vt_Input;
     }
 
 };
@@ -130,32 +123,39 @@ public:
         return os;
     }
 
-    istream& input(istream& is) override {
-        for(auto& [a, b, c]: mat){
-            is >> a >> b >> c;
-        }
-        return is;
+    void input(vector<tuple<int, int, int>>& vt_Input) override {
+        mat = vt_Input;
     }
+
 };
 
 int main()
 {
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    freopen("input.in", "r", stdin);
-    freopen("output.out", "w", stdout);
+    // freopen("input.in", "r", stdin);
+    // freopen("output.out", "w", stdout);
     int n, m;
     cin >> n >> m;
+    stringstream ss;
+    int a, b, c;
+    vector<tuple<int, int, int>> vt_input;
+    while (cin >> a >> b >> c) {
+        vt_input.push_back({a, b, c});
+    }
+    
+    
     matrix* mat = new matrixO(n, m);
-    mat->input(cin);
+    mat->input(vt_input);
     cout << "Traditional matrix:\n";
-    cout << "Original matrix:\n";
+    cout << "\nOriginal matrix:\n";
     mat->print(cout);
     cout << "\nTranspose matrix:\n";
 
 
     #ifdef ENABLE_TIMING
         using namespace std::chrono;
+        vector<nanoseconds> time;
         auto start = high_resolution_clock::now();
     #endif
 
@@ -169,16 +169,18 @@ int main()
 
     mat->print(cout);
     delete mat;
+    cout << "\nTraditional matrix:";
     #ifdef ENABLE_TIMING
-        auto duration = duration_cast<microseconds>(stop - start);
-        cout << "\nTotal time taken: " << duration.count() << " ms.\n";
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
+        time.push_back(duration);
     #endif
     
     cin >> n >> m;
     mat = new matrixT(n, m);
-    mat->input(cin);
-    cout << "Transpose matrix:\n";
-    cout << "Original matrix:\n";
+    mat->input(vt_input);
+    cout << "\nTranspose matrix:\n";
+    cout << "\nOriginal matrix:\n";
     mat->print(cout);
     cout << "\nTranspose matrix:\n";
 
@@ -194,18 +196,19 @@ int main()
 
     mat->print(cout);
     delete mat;
-
+    cout << "Transpose matrix:";
     #ifdef ENABLE_TIMING
-        duration = duration_cast<microseconds>(stop - start);
-        cout << "\nTotal time taken: " << duration.count() << " ms.\n";
+        duration = duration_cast<nanoseconds>(stop - start);
+        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
+        time.push_back(duration);
     #endif
 
 
     cin >> n >> m;
     mat = new matrixFT(n, m);
-    mat->input(cin);
-    cout << "Fast Transpose matrix:\n";
-    cout << "Original matrix:\n";
+    mat->input(vt_input);
+
+    cout << "\nOriginal matrix:\n";
     mat->print(cout);
     cout << "\nTranspose matrix:\n";
 
@@ -221,10 +224,14 @@ int main()
 
     mat->print(cout);
     delete mat;
-
+    cout << "Fast Transpose matrix:";
     #ifdef ENABLE_TIMING
-        duration = duration_cast<microseconds>(stop - start);
-        cout << "\nTotal time taken: " << duration.count() << " ms.\n";
+        duration = duration_cast<nanoseconds>(stop - start);
+        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
+        time.push_back(duration);
+        for(auto it:time){
+            cout << "Time taken: " << double (it.count())/1000.0 << " ms.\n";
+        }
     #endif
 
 

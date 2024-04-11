@@ -17,8 +17,8 @@ int main() {
 
     #ifdef ENABLE_TIMING
         auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        cout << "\nTotal time taken: " << duration.count() << " ms.\n";
+        auto duration = duration_cast<nanoseconds>(stop - start);
+        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
     #endif
 
     return 0;

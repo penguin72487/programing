@@ -2,7 +2,7 @@
 using namespace std;
 void get_RC(int matrix[2][7], int R,int C)
 {
-    int(**)[7] tmp = &matrix;
+    int (*tmp)[2][7] = &matrix;
     R = &matrix;
     C = 0;
 }

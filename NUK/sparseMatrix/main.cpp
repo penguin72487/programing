@@ -133,8 +133,8 @@ int main()
 {
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    // freopen("input.in", "r", stdin);
-    // freopen("output.out", "w", stdout);
+    freopen("input.in", "r", stdin);
+    freopen("output.out", "w", stdout);
     int n, m;
     cin >> n >> m;
     stringstream ss;
@@ -172,7 +172,7 @@ int main()
     cout << "\nTraditional matrix:";
     #ifdef ENABLE_TIMING
         auto duration = duration_cast<nanoseconds>(stop - start);
-        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
+        cout << "\nTotal time taken: " << duration.count() << " ns.\n";
         time.push_back(duration);
     #endif
     
@@ -199,7 +199,7 @@ int main()
     cout << "Transpose matrix:";
     #ifdef ENABLE_TIMING
         duration = duration_cast<nanoseconds>(stop - start);
-        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
+        cout << "\nTotal time taken: " << duration.count() << " ns.\n";
         time.push_back(duration);
     #endif
 
@@ -227,10 +227,10 @@ int main()
     cout << "Fast Transpose matrix:";
     #ifdef ENABLE_TIMING
         duration = duration_cast<nanoseconds>(stop - start);
-        cout << "\nTotal time taken: " << double (duration.count())/1000.0 << " ms.\n";
+        cout << "\nTotal time taken: " << duration.count() << " ns.\n";
         time.push_back(duration);
         for(auto it:time){
-            cout << "Time taken: " << double (it.count())/1000.0 << " ms.\n";
+            cout << "Time taken: " << (long double) (it.count())/1000000.0 << " ms.\n";
         }
     #endif
 

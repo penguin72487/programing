@@ -148,6 +148,12 @@ int main(){
     ll.push_back('c');
     ll.push_back('d');
     ll.push_back('e');
+
+    for(linklist<char>::iterator it = ll.begin(); it!= ll.end(); ++it){
+        cout<<*it<<" ";
+    }
+    cout<<endl;
+
     cout<<ll<<endl;
     ll.erase(2);
     cout<<ll<<endl;
@@ -155,7 +161,6 @@ int main(){
     cout<<ll<<endl;
     ll.insert(3, 'f');
     cout<<ll<<endl;
-
 
     return 0;
 }

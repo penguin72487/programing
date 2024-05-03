@@ -87,7 +87,7 @@ class linklist{
         n++;
     }
     
-    void erase(int index){
+    void erase(int index){ // by iterator
         if(index<0 || index>=n){
             return;
         }
@@ -158,7 +158,10 @@ int main(){
     ll.erase(2);
     cout<<ll<<endl;
     ll.insert(2, 'c');
-    cout<<ll<<endl;
+    for(auto& it:ll){
+        cout<<it<<" ";
+    }
+    cout<<endl;
     ll.insert(3, 'f');
     cout<<ll<<endl;
 

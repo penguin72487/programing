@@ -3,7 +3,7 @@
 # Define the initial conditions and parameters for the corrected calculation
 S0 = 330
 ratio = 40 / 100
-Fee = 0.01
+Fee = 0.01+0.0001+0.000333
 n = 365  # Assuming this was the intended maximum range for n
 
 max_value = S0
@@ -18,4 +18,7 @@ for i in range(1, n + 1):
         max_value = Sn
         optimal_n = i
 
+
+
 print(optimal_n, max_value)
+print(365/optimal_n)

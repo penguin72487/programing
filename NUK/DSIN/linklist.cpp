@@ -132,8 +132,8 @@ class linklist{
         n = 0;
     }
     friend ostream& operator<<(ostream& os, const linklist& ll){
-        for(auto it = ll.begin(); it != ll.end(); ++it){
-            os << *it << " ";
+        for(auto& it:ll){
+            os<<it<<" ";
         }
         return os;
     }
@@ -158,8 +158,8 @@ int main(){
     ll.erase(2);
     cout<<ll<<endl;
     ll.insert(2, 'c');
-    for(auto& it:ll){
-        cout<<it<<" ";
+    for(auto it = ll.begin(); it!=ll.end(); ++it){
+        cout<<*it<<" ";
     }
     cout<<endl;
     ll.insert(3, 'f');

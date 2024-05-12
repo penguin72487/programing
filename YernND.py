@@ -24,10 +24,10 @@ def newton_method_for_maximum(f, x0, tolerance=1e-5, max_iter=1000):
     return x, f(x)
 
 # Parameters
-S0 = 429
-ratio = 86 / 100
-Fee = 0.04
-initial_guess = 100  # Initial guess for n
+S0 = 1735
+ratio = 3.03 / 100
+Fee = 0.2
+initial_guess = 1  # Initial guess for n
 
 # Applying Newton's method
 optimal_n, max_value = newton_method_for_maximum(lambda n: Sn_function(n, S0, ratio, Fee), initial_guess)

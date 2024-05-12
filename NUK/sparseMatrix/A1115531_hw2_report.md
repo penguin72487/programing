@@ -69,3 +69,63 @@ The number frequency in colum.The complexity is $O(k)$.
 Initializing the position The complexity is $O(m)$.
 Filling the transposed matrix is also $O(k)$.
 Therefore, the overall time complexity of this method is O(k + m).
+
+
+# speed test
+
+Traditional matrix:
+
+Original matrix:
+1 0 1 0 0 0 
+0 2 0 0 0 0 
+4 0 3 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+
+Transpose matrix:
+1 0 4 0 0 
+0 2 0 0 0 
+1 0 3 0 0 
+0 0 0 0 0 
+0 0 0 0 0 
+0 0 0 0 0 
+
+Traditional matrix:
+Total time taken: 6400 ns.
+
+Transpose matrix:
+
+Original matrix:
+0 0 1
+0 2 1
+1 1 2
+2 0 4
+2 2 3
+
+Transpose matrix:
+0 0 1
+0 2 4
+1 1 2
+2 0 1
+2 2 3
+Transpose matrix:
+Total time taken: 700 ns.
+
+Original matrix:
+0 0 1
+0 2 1
+1 1 2
+2 0 4
+2 2 3
+
+Transpose matrix:
+0 0 1
+0 2 4
+1 1 2
+2 0 1
+2 2 3
+Fast Transpose matrix:
+Total time taken: 400 ns.
+Time taken: 0.0064 ms.
+Time taken: 0.0007 ms.
+Time taken: 0.0004 ms.

@@ -1,10 +1,8 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<chrono>
 #define endl "\n"
 using namespace std;
-int dx[] = {-1, -1, -1, 0, 1, 1, 1, 0};
-int dy[] = {-1, 0, 1, 1, 1, 0, -1, -1};
-char vec[] = {'\\', '|', '/', '-', '\\', '|', '/', '-'};
-char vec2[] = {'0', '1', '2', '3', '4', '5', '6', '7'};
+
 class Node {
 public:
     int x, y;
@@ -93,15 +91,15 @@ public:
     
 };
 bool dfs(char** maze, int n, int m, int op_X, int op_Y, int ed_X, int ed_Y) {
+    int dx[] = {-1, -1, -1, 0, 1, 1, 1, 0};
+    int dy[] = {-1, 0, 1, 1, 1, 0, -1, -1};
+    char vec[] = {'\\', '|', '/', '-', '\\', '|', '/', '-'};
+    // char vec2[] = {'0', '1', '2', '3', '4', '5', '6', '7'};
     Stack<Node> s((n+2)*(m+2));
     s.push(Node(op_X, op_Y));
     while (!s.empty()) {
         next:
         Node cur = s.top();
-
-        // if(maze[cur.x][cur.y] != '0')
-        //     continue;
-        // maze[cur.x][cur.y] = 'b';
         if (cur.x == ed_X && cur.y == ed_Y) {
 
             return true;
@@ -112,14 +110,11 @@ bool dfs(char** maze, int n, int m, int op_X, int op_Y, int ed_X, int ed_Y) {
             if (maze[new_X][new_Y] == '0') {
                 s.push(Node(new_X, new_Y));
                 maze[new_X][new_Y] = vec[i];
-                // cout << output(maze, n, m, op_X, op_Y, ed_X, ed_Y);
-                // cout << endl;
                 goto next;
             }
             
         }
         maze[cur.x][cur.y] = 'b';
-        // cout << s << endl;
         s.pop();
     }
     return false;
@@ -130,8 +125,9 @@ bool dfs(char** maze, int n, int m, int op_X, int op_Y, int ed_X, int ed_Y) {
 int main() {
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
+    // string t="3";
     freopen("test3.in", "r", stdin);
-    freopen("output.txt", "w", stdout);
+    freopen("test3.out", "w", stdout);
     #ifdef ENABLE_TIMING
     using namespace std::chrono;
     auto start = high_resolution_clock::now();
@@ -162,15 +158,11 @@ int main() {
         maze[i] = new char[m+2];
     }
     for (int i = 0; i < n; i++) {
-        // maze[i] = new char[m+2];
         for (int j = 0; j < m; j++) {
             maze[i+1][j+1] = s[i * m + j];
         }
     }
-    // maze[0][0] = '0';
 
-
-    // maze[0][0] = '0';
     int op_X = 0, op_Y = 0;
     for (int i = 1; i <=n; i++) {
         for (int j = 1; j <=m; j++) {
@@ -206,17 +198,19 @@ int main() {
     }
 
     if(dfs(maze2, n, m, op_X, op_Y, ed_X, ed_Y))
-    // if(dfs(maze, n, m, ed_X, ed_Y, op_X, op_Y))
     {
+        int c_Step=0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if(maze2[i+1][j+1] == '-'||maze2[i+1][j+1] == '|'||maze2[i+1][j+1] == '/'||maze2[i+1][j+1] == '\\')
                 {
                     maze[i+1][j+1] = maze2[i+1][j+1];
+                    ++c_Step;
                 }
             }
         }
         cout << output(maze, n, m ,op_X, op_Y, ed_X, ed_Y);
+        cout << "Total " << c_Step <<" steps"<< endl;
     }
     else
     {

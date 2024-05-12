@@ -1,9 +1,9 @@
 # Re-run the corrected code to find the optimal n and max value for Sn
 
 # Define the initial conditions and parameters for the corrected calculation
-S0 = 400
-ratio = 600 / 100
-Fee = 0.02
+S0 = 1735
+ratio =  3/ 100
+Fee = 0.2 # ada 0.2 atom 0.04
 n = 3650  # Assuming this was the intended maximum range for n
 
 max_value = S0

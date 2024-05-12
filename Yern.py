@@ -1,24 +1,22 @@
-# Re-run the corrected code to find the optimal n and max value for Sn
+import numpy as np
 
-# Define the initial conditions and parameters for the corrected calculation
-S0 = 330
-ratio = 40 / 100
-Fee = 0.01+0.0001+0.000333
-n = 365  # Assuming this was the intended maximum range for n
+# Define the initial conditions and parameters
+S0 = 1735
+ratio = 3.03 / 100
+Fee = 0.2  # ada 0.2 atom 0.04
+total_seconds = 365 * 24 * 60 * 60  # total seconds in a year
 
 max_value = S0
-optimal_n = 0
+optimal_frequency = total_seconds  # Start with the longest possible interval (once a year)
 
-# Calculate Sn for increasing values of n until the maximum value is found
-for i in range(1, n + 1):
+# Test different compounding frequencies (from once a year to once every second)
+for interval in range(1, total_seconds + 1):
+    num_compounds = total_seconds // interval
     Sn = S0
-    for j in range(1, i + 1):
-        Sn = Sn * (1 + ratio / i) - Fee
+    for _ in range(num_compounds):
+        Sn = Sn * (1 + ratio / num_compounds) - Fee
     if Sn > max_value:
         max_value = Sn
-        optimal_n = i
+        optimal_frequency = interval
 
-
-
-print(optimal_n, max_value)
-print(365/optimal_n)
+print(f"Optimal compounding interval in seconds: {optimal_frequency}, Maximum value: {max_value}")

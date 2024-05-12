@@ -2,10 +2,10 @@
 #include <iomanip>  // Include for std::setprecision
 #define endl "\n"
 int main() {
-    long double S0 = 220.0; // 初始金額
-    long double ratio = 69.0 / 100.0; // 年化回報率
-    long double Fee = 0.06; // 手續費
-    long double slip = 1.16 / 100.0; // 滑點
+    long double S0 = 1735; // atom 41.5 ada 1735 sui 220
+    long double ratio = 3.03 / 100.0; // 16.99 3.03 69
+    long double Fee = 0.2; //  0.06 0.2 0.06
+    long double slip = 0 / 100.0; // 0 0 1.16
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
 
     long double max_value = S0;
@@ -34,6 +34,6 @@ int main() {
               << ", Maximum value: " << max_value << endl;
     std::cout << "Optimal compounding interval in days: " << (long double)(optimal_frequency) / 86400.0
                 << ", Maximum value: " << max_value << endl;
-
+    // atom 91.25 ada 121.67 sui 10.43
     return 0;
 }

@@ -3,10 +3,10 @@
 #include <cmath>    // Include for std::pow and std::exp
 #define endl "\n"
 int main() {
-    long double S0 = 2200; // atom 41.5 ada 1735 sui 220
-    long double ratio = 70 / 100.0; // 16.99 3.03 69
+    long double S0 = 712; // atom 41.5 ada 1735 sui 220
+    long double ratio = 54.73 / 100.0; // 16.99 3.03 69
     long double Fee = 0.06; //  0.06 0.2 0.06
-    long double slip = 1.16 / 100.0; // 0 0 1.16
+    long double slip = 0 / 100.0; // 0 0 1.16
 
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
 
@@ -26,7 +26,7 @@ int main() {
         }
     }
 
-    std::cout << std::fixed << std::setprecision(2)
+    std::cout << std::fixed << std::setprecision(10)
               << "Optimal compounding interval in seconds: " << optimal_frequency 
               << ", Maximum value: " << max_value << endl;
     
@@ -39,7 +39,7 @@ int main() {
     std::cout << "Maximum value: " << max_value << endl;
 
     std::cout << "APY: " << (max_value - S0) / S0 * 100 << "%" << endl;
-    std::cout << "Max APY: " << exp(ratio)*100<<"%" << endl;
+    std::cout << "Max APY: " << exp(ratio)*100-100.0<<"%" << endl;
     // atom 91.25 ada 121.67 sui 10.43
     return 0;
 }

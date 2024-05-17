@@ -1,6 +1,16 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define endl "\n"
+long double totle_APR(long double S0, long double ratio, long double Fee, long double slip, int total_seconds, long double A) {
+    long double r = ratio;// second ratio
+    long double time = total_seconds;
+    long double p = S0;
+    while (time >= A/(p*r)) {
+        time-= A/(p*r);
+        p=p+A-Fee;
+    }
+    return p+p*r*time;
+}
 int main() {
     // long double S0 = 712; // atom 41.5 ada 1735 sui 220
     // long double ratio = 54.73 / 100.0; // 16.99 3.03 69
@@ -13,37 +23,35 @@ int main() {
     v.push_back(make_tuple("SUI Scallop", 2000.0, 36.0/100.0, 0.04, 0/100));
     v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0));
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
-
+    long double jump = 0.000000001;
+    // long double jump = 0.0000000000000000001;
     for(auto& [name, S0, ratio, Fee, slip] : v) {
         long double max_value = S0;
-        int optimal_frequency = total_seconds;
-
-        for (int interval = 1; interval <= total_seconds; ++interval) {
-            int num_compounds = total_seconds / interval;
-            long double Sn = S0;
-            for (int i = 0; i < num_compounds; ++i) {
-                long double growth_factor = 1.0 + (ratio * (1.0 - slip) / static_cast<long double>(num_compounds));
-                Sn = Sn * growth_factor - Fee;
-            }
-            if (Sn > max_value) {
-                max_value = Sn;
-                optimal_frequency = interval;
+        long double op = 0;
+        long double ed = S0;
+        while (op <= ed) {
+            // if(op - ed < jump) {
+            //     op = ed + jump;
+            //     break;
+            // }
+            long double mid = (op + ed) / 2.0;
+            long double tmp = totle_APR(S0, ratio/total_seconds, Fee, slip, total_seconds, mid);
+            if (tmp >=max_value) {
+                max_value = tmp;
+                ed = mid - jump;
+            } else {
+                op = mid + jump;
             }
         }
-
         cout << fixed << setprecision(9);
         cout << name << endl;
-        cout << "Optimal frequency: " << optimal_frequency << " seconds ";
-        // cout << "Optimal frequency: " << optimal_frequency / 60 << " minutes" << endl;
-        cout << (long double)optimal_frequency /3600.0 << " hours ";
-        cout << (long double)optimal_frequency / 60.0 / 60.0 / 24.0 << " days" << endl;
+        cout << "Accumulated A " << op + Fee << " T1 = " << (op+Fee)*total_seconds / (S0 * ratio)/86400.0<<" days" <<endl;
         cout << "Initial value: " << S0<<" ";
         cout << "Max value: " << max_value << endl;
         cout << "Original APY: " << ratio * 100.0 << "% ";
         cout << "APY: " << (max_value - S0) / S0 * 100 << "% ";
         cout << "Max APY: " << exp(ratio) * 100.0 - 100.0 << "%" << endl
-             << endl;
-        // atom 91.25 ada 121.67 sui 10.43
+        << endl;
     }
 
     return 0;

@@ -2,6 +2,12 @@
 #include <fstream>
 #include <cstdlib>
 #include <ctime>
+#include <chrono>
+#include <random>
+
+// 獲取當前時間的奈秒部分
+auto now = std::chrono::high_resolution_clock::now();
+auto nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
 
 using namespace std;
 
@@ -16,8 +22,8 @@ string generate_large_number(int size) {
 int main() {
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    srand(time(nullptr));  // Seed for random number generator
-    const int digit_count = 100000;  // Modify as needed
+    srand(nanos);  // Seed for random number generator
+    const int digit_count = 1000000;  // Modify as needed
 
     string num1 = generate_large_number(digit_count);
     string num2 = generate_large_number(digit_count);

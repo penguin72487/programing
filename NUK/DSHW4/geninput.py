@@ -3,6 +3,9 @@ import colorama
 
 # Initialize colorama to handle ANSI sequences in Windows Command Prompt
 colorama.init(autoreset=True, convert=True)
+import sys
+
+sys.set_int_max_str_digits(10000000)
 
 def read_numbers_from_file(file_path):
     # Read two large numbers from the specified file

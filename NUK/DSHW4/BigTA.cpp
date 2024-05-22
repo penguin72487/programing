@@ -1,4 +1,4 @@
-#include "BCD64.hpp"
+#include "bcd.h"
 #include<string>
 #include<iostream>
 #include<iomanip>
@@ -6,8 +6,8 @@
     #include <chrono>
     using namespace std::chrono;
     auto start = high_resolution_clock::now();
-    auto end = high_resolution_clock::now();
-    auto diff = duration_cast<nanoseconds>(end - start);
+    auto ed = high_resolution_clock::now();
+    auto diff = duration_cast<nanoseconds>(ed - start);
 #endif
     using std::cin;
     using std::cout;
@@ -23,21 +23,21 @@
     {
         class node
         {
-        public:
-        bcd64 value;
-        node* next;
-        node(bcd64 __value):value(__value),next(nullptr){}
-        bcd64 FA(bcd64 &b, unsigned long long &carry) { // Full Adder
-            return value.FA(b, carry);
-        }
-        bcd64 FM(bcd64 &b, unsigned long long &borrow) { // Full Minus
-            return value.FM(b, borrow);
-        }        
-    };
+            public:
+            BCD64 value;
+            node* next;
+            node(BCD64 __value):value(__value),next(nullptr){}
+            BCD64 FA(BCD64 &num, unsigned char *carryout = nullptr, unsigned char carryin = 0) { // Full Adder
+                return value.FA(num, carryout, carryin);
+            }
+            BCD64 FM(BCD64 &num, unsigned char *carryout = nullptr, unsigned char carryin = 0){ // Full Minus
+                return value.FM(num, carryout, carryin);
+            }        
+        };
 
     node* head;
     node* tail;
-    void push_back(bcd64 __value){
+    void push_back(BCD64 __value){
         node* cur = new node(__value);
         if(head == nullptr){
             head = cur;
@@ -102,10 +102,10 @@
             {
                 __string.pop_back();
             }
-            push_back(bcd64(tmp));
+            push_back(BCD64(tmp));
             
         }
-        push_back(bcd64(__string));
+        push_back(BCD64(__string));
 
 
     }
@@ -113,24 +113,24 @@
         BigBCD c;
         node* cur = head;
         node* rhs = b.head;
-        unsigned long long carry = 0;
-        bcd64 zero = bcd64(0);
+        unsigned char carry = 0;
+        BCD64 zero = BCD64(0);
         while(cur!= nullptr && rhs!= nullptr){
-            c.push_back(cur->value.FA(rhs->value, carry));
+            c.push_back(cur->value.FA(rhs->value, &carry, carry));
             cur = cur->next;
             rhs = rhs->next;
             // cout<<c<<endl;
         }
         while(cur!= nullptr){
-            c.push_back(cur->value.FA(zero, carry));
+            c.push_back(cur->value.FA(zero, &carry, carry));
             cur = cur->next;
         }
         while(rhs!= nullptr){
-            c.push_back(rhs->value.FA(zero, carry));
+            c.push_back(rhs->value.FA(zero, &carry, carry));
             rhs = rhs->next;
         }
         if(carry){
-            c.push_back(bcd64(1));
+            c.push_back(BCD64(1));
         }
         return c;
     }
@@ -139,23 +139,23 @@
         BigBCD c;
         node* cur = head;
         node* rhs = b.head;
-        unsigned long long borrow = 0;
-        bcd64 zero = bcd64(0);
+        unsigned char borrow = 0;
+        BCD64 zero = BCD64(0);
         while(cur!= nullptr && rhs!= nullptr){
-            c.push_back(cur->value.FM(rhs->value, borrow));
+            c.push_back(cur->value.FM(rhs->value, &borrow, borrow));
             cur = cur->next;
             rhs = rhs->next;
         }
         while(cur!= nullptr){
-            c.push_back(cur->value.FM(zero, borrow));
+            c.push_back(cur->value.FM(zero, &borrow, borrow));
             cur = cur->next;
         }
         while(rhs!= nullptr){
-            c.push_back(rhs->value.FM(zero, borrow));
+            c.push_back(rhs->value.FM(zero, &borrow, borrow));
             rhs = rhs->next;
         }
         if(borrow){
-            c.push_back(bcd64(10));
+            c.push_back(BCD64(10));
         }
         c.erase_Zero();
         return c;
@@ -174,7 +174,7 @@
         return *this;
     }
     void erase_Zero(){
-        if(tail->value == bcd64(0)){
+        if(tail->value == BCD64(0)){
             pop_back();
         }
         return;
@@ -244,8 +244,8 @@ int main(){
     // BigBCD a("12345678901234567");
     // cout<<a<<endl;
 
-    // freopen("ex-in.txt", "r", stdin);
-    freopen("in.txt", "r", stdin);
+    freopen("ex-in.txt", "r", stdin);
+    // freopen("in.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
@@ -258,8 +258,8 @@ int main(){
     #endif
     BigBCD res(a);
     #ifdef ENABLE_TIMING
-                end = high_resolution_clock::now();
-                diff = duration_cast<microseconds>(end - start);
+                ed = high_resolution_clock::now();
+                diff = duration_cast<microseconds>(ed - start);
                 cout << "\n BCD encode Total time taken: " << double (diff.count())/1000000.0 << " ms.\n";
     #endif
     while(cin >> sig >> b){
@@ -269,8 +269,8 @@ int main(){
             #endif
             cout << res << endl;
             #ifdef ENABLE_TIMING
-                end = high_resolution_clock::now();
-                diff = duration_cast<microseconds>(end - start);
+                ed = high_resolution_clock::now();
+                diff = duration_cast<microseconds>(ed - start);
                 cout << "\n BCD output Total time taken: " << double (diff.count())/1000000.0 << " ms.\n";
             #endif
             break;
@@ -283,8 +283,8 @@ int main(){
 
             res = res + B;
             #ifdef ENABLE_TIMING
-                end = high_resolution_clock::now();
-                diff = duration_cast<microseconds>(end - start);
+                ed = high_resolution_clock::now();
+                diff = duration_cast<microseconds>(ed - start);
                 cout << "\n BCD Add Total time taken: " << double (diff.count())/1000000.0 << " ms.\n";
             #endif
         }else if(sig == "-"){
@@ -295,8 +295,8 @@ int main(){
             #endif
             cout << res << endl;
             #ifdef ENABLE_TIMING
-                end = high_resolution_clock::now();
-                diff = duration_cast<microseconds>(end - start);
+                ed = high_resolution_clock::now();
+                diff = duration_cast<microseconds>(ed - start);
                 cout << "\n BCD output Total time taken: " << double (diff.count())/1000000.0 << " ms.\n";
             #endif
             res = BigBCD(b);

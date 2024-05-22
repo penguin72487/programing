@@ -26,6 +26,7 @@
     ],
     "clang.completion.enable": true,
     "files.associations": {
+      "*.cshtml": "html",
       "iostream": "cpp",
       "unordered_map": "cpp",
       "new": "cpp",
@@ -72,6 +73,7 @@
       "ostream": "cpp",
       "stdexcept": "cpp",
       "streambuf": "cpp",
-      "typeinfo": "cpp"
+      "typeinfo": "cpp",
+      "chrono": "cpp"
     }
   }

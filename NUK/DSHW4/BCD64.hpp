@@ -24,7 +24,7 @@ public:
         }
     }
     bcd64(unsigned long long __value) : value(__value) {}
-    bcd64 FA(bcd64 b, unsigned long long &carry) { // Full Adder
+    bcd64 FA(bcd64 &b, unsigned long long &carry) { // Full Adder
         unsigned long long result = 0;
         unsigned long long mask = 0xf;// 1111
         unsigned long long tmp_A = value;
@@ -46,7 +46,7 @@ public:
         }
         return bcd64(result);
     }
-    bcd64 FM(bcd64 b, unsigned long long &borrow) { // Full Minus
+    bcd64 FM(bcd64 &b, unsigned long long &borrow) { // Full Minus
         unsigned long long result = 0;
         unsigned long long mask = 0xf;// 1111
         unsigned long long tmp_A = value;

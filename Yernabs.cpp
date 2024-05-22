@@ -20,7 +20,7 @@ int main() {
     vector<tuple<string, long double, long double, long double, long double> > v;
     v.push_back(make_tuple("ATOM", 41.5, 16.99/100.0, 0.06, 0));
     v.push_back(make_tuple("ADA", 1735, 3.03/100.0, 0.2, 0));
-    v.push_back(make_tuple("SUI Scallop", 2000.0, 33.0/100.0, 0.04, 0/100));
+    v.push_back(make_tuple("SUI Scallop", 2000.0, 68.0/100.0, 0.04, 0/100));
     v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0));
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
     long double jump = 0.000000001;
@@ -35,12 +35,20 @@ int main() {
             //     break;
             // }
             long double mid = (op + ed) / 2.0;
+            long double tmpl = totle_APR(S0, ratio/total_seconds, Fee, slip, total_seconds, mid-1);
             long double tmp = totle_APR(S0, ratio/total_seconds, Fee, slip, total_seconds, mid);
-            if (tmp >=max_value) {
+            long double tmpr = totle_APR(S0, ratio/total_seconds, Fee, slip, total_seconds, mid+1);
+            if ((tmpl<tmp) && (tmp<tmpr)) {
                 max_value = tmp;
                 ed = mid - jump;
-            } else {
+            } else if((tmpl>tmp)&& (tmp>tmpr)) {
                 op = mid + jump;
+            }
+            else if((tmpl>tmp)&& (tmp>tmpr)) {
+                break;
+            }
+            else {
+                cout << "0";
             }
         }
         cout << fixed << setprecision(9);

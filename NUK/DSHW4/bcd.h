@@ -10,6 +10,7 @@ using namespace std;
 class BCD64 {
     public:
 	BCD64() : bcd(0) {
+		
 	}
 
 	BCD64(uint64_t bcd) : bcd(bcd) {
@@ -24,10 +25,9 @@ class BCD64 {
 			bcd = (bcd << 4) | (num_str[i] - '0');
 	}
 
-	BCD64 FA(BCD64 &num, unsigned char *carryout = nullptr, unsigned char carryin = 0) {
+	BCD64 FA(BCD64 &num, unsigned char &carry) {
 		static const uint64_t bcd_add6[2] = {0, 6};
 		uint64_t add_6s = 0;
-		unsigned char carry = carryin;
 		for (int i = 0; i < sizeof(bcd) << 1; i++) {
 			uint8_t bcd_4bit = ((bcd & MASK1111(i)) >> (i << 2));
 			bcd_4bit += ((num.bcd & MASK1111(i)) >> (i << 2));
@@ -35,15 +35,12 @@ class BCD64 {
 			carry = (bcd_4bit >= 10);
 			add_6s |= bcd_add6[carry] << (i << 2);
 		}
-		BCD64 sum(bcd + num.bcd + carryin + add_6s);
-		if (carryout)
-			*carryout = carry;
+		BCD64 sum(bcd + num.bcd + carry + add_6s);
 		return sum;
 	}
-	BCD64 FM(BCD64 &num, unsigned char *borrowout = nullptr, unsigned char borrowin = 0) {
+	BCD64 FM(BCD64 &num,unsigned char &borrow) {
 		static const uint64_t bcd_sub10[2] = {0, 10};
 		uint64_t sub_10s = 0;
-		unsigned char borrow = borrowin;
 		for (int i = 0; i < sizeof(bcd) << 1; i++) {
 			uint8_t bcd_4bit = ((bcd & MASK1111(i)) >> (i << 2));
 			bcd_4bit -= ((num.bcd & MASK1111(i)) >> (i << 2));
@@ -51,9 +48,7 @@ class BCD64 {
 			borrow = (bcd_4bit >= 10);
 			sub_10s |= bcd_sub10[borrow] << (i << 2);
 		}
-		BCD64 diff(bcd - num.bcd - borrowin - sub_10s);
-		if (borrowout)
-			*borrowout = borrow;
+		BCD64 diff(bcd - num.bcd - borrow - sub_10s);
 		return diff;
 	}
 	bool operator==(BCD64 num) {

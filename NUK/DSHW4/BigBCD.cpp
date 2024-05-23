@@ -47,7 +47,7 @@
             tail = cur;
         }
     }
-    void push_back(node* __value){
+    void push_back(node* &__value){
         if(head == nullptr){
             head = __value;
             tail = __value;
@@ -90,7 +90,7 @@
     }
     BigBCD(string &__string): head(nullptr),tail(nullptr){
 
-        while(__string.length()>=16)
+        while(__string.length()>15)
         {
             int n = __string.length();
             string tmp = "0000000000000000";
@@ -218,18 +218,18 @@
         res += b.tail->value.to_string();
         int n = res.length();        
         int less = n%16;
-        int t=n/16;
+        int t=n>>4;
         if(less!= 0){
             for (int i = 0; i < less;++i)
             {
-                os << res[t*16+i];
+                os << res[(t<<4)+i];
             }
         }
         for (int i = t-1; i>-1; --i)
         {
             for (int j = 0; j < 16; ++j)
             {
-                os << res[i*16+j];
+                os << res[(i<<4)+j];
             }
             // os << " ";
         }
@@ -244,8 +244,8 @@ int main(){
     // BigBCD a("12345678901234567");
     // cout<<a<<endl;
 
-    // freopen("ex-in.txt", "r", stdin);
-    freopen("in.txt", "r", stdin);
+    freopen("ex-in.txt", "r", stdin);
+    // freopen("in.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);

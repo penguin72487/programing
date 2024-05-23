@@ -27,11 +27,11 @@
             BCD64 value;
             node* next;
             node(BCD64 __value):value(__value),next(nullptr){}
-            BCD64 FA(BCD64 &num, unsigned char *carryout = nullptr, unsigned char carryin = 0) { // Full Adder
-                return value.FA(num, carryout, carryin);
+            BCD64 FA(BCD64 &num, unsigned char &carry) { // Full Adder
+                return value.FA(num, carry);
             }
-            BCD64 FM(BCD64 &num, unsigned char *carryout = nullptr, unsigned char carryin = 0){ // Full Minus
-                return value.FM(num, carryout, carryin);
+            BCD64 FM(BCD64 &num,unsigned char &borrow)  { // Full Minus
+                return value.FM(num, borrow);
             }        
         };
 
@@ -116,17 +116,17 @@
         unsigned char carry = 0;
         BCD64 zero = BCD64(0);
         while(cur!= nullptr && rhs!= nullptr){
-            c.push_back(cur->value.FA(rhs->value, &carry, carry));
+            c.push_back(cur->value.FA(rhs->value, carry));
             cur = cur->next;
             rhs = rhs->next;
             // cout<<c<<endl;
         }
         while(cur!= nullptr){
-            c.push_back(cur->value.FA(zero, &carry, carry));
+            c.push_back(cur->value.FA(zero, carry));
             cur = cur->next;
         }
         while(rhs!= nullptr){
-            c.push_back(rhs->value.FA(zero, &carry, carry));
+            c.push_back(rhs->value.FA(zero, carry));
             rhs = rhs->next;
         }
         if(carry){
@@ -142,16 +142,16 @@
         unsigned char borrow = 0;
         BCD64 zero = BCD64(0);
         while(cur!= nullptr && rhs!= nullptr){
-            c.push_back(cur->value.FM(rhs->value, &borrow, borrow));
+            c.push_back(cur->value.FM(rhs->value, borrow));
             cur = cur->next;
             rhs = rhs->next;
         }
         while(cur!= nullptr){
-            c.push_back(cur->value.FM(zero, &borrow, borrow));
+            c.push_back(cur->value.FM(zero, borrow));
             cur = cur->next;
         }
         while(rhs!= nullptr){
-            c.push_back(rhs->value.FM(zero, &borrow, borrow));
+            c.push_back(rhs->value.FM(zero, borrow));
             rhs = rhs->next;
         }
         if(borrow){

@@ -245,8 +245,9 @@ int main(){
     // cout<<a<<endl;
 
     freopen("ex-in.txt", "r", stdin);
+    freopen("ex-out.txt", "w", stdout);
     // freopen("in.txt", "r", stdin);
-    freopen("out.txt", "w", stdout);
+    // freopen("out.txt", "w", stdout);
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
     string a;

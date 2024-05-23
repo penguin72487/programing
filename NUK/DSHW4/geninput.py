@@ -45,8 +45,8 @@ def highlight_differences(expected, actual):
 
 def main():
     input_file_path = 'ex-in.txt'
-    output_file_path = 'out.txt'
-    executable_name = 'BigBCD.exe'
+    output_file_path = 'ex-out.txt'
+    executable_name = 'main.exe'
 
     # Read two large numbers
     A, B = read_numbers_from_file(input_file_path)

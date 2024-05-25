@@ -16,8 +16,8 @@ int main() {
     vector<tuple<string, long double, long double, long double, long double> > v;
     v.push_back(make_tuple("ATOM", 41.5, 16.99/100.0, 0.06, 0));
     v.push_back(make_tuple("ADA", 1735, 3.03/100.0, 0.2, 0));
-    v.push_back(make_tuple("SUI Scallop", 2458.84, 63.0/100.0, 0.04, 0/100));
-    v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0));
+    v.push_back(make_tuple("SUI Scallop", 2539.84, 60.0/100.0, 0.04, 0.3/100));
+    v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0.3/100));
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
 
     for(auto& [name, S0, ratio, Fee, slip] : v) {

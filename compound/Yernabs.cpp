@@ -23,11 +23,12 @@ int main() {
     vector<tuple<string, long double, long double, long double, long double> > v;
     v.push_back(make_tuple("ATOM", 41.5, 16.99/100.0, 0.06, 0));
     v.push_back(make_tuple("ADA", 1735, 3.03/100.0, 0.2, 0));
-    v.push_back(make_tuple("SUI Scallop", 2458.84, 63.0/100.0, 0.04, 0/100));
-    v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0));
+    v.push_back(make_tuple("SUI Scallop", 2539.84, 60.0/100.0, 0.04, 0.3/100));
+    v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0.3/100));
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
     long double jump = 0.0000001;
     long double max_value;
+    long double optimoal_A = 0;
     // long double jump = 0.0000000000000000001;
     for(auto& [name, S0, ratio, Fee, slip] : v) {
         max_value = S0;
@@ -56,11 +57,12 @@ int main() {
             }
             if(max_value < tmp) {
                 max_value = tmp;
+                optimoal_A = mid;
             }
         }
         cout << fixed << setprecision(9);
         cout << name << endl;
-        cout << "Accumulated A " << op + Fee << " T1 = " << (op+Fee)*total_seconds / (S0 * ratio)/86400.0<<" days" <<endl;
+        cout << "Accumulated A " << optimoal_A + Fee << " T1 = " << (optimoal_A+Fee)*total_seconds / (S0 * ratio)/86400.0<<" days" <<endl;
         cout << "Initial value: " << S0<<" ";
         cout << "Max value: " << max_value << endl;
         cout << "Original APY: " << ratio * 100.0 << "% ";

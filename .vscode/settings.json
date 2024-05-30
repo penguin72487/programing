@@ -77,5 +77,8 @@
       "chrono": "cpp",
       "bitset": "cpp",
       "stacktrace": "cpp"
-    }
+    },
+    "cSpell.words": [
+      "heapify"
+    ]
   }

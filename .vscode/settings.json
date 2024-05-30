@@ -79,7 +79,10 @@
       "stacktrace": "cpp",
       "expected": "cpp",
       "optional": "cpp",
-      "format": "cpp"
+      "format": "cpp",
+      "charconv": "cpp",
+      "ratio": "cpp",
+      "regex": "cpp"
     },
     "cSpell.words": [
       "heapify"

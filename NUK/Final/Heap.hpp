@@ -3,13 +3,16 @@
 #include <string>
 using namespace std;
 #define endl "\n"
-class value{
-    public:
-    value(){}
-    virtual value &operator=(const value &) = 0;
-    virtual bool operator<(const value &b) const = 0;
-    virtual bool operator >(const value& b) const=0;
+class value {
+public:
+    virtual value& operator=(const value&) {
+        return *this;
+    }
+    virtual bool operator<(const value&) const = 0;
+    virtual bool operator>(const value&) const = 0;
+    virtual ~value() = default;
 };
+
 
 
 template<class T>

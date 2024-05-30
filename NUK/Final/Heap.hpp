@@ -4,11 +4,13 @@
 using namespace std;
 #define endl "\n"
 class value{
-    value();
-    value& operator=(const value&);
-    bool operator <(const value& b) const;
-    bool operator >(const value& b) const;
+    public:
+    value(){}
+    virtual value &operator=(const value &) = 0;
+    virtual bool operator<(const value &b) const = 0;
+    virtual bool operator >(const value& b) const=0;
 };
+
 
 template<class T>
 class max_Heap{
@@ -225,28 +227,28 @@ class min_Heap{class node{
         return os;
     }
 };
-int main()
-{
-    cin.tie(0)->sync_with_stdio(0);
-    cout.tie(0);
-    int n = 5;
-    max_Heap<int> h(n);
-    h.push(1);
-    h.push(20);
-    h.push(3);
-    h.push(7);
-    h.push(30);
-    cout<<h<<endl;
-    h.pop();
-    cout<<h<<endl;
+// int main()
+// {
+//     cin.tie(0)->sync_with_stdio(0);
+//     cout.tie(0);
+//     int n = 5;
+//     max_Heap<int> h(n);
+//     h.push(1);
+//     h.push(20);
+//     h.push(3);
+//     h.push(7);
+//     h.push(30);
+//     cout<<h<<endl;
+//     h.pop();
+//     cout<<h<<endl;
 
-    min_Heap<int> h2(n);
-    h2.push(1);
-    h2.push(20);
-    h2.push(3);
-    h2.push(7);
-    h2.push(30);
-    cout<<h2<<endl;
-    h2.pop();
-    cout<<h2<<endl;
-}
+//     min_Heap<int> h2(n);
+//     h2.push(1);
+//     h2.push(20);
+//     h2.push(3);
+//     h2.push(7);
+//     h2.push(30);
+//     cout<<h2<<endl;
+//     h2.pop();
+//     cout<<h2<<endl;
+// }

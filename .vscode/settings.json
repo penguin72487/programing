@@ -76,7 +76,10 @@
       "typeinfo": "cpp",
       "chrono": "cpp",
       "bitset": "cpp",
-      "stacktrace": "cpp"
+      "stacktrace": "cpp",
+      "expected": "cpp",
+      "optional": "cpp",
+      "format": "cpp"
     },
     "cSpell.words": [
       "heapify"

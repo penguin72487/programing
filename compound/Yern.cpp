@@ -21,7 +21,7 @@ int main() {
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
 
     for(auto& [name, S0, ratio, Fee, slip] : v) {
-        long double max_value = S0;
+        long double max_value = S0 * (1 + ratio);
         int optimal_frequency = total_seconds;
 
         for (int interval = 1; interval <= total_seconds; ++interval) {

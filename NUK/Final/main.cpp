@@ -84,6 +84,17 @@ int main() {
         k_Heap.push(it);
     }
     cout<<k_Heap.top()<<endl;
+    cout<<endl;
+    k_Heap.sort();
+    // int n=k_Heap.size();
+    for(int i=0;i<10;i++){// small K
+        cout<<k_Heap[i]<<endl;
+    }
+    cout<<endl;
+    for(int i=size-10;i<size;i++){// large K
+        cout<<k_Heap[i]<<endl;
+    }
+    cout<<endl;
 
     return 0;
 }

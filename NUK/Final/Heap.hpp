@@ -1,6 +1,5 @@
+#ifndef __HEAP_HPP__
 #include <iostream>
-#include <iomanip>
-#include <string>
 using namespace std;
 #define endl "\n"
 class heap_Value {
@@ -32,14 +31,7 @@ class max_Heap{
 
     node *root;
     int max_size;
-    int size;
-
-
-    node min(node a, node b){
-        
-        return a.value < b.value?a:b;
-    }
-
+    int n;
     void up_Heapify(int cur){
 
         if(cur == 0){
@@ -54,8 +46,11 @@ class max_Heap{
     }
     void down_Heapify(int cur)
     {
-        int left = (cur<<1)>=size?-1:(cur<<1);
-        int right = ((cur<<1)|1)>=size?-1:(cur<<1)|1;
+        if(n <2){
+            return;
+        }
+        int left = (cur<<1)>=n?-1:(cur<<1);
+        int right = ((cur<<1)|1)>=n?-1:(cur<<1)|1;
         if(left == -1){
             return;
         }
@@ -80,43 +75,60 @@ class max_Heap{
         }
     }
     public:
-    max_Heap(int _Max_Size):max_size(_Max_Size),size(0){
+    max_Heap(int _Max_Size):max_size(_Max_Size),n(0){
         root = new node[max_size];
     }
     ~max_Heap(){
         delete[] root;
     }
     void push(T __value){
-        if(size == max_size){
+        if(n == max_size){
             cout<<"Heap is full"<<endl;
             throw "Heap is full";
         }
 
-        root[size] = node(__value);
-        up_Heapify(size);
-        size++;
+        root[n] = node(__value);
+        up_Heapify(n);
+        n++;
     }
     void pop(){
-        if(size == 0){
+        if(n == 0){
             cout<<"Heap is empty"<<endl;
             throw "Heap is empty";
         }
-        root[0] = root[size-1];
-        size--;
+        swap(root[0],root[n-1]);
+        n--;
         down_Heapify(0);
     }
     T top(){
-        if(size == 0){
+        if(n == 0){
             cout<<"Heap is empty"<<endl;
             throw "Heap is empty";
         }
         return root[0].value;
     }
     bool empty(){
-        return size == 0;
+        return n == 0;
+    }
+    int size(){
+        return n;
+    }
+    void sort(){ //small to large
+        int tmp_Size=n;
+        // node *res;
+        while(!empty())
+        {
+          pop();
+        }
+        n=tmp_Size;
+        // return root;
+        return;
+    }
+    T operator[](int i){
+        return root[i].value;
     }
     friend ostream& operator<<(ostream& os, const max_Heap& h){
-        for (int i = 0; i < h.size; ++i)
+        for (int i = 0; i < h.n; ++i)
         {
             os<<h.root[i].value<<" ";
         }
@@ -124,7 +136,8 @@ class max_Heap{
     }
 };
 template<class T>
-class min_Heap{class node{
+class min_Heap{
+    class node{
     public:
         T value;
         node(){}
@@ -139,14 +152,7 @@ class min_Heap{class node{
 
     node *root;
     int max_size;
-    int size;
-
-
-    node min(node a, node b){
-        
-        return a.value < b.value?a:b;
-    }
-
+    int n;
     void up_Heapify(int cur){
 
         if(cur == 0){
@@ -161,8 +167,8 @@ class min_Heap{class node{
     }
     void down_Heapify(int cur)
     {
-        int left = (cur<<1)>=size?-1:(cur<<1);
-        int right = ((cur<<1)|1)>=size?-1:(cur<<1)|1;
+        int left = (cur<<1)>=n?-1:(cur<<1);
+        int right = ((cur<<1)|1)>=n?-1:(cur<<1)|1;
         if(left == -1){
             return;
         }
@@ -187,43 +193,56 @@ class min_Heap{class node{
         }
     }
     public:
-    min_Heap(int _Max_Size):max_size(_Max_Size),size(0){
+    min_Heap(int _Max_Size):max_size(_Max_Size),n(0){
         root = new node[max_size];
     }
     ~min_Heap(){
         delete[] root;
     }
     void push(T __value){
-        if(size == max_size){
+        if(n == max_size){
             cout<<"Heap is full"<<endl;
             throw "Heap is full";
         }
 
-        root[size] = node(__value);
-        up_Heapify(size);
-        size++;
+        root[n] = node(__value);
+        up_Heapify(n);
+        n++;
     }
     void pop(){
-        if(size == 0){
+        if(n == 0){
             cout<<"Heap is empty"<<endl;
             throw "Heap is empty";
         }
-        root[0] = root[size-1];
-        size--;
+        root[0] = root[n-1];
+        n--;
         down_Heapify(0);
     }
     T top(){
-        if(size == 0){
+        if(n == 0){
             cout<<"Heap is empty"<<endl;
             throw "Heap is empty";
         }
         return root[0].value;
     }
     bool empty(){
-        return size == 0;
+        return n == 0;
+    }
+    int size(){
+        return n;
+    }
+    node* sort(){// big to small
+        int tmp_Size=n;
+        // node *res;
+        while(!empty())
+        {
+          pop();
+        }
+        n=tmp_Size;
+        return root;
     }
     friend ostream& operator<<(ostream& os, const min_Heap& h){
-        for (int i = 0; i < h.size; ++i)
+        for (int i = 0; i < h.n; ++i)
         {
             os<<h.root[i].value<<" ";
         }
@@ -255,3 +274,4 @@ class min_Heap{class node{
 //     h2.pop();
 //     cout<<h2<<endl;
 // }
+# endif

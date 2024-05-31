@@ -1,6 +1,5 @@
+# ifndef LINKLIST_HPP__
 #include <iostream>
-#include <iomanip>
-#include <string>
 using namespace std;
 #define endl "\n"
 template<class T>
@@ -141,3 +140,5 @@ class linklist{
     }
 
 };
+
+#endif

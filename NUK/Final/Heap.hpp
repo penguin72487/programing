@@ -3,19 +3,19 @@
 #include <string>
 using namespace std;
 #define endl "\n"
-class value {
+class heap_Value {
 public:
-    virtual value& operator=(const value&) {
+    virtual heap_Value& operator=(const heap_Value&) {
         return *this;
     }
-    virtual bool operator<(const value&) const = 0;
-    virtual bool operator>(const value&) const = 0;
-    virtual ~value() = default;
+    virtual bool operator<(const heap_Value&) const = 0;
+    virtual bool operator>(const heap_Value&) const = 0;
+    virtual ~heap_Value() = default;
 };
 
 
 
-template<class T>
+template<class T> // custom class should be inherited from heap_Value
 class max_Heap{
     class node{
     public:

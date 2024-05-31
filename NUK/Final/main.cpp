@@ -7,7 +7,7 @@
 #include <sstream>
 using namespace std;
 #define endl "\n"
-class k_Bar : public value {
+class k_Bar : public heap_Value {
     int Date;
     float open;
     float High;
@@ -16,7 +16,7 @@ class k_Bar : public value {
 public:
     k_Bar() : Date(0), open(0), High(0), Low(0), close(0) {}
     k_Bar(int _Date, float _open, float _High, float _Low, float _close) : Date(_Date), open(_open), High(_High), Low(_Low), close(_close) {}
-    value& operator=(const value& other) override {
+    heap_Value& operator=(const heap_Value& other) override {
         if (this != &other) {
             const k_Bar& k = dynamic_cast<const k_Bar&>(other);
             Date = k.Date;
@@ -27,13 +27,13 @@ public:
         }
         return *this;
     }
-    bool operator<(const value& b) const override {
+    bool operator<(const heap_Value& b) const override {
         const k_Bar& k = dynamic_cast<const k_Bar&>(b);
         if(close < k.close) return true;
         else if(close == k.close) return Date < k.Date;
         else return false;
     }
-    bool operator>(const value& b) const override {
+    bool operator>(const heap_Value& b) const override {
         const k_Bar& k = dynamic_cast<const k_Bar&>(b);
         if(close > k.close) return true;
         else if(close == k.close) return Date > k.Date;

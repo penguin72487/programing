@@ -72,33 +72,33 @@ d. 使用成交價格計算逐筆返回（除了第一筆），然後確定最�
 默認 max_Heap
 
 如果要自訂資料結構當數值，請繼承或是多型heap_Value
-使用`operator<`以及`operator>`去控制max_Heap與min_Heap，順著<或>的順序排序是max_Heap，反之是min_Heap
-
-push(T) 把數值推入堆積
-pop() 把數值移出推積
-top() 得到堆積最大值
-int size() 得到堆積大小
-bool empty() 判斷堆積是否為空
-sort() heap sort，做了之後就在也不是heap了
-T heap[] 用index取得堆積裡面root陣列的資料，用在heap sort之後
-cout<< 輸出堆積
+使用`operator<`以及`operator>`去控制max_Heap與min_Heap，順著<或>的順序排序是max_Heap，反之是min_Heap  
+  
+push(T) 把數值推入堆積  
+pop() 把數值移出推積  
+top() 得到堆積最大值  
+int size() 得到堆積大小  
+bool empty() 判斷堆積是否為空  
+sort() heap sort，做了之後就在也不是heap了  
+T heap[] 用index取得堆積裡面root陣列的資料，用在heap sort之後  
+cout<< 輸出堆積  
 
 
 # linklist
 
-要使用請
-`#include "linklist.hpp"`
+要使用請  
+`#include "linklist.hpp"`  
+  
 
-
-push_back(T) 加入數值
-insert(insex,T) 加入數值by index
-erase(index) 刪除數值by index
-iterator begin() 起始迭代器
-iterator end() 結束迭代器
-int size 返回數量
-bool empty() 判斷是否為空
-clear() 清空
-cout<< 輸出
+push_back(T) 加入數值  
+insert(insex,T) 加入數值by index  
+erase(index) 刪除數值by index  
+iterator begin() 起始迭代器  
+iterator end() 結束迭代器  
+int size 返回數量  
+bool empty() 判斷是否為空  
+clear() 清空  
+cout<< 輸出  
 
 
 

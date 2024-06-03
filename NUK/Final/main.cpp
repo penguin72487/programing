@@ -79,7 +79,7 @@ int main() {
     ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    max_Heap<k_Bar> k_Heap(size);
+    Heap<k_Bar> k_Heap(size);
     for(auto& it:k_line){
         k_Heap.push(it);
     }

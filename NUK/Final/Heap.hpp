@@ -93,7 +93,7 @@ class Heap{// defalt max heap if want to make min heap, change the logic > to <
     }
     void pop(){
         if(n == 0){
-            cout<<"Heap is empty"<<endl;
+            cout<<"pop Heap is empty"<<endl;
             throw "Heap is empty";
         }
         swap(root[0],root[n-1]);
@@ -102,7 +102,7 @@ class Heap{// defalt max heap if want to make min heap, change the logic > to <
     }
     T top(){
         if(n == 0){
-            cout<<"Heap is empty"<<endl;
+            cout<<"top Heap is empty"<<endl;
             throw "Heap is empty";
         }
         return root[0].value;

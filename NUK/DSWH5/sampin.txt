@@ -1,0 +1,10 @@
+A 1
+B 10
+C 20
+D 30
+E 40
+F 50
+G 60
+H 70
+
+HACGHBDEF

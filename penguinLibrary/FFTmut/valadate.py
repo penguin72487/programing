@@ -3,7 +3,7 @@ import os
 
 def main():
     # 調整最大位數限制，設定為 20000000（可以根據需要調整）
-    sys.set_int_max_str_digits(20000000)
+    sys.set_int_max_str_digits(1000000000)
 
     # Read number A from bumA.txt
     with open('C:\\gitproject\\programing\\penguinLibrary\\FFTmut\\bumA.txt', 'r') as infile:
@@ -14,7 +14,7 @@ def main():
     result = A * A
 
     # Check if output.txt exists and read number B
-    output_path = 'C:\\gitproject\\programing\\penguinLibrary\\FFTmut\\output.txt'
+    output_path = 'C:\\gitproject\\programing\\penguinLibrary\\FFTmut\\cudaFFToutput.txt'
     if os.path.exists(output_path) and os.path.getsize(output_path) > 0:
         with open(output_path, 'r') as infile:
             num_str = infile.readline().strip()

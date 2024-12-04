@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef complex<long double> cd;
-#define endl "\n" 
-
+#define endl "\n"
 #ifdef ENABLE_TIMING
     #include <chrono>
     using namespace std::chrono;
@@ -42,7 +41,7 @@ void fft(vector<cd>& a, bool invert) {
 }
 
 // Multiplication using FFT
-vector<unsigned long long> multiply(const vector<unsigned long long>& a, const vector<unsigned long long>& b) {
+vector<unsigned long long> operator*(const vector<unsigned long long>& a, const vector<unsigned long long>& b) {
     vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
     int n = 1;
     while (n < a.size() + b.size()) 
@@ -95,21 +94,19 @@ int main() {
     cin >> s;
 
     vector<unsigned long long> a, b;
-    for (int i = s.size() - 1; i >= 0; i--) {
-        a.push_back(s[i] - '0');
+    reverse(s.begin(), s.end());
+    for (auto it : s) {
+        a.push_back(it^48);
     }
-
-    // cout << a << endl;
-    
     b = a;  // Squaring the number
     #ifdef ENABLE_TIMING
         start = high_resolution_clock::now();
     #endif
-    vector<unsigned long long> result = multiply(a, b);
+    vector<unsigned long long> result = a * b;
     #ifdef ENABLE_TIMING
         stop = high_resolution_clock::now();
         durat = duration_cast<nanoseconds>(stop - start);
-        // cout << "\nTotal time taken: " << double (durat.count())/1000000.0 << " ms.\n";
+        // cout << "\nTotal time taken: " << long double (durat.count())/1000000.0 << " ms.\n";
     #endif
 
     cout << result << endl;

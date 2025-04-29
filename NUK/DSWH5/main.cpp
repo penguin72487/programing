@@ -13,8 +13,8 @@ int main()
     freopen("sampout.txt", "w", stdout);
     string s;
     int f;
-    while (cin.peek()!='\n') {
-        cin >> s >> f;
+    while (cin.peek()!='\n'&&cin >> s >> f) {
+
         list.push_back(huffman_Value(s, f));
         cin.ignore();
     }

@@ -1,6 +1,3 @@
-void swap(int & a,int & b)
-// {
-//     int tmp = a;
-//     a = b;
-//     b=tmp;
-// }
+    // for(int i=0; i<n;++i){
+    //     cin>>a[i];
+    // }

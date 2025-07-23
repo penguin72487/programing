@@ -10,19 +10,13 @@
 #include <cufft.h>
 #include <cuda_runtime.h>
 using namespace std;
+
+#ifndef CUDAFFT_HPP
+#define CUDAFFT_HPP
+
+int digit=8;
+
 typedef complex<double> cd;
-#define endl "\n"
-#ifdef ENABLE_TIMING
-    #include <chrono>
-    using namespace std::chrono;
-    auto start = high_resolution_clock::now();
-    auto stop = high_resolution_clock::now();
-    auto durat = duration_cast<nanoseconds>(stop - start);
-#endif
-
-double PI = acos(-1.0);  // 使用更精確的方式取得 PI
-
-// GPU FFT function using cuFFT
 void cuda_fft(vector<double>& real, vector<double>& imag, unsigned long long n, bool inverse) {
     unsigned long long size = n * sizeof(cufftDoubleComplex);
     cufftDoubleComplex* h_data = (cufftDoubleComplex*)malloc(size);
@@ -60,8 +54,26 @@ void cuda_fft(vector<double>& real, vector<double>& imag, unsigned long long n, 
     cudaFree(d_data);
     free(h_data);
 }
+vector<unsigned long long> operator+(const vector<unsigned long long>& a, const vector<unsigned long long>& b) {
+    unsigned long long n = max(a.size(), b.size()) + 1;
+    vector<unsigned long long> result(n, 0);
+    unsigned long long carry = 0;
+    for (unsigned long long i = 0; i < n; i++) {
+        unsigned long long sum = carry;
+        if (i < a.size()) sum += a[i];
+        if (i < b.size()) sum += b[i];
+        unsigned long long pow10 = pow(10, digit);
+        result[i] = sum % pow10;
+        carry = sum / pow10;
+    }
 
-// Multiplication using GPU FFT
+    // Remove leading zeros
+    while (result.size() > 1 && result.back() == 0)
+        result.pop_back();
+
+    return result;
+}
+
 vector<unsigned long long> operator*(const vector<unsigned long long>& a, const vector<unsigned long long>& b) {
     unsigned long long n = 1;
     while (n < a.size() + b.size()) 
@@ -100,10 +112,11 @@ vector<unsigned long long> operator*(const vector<unsigned long long>& a, const 
     vector<unsigned long long> result;
     unsigned long long carry = 0;
     result.reserve(n);  // 提前分配空間以加速輸出
+    unsigned long long pow10 = round(pow(10, digit));
     for (unsigned long long i = 0; i < n; i++) {
         unsigned long long value = round(real_result[i]) + carry;
-        carry = value / 10;
-        result.push_back(value % 10);
+        carry = value / pow10;
+        result.push_back(value % pow10);
     }
 
     // Remove trailing zeros
@@ -113,32 +126,7 @@ vector<unsigned long long> operator*(const vector<unsigned long long>& a, const 
     return result;
 }
 
-vector<unsigned long long> operator^(const vector<unsigned long long>& a,unsigned long long exp) {
-    // Fast power function using repeated squaring
-    vector<unsigned long long> result = {1};  // Start with 1
-    vector<unsigned long long> base = a;  // Copy the base
-    while (exp > 0) {
-        if (exp & 1 == 1) {
-            result = result * base;  // Multiply result by base
-        }
-        base = base * base;  // Square the base
-        exp >>= 1;  // Divide exponent by 2
-    }
-    return result;  // Return the final result
-}
-
-// Operator overload for ostream output
-// ostream& operator<<(ostream& os, const vector<unsigned long long>& v) {
-//     // 使用字符串流構建輸出，減少多次字符串拼接的開銷
-//     ostringstream result;
-//     result.precision(0);  // 禁止小數點輸出
-//     for (auto it = v.rbegin(); it != v.rend(); ++it) {
-//         result << *it;
-//     }
-//     os << result.str();
-//     return os;
-// }
-
+  
 ostream& operator<<(ostream& os, const vector<unsigned long long>& v) {
     // 直接將輸出改為二進制寫入方式以減少 I/O 開銷
     constexpr size_t buffer_size = 1 << 30;  // 2^30 bytes
@@ -165,48 +153,82 @@ ostream& operator<<(ostream& os, const vector<unsigned long long>& v) {
     return os;
 }
 
-int main() {
-    cin.tie(0)->sync_with_stdio(0);
-    cout.tie(0);
+class cudaFFT {
+    public:
+        cudaFFT();
+        cudaFFT(vector<unsigned long long> val) {
+            this->val = val;
+        }
+        cudaFFT(string s) {
+            reverse(s.begin(), s.end());
+            while(s.size() % digit != 0) {
+                s.push_back('0');
+            }
+            val.reserve(s.size());  // 提前分配空間以提高性能
 
-    // Open input and output files
-    freopen("bumA.txt", "r", stdin);
-    freopen("cudaFFToutput.txt", "w", stdout);
+            for (unsigned long long i = 0; i < s.size(); i += digit) {
+                unsigned long long value = 0;
+                unsigned long long pow10 = 1;
+                for (int j = 0; j < digit; j++) {
+                    value += (s[i + j] ^ 48) * pow10;
+                    pow10 *= 10;
+                }
+                val.push_back(value);
+            }
+        }
 
-    string s, trash;
-    cin >> s;
+        ~cudaFFT() {
+            val.clear();
+        }
 
-    for(unsigned long long i = 0; i < 10; i++) {
-        cin >> trash;
-    }
+        cudaFFT operator+(const cudaFFT& b) {
+            vector<unsigned long long> a = this->val;
+            vector<unsigned long long> b_val = b.val;
+            return cudaFFT(a + b_val);
+        }
 
-    vector<unsigned long long> a, b;
-    reverse(s.begin(), s.end());
-    a.reserve(s.size());  // 提前分配空間以提高性能
-    for (auto it : s) {
-        a.push_back(it ^ 48);
-    }
-    b = a;  // Squaring the number
-    #ifdef ENABLE_TIMING
-        start = high_resolution_clock::now();
-    #endif
-    vector<unsigned long long> result = a * b;
-    #ifdef ENABLE_TIMING
-        stop = high_resolution_clock::now();
-        durat = duration_cast<nanoseconds>(stop - start);
-        // cout << "\nTotal time taken: " << double(durat.count()) / 1000000.0 << " ms.\n";
-    #endif
+        cudaFFT operator*(const cudaFFT& b) {
+            vector<unsigned long long> a = this->val;
+            vector<unsigned long long> b_val = b.val;
+            return cudaFFT(a * b_val);
+        }
 
-    cout << result << endl;
-    #ifdef ENABLE_TIMING
-        cout << "\nTotal time taken: " << double(durat.count()) / 1000000.0 << " ms.\n";
-    #endif
-    cout << result.size() << endl;
-    return 0;
-}
+        cudaFFT& operator=(const cudaFFT& b) {
+            this->val = b.val;
+            return *this;
+        }
+        cudaFFT& operator=(const vector<unsigned long long>& b) {
+            this->val = b;
+            return *this;
+        }
 
-/*
-cd "c:\gitproject\programing\penguinLibrary\FFTmut\" ; if ($?) { nvcc cudaFFT.cpp -o cudaFFT -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include" -L"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64" -lcufft -lcudart -DENABLE_TIMING } ; if ($?) { .\cudaFFT }
+        friend ostream& operator<<(ostream& os, const cudaFFT& a) {
+            return os << a.val;
+        }
 
-.\cudaFFT.exe
-*/
+        cudaFFT pow(unsigned long long n) {
+            cudaFFT result = cudaFFT("1");
+            cudaFFT base = this->val;
+            while (n > 0) {
+                if (n & 1) {
+                    result = result * base;
+                }
+                base = base * base;
+                n >>= 1;
+            }
+            return result;
+        }
+
+
+        
+        
+    private:
+        double PI = acos(-1.0);  // 使用更精確的方式取得 PI
+        vector<unsigned long long> val;
+};
+
+
+
+
+
+#endif

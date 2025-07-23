@@ -127,6 +127,7 @@ vector<unsigned long long> operator^(const vector<unsigned long long>& a,unsigne
     return result;  // Return the final result
 }
 
+
 // Operator overload for ostream output
 // ostream& operator<<(ostream& os, const vector<unsigned long long>& v) {
 //     // 使用字符串流構建輸出，減少多次字符串拼接的開銷
@@ -169,28 +170,13 @@ int main() {
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
 
-    // Open input and output files
-    freopen("bumA.txt", "r", stdin);
-    freopen("cudaFFToutput.txt", "w", stdout);
-
-    string s, trash;
-    cin >> s;
-
-    for(unsigned long long i = 0; i < 10; i++) {
-        cin >> trash;
-    }
-
-    vector<unsigned long long> a, b;
-    reverse(s.begin(), s.end());
-    a.reserve(s.size());  // 提前分配空間以提高性能
-    for (auto it : s) {
-        a.push_back(it ^ 48);
-    }
-    b = a;  // Squaring the number
+    vector<unsigned long long> a = {2};
+    unsigned long long exp = 512;
     #ifdef ENABLE_TIMING
         start = high_resolution_clock::now();
     #endif
-    vector<unsigned long long> result = a * b;
+    vector<unsigned long long> result = a ^ exp;
+    result[0] -= 1;
     #ifdef ENABLE_TIMING
         stop = high_resolution_clock::now();
         durat = duration_cast<nanoseconds>(stop - start);
@@ -201,12 +187,12 @@ int main() {
     #ifdef ENABLE_TIMING
         cout << "\nTotal time taken: " << double(durat.count()) / 1000000.0 << " ms.\n";
     #endif
-    cout << result.size() << endl;
+    cout << result.size()<< " digits in the result." << endl;
     return 0;
 }
 
 /*
-cd "c:\gitproject\programing\penguinLibrary\FFTmut\" ; if ($?) { nvcc cudaFFT.cpp -o cudaFFT -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include" -L"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64" -lcufft -lcudart -DENABLE_TIMING } ; if ($?) { .\cudaFFT }
+cd "c:\gitproject\programing\penguinLibrary\FFTmut\" ; if ($?) { nvcc pow2.cpp -o cudaFFT -I"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/include" -L"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.6/lib/x64" -lcufft -lcudart -DENABLE_TIMING } ; if ($?) { .\cudaFFT }
 
 .\cudaFFT.exe
 */

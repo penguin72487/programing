@@ -21,6 +21,8 @@ int main() {
     // v.push_back(make_tuple("ADA", 1735, 3.03/100.0, 0.2, 0));
     v.push_back(make_tuple("SUI Scallop", 2539.84, 60.0/100.0, 0.04, 0.3/100));
     v.push_back(make_tuple("SUI Scallop", 2556.32, 60.0/100.0, 0.04, 0.3/100));
+    v.push_back(make_tuple("SUI Sui Land", 2539.84, 20/100.0, 0.01, 0));
+    v.push_back(make_tuple("EigenLayer",110.0, 3.77/100.0, 0.3, 0));
     // v.push_back(make_tuple("SUI Scallop", 25398.4, 60.0/100.0, 0.04, 0.3/100));
     // v.push_back(make_tuple("SUI Scallop", 253984.0, 60.0/100.0, 0.04, 0.3/100));
     // v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0.3/100));

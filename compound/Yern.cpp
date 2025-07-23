@@ -18,7 +18,7 @@ int main() {
     v.push_back(make_tuple("ADA", 1735, 3.03/100.0, 0.2, 0));
     v.push_back(make_tuple("SUI Scallop", 2539.84, 60.0/100.0, 0.04, 0.3/100));
     v.push_back(make_tuple("SUI Bucket", 330, 30.0/100.0, 0.06, 0.3/100));
-    v.push_back(make_tuple("SUI Navi", 1975, 6.83/100.0, 0.1, 0));
+    v.push_back(make_tuple("SUI Sui Land", 2539.84, 20/100.0, 0.01, 0.3/100));
     int total_seconds = 365 * 24 * 60 * 60; // 一年的總秒數
 
     for(auto& [name, S0, ratio, Fee, slip] : v) {

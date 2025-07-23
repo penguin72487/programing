@@ -7,12 +7,13 @@ void swap(int & a,int & b)
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
-    int n;
-    cin >> n;
-    int a[n];
-    for(int i=0; i<n;++i){
-        cin>>a[i];
-    }
+    int n = 10;
+    // cin >> n;
+    // int a[n];
+    int a[10] = {19, 29, 2, 27, 3, 23, 5, 9, 8, 0};
+    // for(int i=0; i<n;++i){
+    //     cin>>a[i];
+    // }
     
     for(int i=0; i<n;++i)
     {

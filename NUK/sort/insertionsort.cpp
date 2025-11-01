@@ -1,9 +1,6 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
-void swap(int & a,int & b)
-{
-    a^=b^=a^=b;
-}
 int main(){
     cin.tie(0)->sync_with_stdio(0);
     cout.tie(0);
@@ -11,7 +8,7 @@ int main(){
     // cin >> n;
     // int a[n];
     int a[10] = {19, 29, 2, 27, 3, 23, 5, 9, 8, 0};
-    // for(int i=0; i<n;++i){
+    // for(int i=0; i<n;++i){   
     //     cin>>a[i];
     // }
     

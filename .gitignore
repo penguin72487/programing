@@ -38,3 +38,6 @@
 # End of https://www.toptal.com/developers/gitignore/api/c++
 penguinLibrary/FFTmut/cudaFFToutput.txt
 penguinLibrary/FFTmut/cudaFFT/cudaFFToutput.txt
+NUK/Realtime/result/*
+*.pdb
+*.ilk

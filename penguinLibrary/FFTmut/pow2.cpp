@@ -127,6 +127,31 @@ vector<unsigned long long> operator^(const vector<unsigned long long>& a,unsigne
     return result;  // Return the final result
 }
 
+vector<unsigned long long> operator+ (const vector<unsigned long long>& a, const vector<unsigned long long>& b) {
+    unsigned long long max_size = max(a.size(), b.size());
+    const vector<unsigned long long>* pa = &a;
+    const vector<unsigned long long>* pb = &b;
+    if (a.size() < b.size()) {
+        swap(pa, pb);  // 只換指標，不動實體
+    }
+    const vector<unsigned long long>& big = *pa;
+    const vector<unsigned long long>& small = *pb;
+
+    vector<unsigned long long> result(big);
+
+    unsigned long long carry = 0;
+    for (unsigned long long i = 0; i < small.size(); i++) {
+        result[i] += small[i] + carry;
+        carry = result[i] / 10;
+        result[i] %= 10;
+    }
+    if( carry > 0) {
+        result.push_back(carry);
+    }
+    
+    return result;  // 返回結果向量
+}
+
 
 // Operator overload for ostream output
 // ostream& operator<<(ostream& os, const vector<unsigned long long>& v) {
@@ -175,8 +200,16 @@ int main() {
     #ifdef ENABLE_TIMING
         start = high_resolution_clock::now();
     #endif
-    vector<unsigned long long> result = a ^ exp;
-    result[0] -= 1;
+    vector<unsigned long long> result = {1};
+    vector<unsigned long long> ull_1 = {1};
+    for (unsigned long long i = 0; i <= 8; ++i) {
+        vector<unsigned long long> ull_Base = {2};
+        vector<unsigned long long> i_mux = ull_Base ^ (1ull << i);
+        cout << "2^" << (1ull << i) << " = " << i_mux << endl;
+        vector<unsigned long long> mux = {i_mux+ull_1};
+        result = result * mux;
+    }
+    // result[0] -= 1;
     #ifdef ENABLE_TIMING
         stop = high_resolution_clock::now();
         durat = duration_cast<nanoseconds>(stop - start);

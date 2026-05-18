@@ -1,0 +1,10 @@
+=== CUS Simulation (Slide R1/R2/R3) ===
+SIM_TIME = 1000
+Server Utilization = 0.2
+
+Periodic total jobs = 145
+Periodic missed jobs = 3
+Periodic miss rate = 0.020690
+
+Aperiodic completed jobs = 34
+Aperiodic avg response time = 302.294118

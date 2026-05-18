@@ -1,5 +1,5 @@
 #include <iostream>         // 替換為需要的標頭文件
-#include "cudaFFT8.hpp"
+#include "cudaFFT.hpp"
 #define endl "\n"
 using namespace std;
 #ifdef ENABLE_TIMING
@@ -27,7 +27,7 @@ int main() {
     #ifdef ENABLE_TIMING
         start = high_resolution_clock::now();
     #endif
-    cout << a.pow(1ull<<1) << endl;
+    cout << a.pow(256ull<<1ull) << endl;
     #ifdef ENABLE_TIMING
         stop = high_resolution_clock::now();
         durat = duration_cast<nanoseconds>(stop - start);

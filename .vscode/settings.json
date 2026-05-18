@@ -4,9 +4,9 @@
     "editor.snippetSuggestions": "top",
     "code-runner.runInTerminal": true,
     "code-runner.executorMap": {
-      "c": "cd $dir && clang $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c11 && $dir$fileNameWithoutExt",
-      "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c++17 -lpthread -DENABLE_TIMING && $dir$fileNameWithoutExt"
-    }, 
+      "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -std=c11 && $dir$fileNameWithoutExt.exe",
+      "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og --target=x86_64-w64-windows-gnu -std=gnu++23 -DENABLE_TIMING && $dir$fileNameWithoutExt.exe"
+    },
     "code-runner.saveFileBeforeRun": true, 
     "code-runner.preserveFocus": true, 
     "code-runner.clearPreviousOutput": false, 
